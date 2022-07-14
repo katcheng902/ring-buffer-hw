@@ -199,10 +199,8 @@ control Dequeue(out bit<ELT_SIZE> deq_value) {
     /* head (increment) */
     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (head) inc_head_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
-	    if (size_tmp > 0) {
-	        rv = val;
-	        val = val + 1;
-	    }
+	    rv = val;
+	    val = val + 1;
 	}
     };
 
@@ -210,18 +208,15 @@ control Dequeue(out bit<ELT_SIZE> deq_value) {
 	inc_head_reg_action.execute(0, head_tmp);
     }
 
-
-    /* buffer (read) * / 
+    /* buffer (read) */
     RegisterAction<bit<ELT_SIZE>, bit<32>, bit<ELT_SIZE>> (ring_buffer) read_buffer_reg_action = {
 	void apply(inout bit<ELT_SIZE> val, out bit<ELT_SIZE> rv) {
-	    if (size_tmp > 0) {
-	        rv = val;
-	    }
+	    rv = val;
 	}
     };
 
     action dequeue_action() {
-	read_buffer_reg_action.execute(head_tmp, deq_value);
+ 	inc_head_reg_action.execute(0, head_tmp);
     }
 
     /* TABLES */
