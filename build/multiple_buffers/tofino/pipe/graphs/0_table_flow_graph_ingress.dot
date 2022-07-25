@@ -1,0 +1,57 @@
+digraph ingress {
+dmac_0 [ shape=record, style="filled", fillcolor=cornsilk, label="dmac_0\l\l
+M:\l
+ hdr.ethernet.src_addr\l
+\lR:\l
+ Enqueue_first_tmp\l
+ hdr.ipv4.dst_addr\l
+\lW:\l
+ ig_intr_md_for_dprsr.drop_ctl\l
+ Enqueue_first_tmp\l
+ Enqueue_tail_tmp\l
+ Dequeue_size_tmp\l
+ "];
+Enqueue_first_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_first_table\l\l
+W:\l
+ Enqueue_first_tmp\l
+ "];
+Dequeue_dec_size_table [ shape=record, style="filled", fillcolor=cornsilk, label="Dequeue_dec_size_table\l\l
+W:\l
+ Dequeue_size_tmp\l
+ "];
+Enqueue_inc_tail_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_inc_tail_table\l\l
+R:\l
+ Enqueue_first_tmp\l
+\lW:\l
+ Enqueue_tail_tmp\l
+ "];
+Enqueue_inc_size_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_inc_size_table\l\l
+ "];
+Enqueue_enqueue_table_two [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_enqueue_table_two\l\l
+R:\l
+ hdr.ipv4.dst_addr\l
+\l "];
+cond_2 [ shape=record, style="filled", fillcolor=cornsilk, label="Dequeue_size_tmp > 0\l\l
+ "];
+Dequeue_inc_head_table [ shape=record, style="filled", fillcolor=cornsilk, label="Dequeue_inc_head_table\l\l
+W:\l
+ Dequeue_head_tmp\l
+ "];
+Dequeue_dequeue_table_two [ shape=record, style="filled", fillcolor=cornsilk, label="Dequeue_dequeue_table_two\l\l
+R:\l
+ hdr.ipv4.dst_addr\l
+\l "];
+    PARSER -> dmac_0
+    dmac_0 -> Enqueue_first_table
+    PARSER -> dmac_0
+    dmac_0 -> Dequeue_dec_size_table
+    Enqueue_first_table -> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -> Enqueue_inc_size_table
+    Enqueue_inc_size_table -> Enqueue_enqueue_table_two
+    Enqueue_enqueue_table_two -> DEPARSER
+    Dequeue_dec_size_table -> cond_2
+    cond_2 -> Dequeue_inc_head_table
+    cond_2 -> DEPARSER
+    Dequeue_inc_head_table -> Dequeue_dequeue_table_two
+    Dequeue_dequeue_table_two -> DEPARSER
+}

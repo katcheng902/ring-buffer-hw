@@ -1,0 +1,1161 @@
+{
+  "graphs" : [
+    {
+      "metadata" : {
+        "gress" : "ingress",
+        "description" : "Before Table Placement Round 1",
+        "placement_complete" : false
+      },
+      "nodes" : [
+        {
+          "id" : "0",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.dmac",
+                "table_type" : "match",
+                "match_type" : "exact"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "1",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.left_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "lefts",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "2",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.first_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "firsts",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "3",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.inc_tail_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "tails",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 1,
+            "dep_chain" : 1
+          }
+        },
+        {
+          "id" : "4",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.inc_size_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "sizes",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "5",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.enqueue_table",
+                "table_type" : "match",
+                "match_type" : "hash_action"
+              },
+              {
+                "name" : "ring_buffers",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 2,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "6",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.dec_size_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "sizes",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "7",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "cond-2",
+                "table_type" : "condition",
+                "condition" : "Dequeue_size_tmp > 0"
+              }
+            ],
+            "min_stage" : 1,
+            "dep_chain" : 1
+          }
+        },
+        {
+          "id" : "8",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.inc_head_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "heads",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 1,
+            "dep_chain" : 1
+          }
+        },
+        {
+          "id" : "9",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.dequeue_table",
+                "table_type" : "match",
+                "match_type" : "hash_action"
+              },
+              {
+                "name" : "ring_buffers",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 2,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "10",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SINK",
+                "table_type" : "condition",
+                "condition" : "<null>"
+              }
+            ],
+            "min_stage" : -1,
+            "dep_chain" : -1
+          }
+        }
+      ],
+      "edges" : [
+        {
+          "id" : "0",
+          "source" : "0",
+          "target" : "1",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "1",
+          "source" : "0",
+          "target" : "2",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "2",
+          "source" : "0",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "3",
+          "source" : "0",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "4",
+          "source" : "0",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "5",
+          "source" : "0",
+          "target" : "6",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "6",
+          "source" : "0",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "7",
+          "source" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "condition",
+            "condition_value" : true,
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "8",
+          "source" : "7",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "condition",
+            "condition_value" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "9",
+          "source" : "2",
+          "target" : "3",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_first_tmp",
+                "start_bit" : 0,
+                "width" : 1
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "10",
+          "source" : "3",
+          "target" : "5",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_tail_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "11",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "12",
+          "source" : "8",
+          "target" : "9",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_head_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "13",
+          "source" : "3",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_tail_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "14",
+          "source" : "2",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_first_tmp",
+                "start_bit" : 0,
+                "width" : 1
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "15",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_size_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "16",
+          "source" : "8",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_head_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "17",
+          "source" : "0",
+          "target" : "1",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "18",
+          "source" : "0",
+          "target" : "6",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "19",
+          "source" : "1",
+          "target" : "2",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "20",
+          "source" : "2",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "21",
+          "source" : "3",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "22",
+          "source" : "4",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "23",
+          "source" : "5",
+          "target" : "10",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "24",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "25",
+          "source" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "condition",
+            "condition_value" : true,
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "26",
+          "source" : "7",
+          "target" : "10",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "condition",
+            "condition_value" : false,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "27",
+          "source" : "8",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "28",
+          "source" : "9",
+          "target" : "10",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        }
+      ]
+    },
+    {
+      "metadata" : {
+        "gress" : "ingress",
+        "description" : "After Table Placement Round 1",
+        "placement_complete" : true
+      },
+      "nodes" : [
+        {
+          "id" : "0",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 0,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.dmac",
+                "table_type" : "match",
+                "match_type" : "exact"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "1",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 1,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.first_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "firsts",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Enqueue_first_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "2",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 3,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.inc_size_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "sizes",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Enqueue_inc_size_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "3",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 4,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.left_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "lefts",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Enqueue_left_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "4",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 0,
+              "stage_number" : 1
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.inc_tail_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "tails",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Enqueue_inc_tail_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 1,
+            "dep_chain" : 1
+          }
+        },
+        {
+          "id" : "5",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 1,
+              "stage_number" : 2
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.enqueue_table",
+                "table_type" : "match",
+                "match_type" : "hash_action"
+              },
+              {
+                "name" : "ring_buffers",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 2,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "6",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 2,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.dec_size_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "sizes",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Dequeue_dec_size_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "7",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 1,
+              "stage_number" : 1
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.inc_head_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "heads",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Dequeue_inc_head_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 1,
+            "dep_chain" : 1
+          }
+        },
+        {
+          "id" : "8",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 0,
+              "stage_number" : 2
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.dequeue_table",
+                "table_type" : "match",
+                "match_type" : "hash_action"
+              },
+              {
+                "name" : "ring_buffers",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 2,
+            "dep_chain" : 0
+          }
+        },
+        {
+          "id" : "9",
+          "metadata" : {
+            "tables" : [
+              {
+                "name" : "SINK",
+                "table_type" : "condition",
+                "condition" : "<null>"
+              }
+            ],
+            "min_stage" : -1,
+            "dep_chain" : -1
+          }
+        }
+      ],
+      "edges" : [
+        {
+          "id" : "0",
+          "source" : "0",
+          "target" : "1",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "1",
+          "source" : "0",
+          "target" : "2",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "2",
+          "source" : "0",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "3",
+          "source" : "0",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "4",
+          "source" : "0",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "5",
+          "source" : "0",
+          "target" : "6",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "6",
+          "source" : "0",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "7",
+          "source" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "8",
+          "source" : "1",
+          "target" : "4",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_first_tmp",
+                "start_bit" : 0,
+                "width" : 1
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "9",
+          "source" : "4",
+          "target" : "5",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_tail_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "10",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "11",
+          "source" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "match",
+            "sub_type" : "ixbar_read",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_head_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "12",
+          "source" : "4",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_tail_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "13",
+          "source" : "1",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_first_tmp",
+                "start_bit" : 0,
+                "width" : 1
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "14",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_size_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "15",
+          "source" : "0",
+          "target" : "1",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "drop",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "16",
+          "source" : "0",
+          "target" : "6",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "17",
+          "source" : "1",
+          "target" : "2",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "18",
+          "source" : "2",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "19",
+          "source" : "3",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "20",
+          "source" : "4",
+          "target" : "5",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "21",
+          "source" : "5",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "22",
+          "source" : "6",
+          "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "23",
+          "source" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "24",
+          "source" : "7",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "condition",
+            "condition_value" : false,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "25",
+          "source" : "8",
+          "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        }
+      ]
+    }
+  ],
+  "schema_version" : "1.0.1"
+}

@@ -1,0 +1,583 @@
+{
+    "build_date": "Mon Jul 25 22:05:33 2022", 
+    "program_name": "opt_buffers", 
+    "run_id": "89d8164a6d3259e2", 
+    "compiler_version": "9.8.0 (989b4bf)", 
+    "schema_version": "1.0.0", 
+    "tables": [
+        {
+            "name": "SwitchIngress.Dequeue.dec_size_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Dequeue.dec_size", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Dequeue.dequeue_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 1, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Dequeue.dequeue_action", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 2, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": []
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Dequeue.inc_head_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Dequeue.inc_head", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 1, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Enqueue.enqueue_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 1, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Enqueue.enqueue_action", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 2, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": []
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Enqueue.first_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Enqueue.first_action", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 128, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Enqueue.inc_size_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Enqueue.inc_size", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Enqueue.inc_tail_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Enqueue.inc_tail", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 1, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Enqueue.left_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Enqueue.read_left", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.dmac", 
+            "gress": "ingress", 
+            "lookup_types": [
+                "exact"
+            ], 
+            "entries_requested": 256, 
+            "entries_allocated": 4096, 
+            "match_fields": [
+                {
+                    "name": "hdr.ethernet.src_addr", 
+                    "start_bit": 0, 
+                    "bit_width": 48, 
+                    "lookup_type": "exact"
+                }
+            ], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.drop", 
+                    "parameters": []
+                }, 
+                {
+                    "action_name": "NoAction", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 4, 
+                            "entries_requested": 256, 
+                            "entries_allocated": 4096, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 52, 
+                            "entry_bit_width_allocated": 43, 
+                            "ideal_entries_per_table_word": 8, 
+                            "ideal_table_word_bit_width": 384
+                        }
+                    ], 
+                    "overhead_fields": [
+                        {
+                            "name": "version/valid", 
+                            "bit_width": 4
+                        }
+                    ], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": [
+                                    {
+                                        "name": "action", 
+                                        "bit_width": 1, 
+                                        "start_bit": 0, 
+                                        "memory_start_bit": 0
+                                    }, 
+                                    {
+                                        "name": "version", 
+                                        "bit_width": 4, 
+                                        "start_bit": 0, 
+                                        "memory_start_bit": 112
+                                    }, 
+                                    {
+                                        "name": "hdr.ethernet.src_addr", 
+                                        "bit_width": 6, 
+                                        "start_bit": 42, 
+                                        "memory_start_bit": 66
+                                    }, 
+                                    {
+                                        "name": "hdr.ethernet.src_addr", 
+                                        "bit_width": 8, 
+                                        "start_bit": 0, 
+                                        "memory_start_bit": 32
+                                    }, 
+                                    {
+                                        "name": "hdr.ethernet.src_addr", 
+                                        "bit_width": 8, 
+                                        "start_bit": 8, 
+                                        "memory_start_bit": 40
+                                    }, 
+                                    {
+                                        "name": "hdr.ethernet.src_addr", 
+                                        "bit_width": 8, 
+                                        "start_bit": 16, 
+                                        "memory_start_bit": 48
+                                    }, 
+                                    {
+                                        "name": "hdr.ethernet.src_addr", 
+                                        "bit_width": 8, 
+                                        "start_bit": 24, 
+                                        "memory_start_bit": 56
+                                    }
+                                ]
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngressParser.$PORT_METADATA", 
+            "gress": "ingress", 
+            "lookup_types": [
+                "exact"
+            ], 
+            "entries_requested": 288, 
+            "entries_allocated": 288, 
+            "match_fields": [
+                {
+                    "name": "ig_intr_md.ingress_port", 
+                    "start_bit": 0, 
+                    "bit_width": 9, 
+                    "lookup_type": "exact"
+                }
+            ], 
+            "action_parameters": [
+                {
+                    "action_name": "set_port_metadata", 
+                    "parameters": [
+                        {
+                            "name": "ig_intr_md", 
+                            "bit_width": 64
+                        }
+                    ]
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": -1, 
+                    "memories": [
+                        {
+                            "memory_type": "buf", 
+                            "table_word_width": 64, 
+                            "memory_word_width": 64, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 1, 
+                            "entries_requested": 288, 
+                            "entries_allocated": 288, 
+                            "imm_bit_width_in_overhead_requested": 64, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 9, 
+                            "entry_bit_width_allocated": 64, 
+                            "ideal_entries_per_table_word": 1, 
+                            "ideal_table_word_bit_width": 128
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": [
+                                    {
+                                        "name": "ig_intr_md", 
+                                        "bit_width": 64, 
+                                        "start_bit": 0, 
+                                        "memory_start_bit": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }
+    ]
+}

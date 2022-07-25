@@ -1,0 +1,45 @@
+Parser Characterization Report:
+Number of states on ingress: 4
+
+Number of matches on ingress: 5
+
+Longest path (4 states) on ingress:
+    $entry_point
+    start
+    TofinoIngressParser_parse_port_metadata
+    TofinoIngressParser_parse_port_metadata.$split_0
+
+Shortest path (2 states) on ingress:
+    $entry_point
+    start
+
+Timing is met for min-sized packet (73 B) running at 100 Gbps
+
+Extractor usage:
++--------------------------------------------------+------------+-------+--------+--------+---------------------------+---------+
+|State                                             |Match       |8-bit  |16-bit  |32-bit  |Total Extractors (16-bit)  |Other    |
++--------------------------------------------------+------------+-------+--------+--------+---------------------------+---------+
+|$entry_point                                      |*           |0      |0       |0       |0                          |         |
+|start                                             |0b1*******  |0      |0       |0       |0                          |         |
+|-                                                 |0b0*******  |0      |0       |0       |0                          |         |
+|TofinoIngressParser_parse_port_metadata           |*           |1      |1       |1       |4                          |clot 0   |
+|TofinoIngressParser_parse_port_metadata.$split_0  |*           |0      |0       |0       |0                          |clot 0   |
++--------------------------------------------------+------------+-------+--------+--------+---------------------------+---------+
+Number of states on egress: 1
+
+Number of matches on egress: 1
+
+Longest path (1 states) on egress:
+    $entry_point.start
+
+Shortest path (1 states) on egress:
+    $entry_point.start
+
+Timing is met for min-sized packet (73 B) running at 100 Gbps
+
+Extractor usage:
++--------------------+-------+-------+--------+--------+---------------------------+-------+
+|State               |Match  |8-bit  |16-bit  |32-bit  |Total Extractors (16-bit)  |Other  |
++--------------------+-------+-------+--------+--------+---------------------------+-------+
+|$entry_point.start  |*      |2      |0       |0       |2                          |       |
++--------------------+-------+-------+--------+--------+---------------------------+-------+

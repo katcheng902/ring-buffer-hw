@@ -1,0 +1,6 @@
+# Hashes of file build rules.
+3e83f30fcc4c31c9cbdbadbbdc9457d6 CMakeFiles/opt_buffers-tofino
+d8c76ca755c4c39ae85c047638d73260 multiple_buffers/tofino/bf-rt.json
+487f3e71b66708cbc2272aa52cc6098b opt_buffers/tofino/bf-rt.json
+be547f8ee0c4235e2c5a03aa2b673988 ring_buffer/tofino/bf-rt.json
+770ab85d37235ac8cfe4a47a712124ec ring_buffer/tofino2/bf-rt.json

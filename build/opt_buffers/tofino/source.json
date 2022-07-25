@@ -1,0 +1,1134 @@
+{
+    "schema_version": "1.0.0",
+    "symbols": [
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 229,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.dec_size_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 219,
+                "column": 55
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 241,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.inc_head_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 233,
+                "column": 55
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 252,
+                    "column": 15
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.read_buffer_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 245,
+                "column": 62
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 153,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 144,
+                "column": 56
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 140,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 128,
+                "column": 56
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 112,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.read_left_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 105,
+                "column": 56
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 124,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.set_first_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 116,
+                "column": 55
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 164,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.write_buffer_reg_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 157,
+                "column": 63
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 116,
+                    "column": 47
+                }
+            ],
+            "symbol_name": "firsts",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 93,
+                "column": 33
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 233,
+                    "column": 48
+                }
+            ],
+            "symbol_name": "heads",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 90,
+                "column": 35
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 105,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "lefts",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 89,
+                "column": 35
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 336,
+                    "column": 8
+                }
+            ],
+            "symbol_name": "pipe",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 334,
+                "column": 33
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 157,
+                    "column": 49
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 245,
+                    "column": 48
+                }
+            ],
+            "symbol_name": "ring_buffers",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 95,
+                "column": 42
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 144,
+                    "column": 49
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 219,
+                    "column": 48
+                }
+            ],
+            "symbol_name": "sizes",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 92,
+                "column": 34
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 128,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "tails",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 91,
+                "column": 34
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 241,
+                    "column": 2
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 252,
+                    "column": 46
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.head_tmp",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 216,
+                "column": 5
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 229,
+                    "column": 2
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 279,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.size_tmp",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 215,
+                "column": 5
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 124,
+                    "column": 2
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 130,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_tmp",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 99,
+                "column": 6
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 102,
+                    "column": 14
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 135,
+                    "column": 15
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.left_tmp",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 102,
+                "column": 6
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 140,
+                    "column": 2
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 164,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.tail_tmp",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 100,
+                "column": 6
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 309,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 312,
+                    "column": 26
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 316,
+                    "column": 24
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 324,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "NoAction",
+            "declaration": {
+                "file": "/root/bf-sde-9.8.0/install/share/p4c/p4include/core.p4",
+                "line": 70,
+                "column": 8
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 258,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 260,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.dec_size",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 228,
+                "column": 12
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 272,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 274,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.dequeue_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 251,
+                "column": 12
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 265,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 267,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.inc_head",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 240,
+                "column": 12
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 199,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 201,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.enqueue_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 163,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 178,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 180,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_action",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 123,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 192,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 194,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 152,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 185,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 187,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 139,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 171,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 173,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.read_left",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 111,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 308,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 315,
+                    "column": 24
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 323,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.drop",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 295,
+                "column": 12
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 278,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.dec_size_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 256,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 281,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.dequeue_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 270,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 280,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.Dequeue.inc_head_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 263,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 209,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.enqueue_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 197,
+                "column": 10
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 206,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 176,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 208,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 190,
+                "column": 10
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 207,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 183,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 205,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.left_table",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 169,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 322,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "SwitchIngress.dmac",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 300,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [],
+            "symbol_name": "tbl_opt_buffers102",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 102,
+                "column": 6
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 303,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ethernet.src_addr",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 288,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 323,
+                    "column": 30
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ipv4.dst_addr",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 288,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 296,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.ig_dprsr_md.drop_ctl",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 292,
+                "column": 57
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 107,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 118,
+                    "column": 7
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 135,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 221,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 235,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 247,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.rv",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 246,
+                "column": 44
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 107,
+                    "column": 11
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 118,
+                    "column": 12
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 119,
+                    "column": 7
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 130,
+                    "column": 31
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 131,
+                    "column": 3
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 133,
+                    "column": 3
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 133,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 135,
+                    "column": 11
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 146,
+                    "column": 10
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 147,
+                    "column": 3
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 147,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 159,
+                    "column": 6
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 221,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 222,
+                    "column": 10
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 223,
+                    "column": 3
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 223,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 235,
+                    "column": 11
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 236,
+                    "column": 13
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 236,
+                    "column": 19
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 247,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "SwitchIngress.val",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 246,
+                "column": 27
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 80,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ethernet",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 74,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 80,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.pkt",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 73,
+                "column": 20
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 56,
+                    "column": 21
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ethernet",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 45,
+                "column": 22
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 61,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 45,
+                "column": 22
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 62,
+                    "column": 20
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ipv4.dst_addr",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 45,
+                "column": 22
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 27,
+                    "column": 21
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.$valid",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 28,
+                    "column": 27
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.resubmit_flag",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 27,
+                    "column": 9
+                },
+                {
+                    "file": "include/util.p4",
+                    "line": 40,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 51,
+                    "column": 29
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 56,
+                    "column": 9
+                },
+                {
+                    "file": "opt_buffers.p4",
+                    "line": 61,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.pkt",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 44,
+                "column": 19
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-1",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 279,
+                "column": 2
+            },
+            "symbol_type": "IfStatement"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-2",
+            "declaration": {
+                "file": "opt_buffers.p4",
+                "line": 279,
+                "column": 2
+            },
+            "symbol_type": "IfStatement"
+        }
+    ],
+    "source_root": "/root/ring-buffer"
+}

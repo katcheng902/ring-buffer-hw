@@ -1,0 +1,21 @@
+Table allocation done 1 time(s), state = INITIAL
+Number of stages in table allocation: 3
+  Number of stages for ingress table allocation: 3
+  Number of stages for egress table allocation: 0
+Critical path length through the table dependency graph: 3
+Number of tables allocated: 9
++-------+--------------------------------------+
+|Stage  |Table Name                            |
++-------+--------------------------------------+
+|0      |SwitchIngress.dmac                    |
+|0      |SwitchIngress.Enqueue.first_table     |
+|0      |SwitchIngress.Dequeue.dec_size_table  |
+|0      |SwitchIngress.Enqueue.inc_size_table  |
+|0      |SwitchIngress.Enqueue.left_table      |
+|1      |SwitchIngress.Enqueue.inc_tail_table  |
+|1      |SwitchIngress.Dequeue.inc_head_table  |
+|2      |SwitchIngress.Dequeue.dequeue_table   |
+|2      |SwitchIngress.Enqueue.enqueue_table   |
+|1      |cond-2                                |
++-------+--------------------------------------+
+

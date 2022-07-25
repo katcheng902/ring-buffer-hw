@@ -1,0 +1,22 @@
+digraph table_deps {
+  splines=ortho; rankdir=LR;
+  label="Program: ring_buffer
+RunId: 1f645164d3e5f320
+";
+  labelloc=t; labeljust=l;
+  { "SwitchIngress.dmac"; "tbl_ring_buffer87"; "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Enqueue.inc_size_table"; }
+  { rank = same; "SwitchIngress.Enqueue.inc_tail_table"; }
+  { rank = same; "SwitchIngress.Enqueue.enqueue_table"; }
+   "SwitchIngress.dmac" -> "tbl_ring_buffer87" [ label= "",color=green ];
+   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.first_table" [ label= "",color=green ];
+   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=green ];
+   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_size_table" [ label= "",color=green ];
+   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.enqueue_table" [ label= "",color=green ];
+   "tbl_ring_buffer87" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table" [ label= "",color=gold ];
+  { rank=max;
+    subgraph cluster_legend { node [ shape=record; fontsize=10];
+      empty [label=<<table border="0" cellborder="0"><tr><td colspan="8">Edge colors</td></tr><tr><td><font color="gold">ixbar_read</font></td><td><font color="blue">action_read</font></td><td><font color="red">output</font></td><td><font color="navy">cont_conflict</font></td><td><font color="cyan">reduction_or_read</font></td><td><font color="cyan">reduction_or_output</font></td><td><font color="pink">anti_table_read</font></td><td><font color="pink">anti_next_action_read</font></td><td><font color="pink">anti_next_table_data</font></td><td><font color="pink">anti_next_table_control</font></td><td><font color="pink">anti_next_table_metadata</font></td><td><font color="black">exit</font></td><td><font color="green">control_action</font></td><td><font color="green">control_condition_true</font></td><td><font color="green">control_condition_false</font></td><td><font color="green">control_table_hit</font></td><td><font color="green">control_table_miss</font></td><td><font color="green">control_default_next_table</font></td><td><font color="green">control_exit</font></td></tr></table>>;]
+    }
+  }
+}

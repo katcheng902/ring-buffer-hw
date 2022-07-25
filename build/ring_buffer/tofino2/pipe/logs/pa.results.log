@@ -1,0 +1,59 @@
++---------------------------------------------------------------------+
+|  Log file: pa.results.log                                           |
+|  Compiler version: 9.8.0                                            |
+|  Created on: Tue Jul 19 16:52:34 2022                               |
+|  Run ID: 1f645164d3e5f320                                           |
++---------------------------------------------------------------------+
+
+Allocation state: Final Allocation
+----------------------------------------------------------------------------
+|       PHV Group        | Containers Used |  Bits Used  | Bits Available |
+| (container bit widths) |     (% used)    |   (% used)  |                |
+----------------------------------------------------------------------------
+|         0 (32)         |    2 (10.00%)   | 64 (10.00%) |      640       |
+|         1 (32)         |    0 (0.00%)    |  0 (0.00%)  |      640       |
+|         2 (32)         |    0 (0.00%)    |  0 (0.00%)  |      640       |
+|         3 (32)         |    0 (0.00%)    |  0 (0.00%)  |      640       |
+|    Total for 32 bit    |    2 (2.50%)    |  64 (2.50%) |      2560      |
+|                        |                 |             |                |
+|         4 (8)          |    3 (15.00%)   |  4 (2.50%)  |      160       |
+|         5 (8)          |    0 (0.00%)    |  0 (0.00%)  |      160       |
+|         6 (8)          |    0 (0.00%)    |  0 (0.00%)  |      160       |
+|         7 (8)          |    0 (0.00%)    |  0 (0.00%)  |      160       |
+|    Total for 8 bit     |    3 (3.75%)    |  4 (0.62%)  |      640       |
+|                        |                 |             |                |
+|         8 (16)         |    1 (5.00%)    |  16 (5.00%) |      320       |
+|         9 (16)         |    0 (0.00%)    |  0 (0.00%)  |      320       |
+|        10 (16)         |    0 (0.00%)    |  0 (0.00%)  |      320       |
+|        11 (16)         |    0 (0.00%)    |  0 (0.00%)  |      320       |
+|        12 (16)         |    0 (0.00%)    |  0 (0.00%)  |      320       |
+|        13 (16)         |    0 (0.00%)    |  0 (0.00%)  |      320       |
+|    Total for 16 bit    |    1 (0.83%)    |  16 (0.83%) |      1920      |
+|                        |                 |             |                |
+|     Overall total      |    6 (2.14%)    |  84 (1.64%) |      5120      |
+----------------------------------------------------------------------------
+
+--------------------------------------------
+PHV Allocation
+--------------------------------------------
+
+Allocations in Group 0 32 bits
+  32-bit PHV 0n (ingress): phv0[31:0] = Enqueue_tail_tmp[31:0]
+  32-bit PHV 12m (ingress): phv12[31:0] = hdr.ethernet.dst_addr[31:0] (deparsed)
+  >> 2 in ingress and 0 in egress
+
+Allocations in Group 4 8 bits
+  8-bit PHV 80n (egress): phv80[0:0] = eg_intr_md_for_dprsr.mirror_io_select.$valid[0:0] (deparsed)
+  8-bit PHV 84n (ingress): phv84[1:1] = Enqueue_first_tmp[0:0]
+  8-bit PHV 84n (ingress): phv84[0:0] = hdr.ethernet.$valid[0:0] (deparsed)
+  8-bit PHV 92m (egress): phv92[0:0] = eg_intr_md_for_dprsr.mirror_io_select[0:0] (deparsed)
+  >> 1 in ingress and 2 in egress
+
+Allocations in Group 8 16 bits
+  16-bit PHV 172m (ingress): phv172[15:0] = hdr.ethernet.dst_addr[47:32] (deparsed)
+  >> 1 in ingress and 0 in egress
+
+
+Final POV layout (ingress):
+
+Final POV layout (egress):

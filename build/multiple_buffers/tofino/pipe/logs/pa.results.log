@@ -1,0 +1,85 @@
++---------------------------------------------------------------------+
+|  Log file: pa.results.log                                           |
+|  Compiler version: 9.8.0                                            |
+|  Created on: Mon Jul 25 21:44:59 2022                               |
+|  Run ID: f770ce0ff0f1ebcb                                           |
++---------------------------------------------------------------------+
+
+Allocation state: Final Allocation
+-----------------------------------------------------------------------------
+|       PHV Group        | Containers Used |  Bits Used   | Bits Available |
+| (container bit widths) |     (% used)    |   (% used)   |                |
+-----------------------------------------------------------------------------
+|         0 (32)         |    4 (25.00%)   | 128 (25.00%) |      512       |
+|         1 (32)         |    0 (0.00%)    |  0 (0.00%)   |      512       |
+|         2 (32)         |    0 (0.00%)    |  0 (0.00%)   |      512       |
+|         3 (32)         |    0 (0.00%)    |  0 (0.00%)   |      512       |
+|    Total for 32 bit    |    4 (6.25%)    | 128 (6.25%)  |      2048      |
+|                        |                 |              |                |
+|         4 (8)          |    2 (12.50%)   |  4 (3.12%)   |      128       |
+|         5 (8)          |    0 (0.00%)    |  0 (0.00%)   |      128       |
+|         6 (8)          |    0 (0.00%)    |  0 (0.00%)   |      128       |
+|         7 (8)          |    0 (0.00%)    |  0 (0.00%)   |      128       |
+|    Total for 8 bit     |    2 (3.12%)    |  4 (0.78%)   |      512       |
+|                        |                 |              |                |
+|         8 (16)         |    1 (6.25%)    |  16 (6.25%)  |      256       |
+|         9 (16)         |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|        10 (16)         |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|        11 (16)         |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|        12 (16)         |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|        13 (16)         |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|    Total for 16 bit    |    1 (1.04%)    |  16 (1.04%)  |      1536      |
+|                        |                 |              |                |
+|       14 (32) T        |    1 (6.25%)    |  32 (6.25%)  |      512       |
+|       15 (32) T        |    0 (0.00%)    |  0 (0.00%)   |      512       |
+|    Total for 32 bit    |    1 (3.12%)    |  32 (3.12%)  |      1024      |
+|                        |                 |              |                |
+|        16 (8) T        |    0 (0.00%)    |  0 (0.00%)   |      128       |
+|        17 (8) T        |    0 (0.00%)    |  0 (0.00%)   |      128       |
+|    Total for 8 bit     |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|                        |                 |              |                |
+|       18 (16) T        |    2 (12.50%)   | 32 (12.50%)  |      256       |
+|       19 (16) T        |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|       20 (16) T        |    0 (0.00%)    |  0 (0.00%)   |      256       |
+|    Total for 16 bit    |    2 (4.17%)    |  32 (4.17%)  |      768       |
+|                        |                 |              |                |
+|       MAU total        |    7 (3.12%)    | 148 (3.61%)  |      4096      |
+|     Tagalong total     |    3 (2.68%)    |  64 (3.12%)  |      2048      |
+|     Overall total      |    10 (2.98%)   | 212 (3.45%)  |      6144      |
+-----------------------------------------------------------------------------
+
+--------------------------------------------
+PHV Allocation
+--------------------------------------------
+
+Allocations in Group 0 32 bits
+  32-bit PHV 0 (ingress): phv0[31:0] = hdr.ethernet.src_addr[31:0] (deparsed)
+  32-bit PHV 1 (ingress): phv1[31:0] = hdr.ipv4.dst_addr[31:0]
+  32-bit PHV 2 (ingress): phv2[31:0] = Enqueue_tail_tmp[31:0]
+  32-bit PHV 2 (ingress): phv2[31:0] = Dequeue_size_tmp[31:0]
+  32-bit PHV 3 (ingress): phv3[31:0] = Dequeue_head_tmp[31:0]
+  32-bit PHV 3 (ingress): phv3[0:0] = Enqueue_first_tmp[0:0]
+  >> 4 in ingress and 0 in egress
+
+Allocations in Group 4 8 bits
+  8-bit PHV 64 (ingress): phv64[2:0] = ig_intr_md_for_dprsr.drop_ctl[2:0] (deparsed)
+  8-bit PHV 65 (ingress): phv65[0:0] = hdr.ethernet.$valid[0:0] (deparsed)
+  >> 2 in ingress and 0 in egress
+
+Allocations in Group 8 16 bits
+  16-bit PHV 128 (ingress): phv128[15:0] = hdr.ethernet.src_addr[47:32] (deparsed)
+  >> 1 in ingress and 0 in egress
+
+Allocations in Group 14 32 bits (tagalong)
+  32-bit PHV 256 (ingress): phv256[31:0] = hdr.ethernet.dst_addr[31:0] (tagalong capable) (deparsed)
+  >> 1 in ingress and 0 in egress
+
+Allocations in Group 18 16 bits (tagalong)
+  16-bit PHV 320 (ingress): phv320[15:0] = hdr.ethernet.ether_type[15:0] (tagalong capable) (deparsed)
+  16-bit PHV 321 (ingress): phv321[15:0] = hdr.ethernet.dst_addr[47:32] (tagalong capable) (deparsed)
+  >> 2 in ingress and 0 in egress
+
+
+Final POV layout (ingress):
+
+Final POV layout (egress):

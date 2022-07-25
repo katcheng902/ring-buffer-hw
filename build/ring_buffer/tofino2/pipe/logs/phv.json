@@ -1,0 +1,2360 @@
+{
+    "build_date": "Tue Jul 19 16:52:34 2022",
+    "compiler_version": "9.8.0",
+    "constraint_reasons": [
+        "Solitary (ALU): This field cannot be packed with anything else due to ALU operation.",
+        "Solitary (Intrinsic): This field cannot be packed with anything else due to hardware requirement.",
+        "Solitary (Checksum): This field cannot be packed with anything else because it is used as a checksum calculation result.",
+        "Solitary (Last byte): This field cannot be packed with anything else in its non-full last byte.",
+        "Solitary (Mirror): This field cannot be packed with any field that is mirrored.",
+        "Solitary (Container size): This field was constrained with pa_container_size pragma in a way that requires it to be solitary.",
+        "Solitary (Pragma): This field was constrained by pa_solitary pragma.",
+        "Solitary (Except same digest): This field cannot be packed with anything else that does not belong to the same digest field list.",
+        "Different Container: This field cannot be packed into same container with listed fields or their slices.",
+        "MAU Group: This field (or its particular slices) must be in the same MAU group as other fields or slices.",
+        "No Split: This field must be entirely allocated to a single PHV container. Fields that are shifted or are the destination of arithmetic operation have this constraint.",
+        "Container Size: Slices of this field can only be placed into containers of specific sizes. Container size is in bits.",
+        "Alignment: Field has to be placed at a given offset within a container.",
+        "No Overlay: Field cannot be overlayed with any other field.",
+        "Exact Container: If any field slice in a PHV container has this constraint, then the container must be completely filled, and if it contains more than one slice, all slices must be layed contiguously (in order). All header fields have this constraint.",
+        "Equivalent Alignment: Each field in this group must be placed starting at the same least-significant bit in their respective PHV containers. This constraint implies MAU Group.",
+        "No Holes: Field can either be located entirely on a single container or be splitted across multiple containers as long as all of the slices fit with no holes (concatenating the containers would reconstruct the field). This constraint relaxes Exact Containers by allowing to split the field.",
+        "Same Container Group: All slices of this field must be present in the same MAU group. This constraint does not imply MAU group, but it makes it stricter if it is present."
+    ],
+    "containers": [
+        {
+            "bit_width": 16,
+            "container_type": "mocha",
+            "gress": "ingress",
+            "phv_deparser_group_number": 48,
+            "phv_mau_group_number": 8,
+            "phv_number": 172,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.dst_addr",
+                        "slice_info": {
+                            "lsb": 32,
+                            "msb": 47
+                        }
+                    },
+                    "phv_number": 172,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pkt",
+                                "type": "deparser"
+                            }
+                        },
+                        {
+                            "location": {
+                                "detail": "xbar",
+                                "stage": 0,
+                                "type": "mau",
+                                "table": "SwitchIngress.dmac"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 15
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 32,
+            "container_type": "mocha",
+            "gress": "ingress",
+            "phv_deparser_group_number": 0,
+            "phv_mau_group_number": 0,
+            "phv_number": 12,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.dst_addr",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 12,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pkt",
+                                "type": "deparser"
+                            }
+                        },
+                        {
+                            "location": {
+                                "detail": "xbar",
+                                "stage": 0,
+                                "type": "mau",
+                                "table": "SwitchIngress.dmac"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 32,
+            "container_type": "normal",
+            "gress": "ingress",
+            "phv_deparser_group_number": 0,
+            "phv_mau_group_number": 0,
+            "phv_number": 0,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_tail_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 0,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.inc_tail",
+                                "table": "SwitchIngress.Enqueue.inc_tail_table"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 8,
+            "container_type": "normal",
+            "gress": "ingress",
+            "phv_deparser_group_number": 33,
+            "phv_mau_group_number": 4,
+            "phv_number": 84,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_first_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 84,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 1,
+                        "msb": 1
+                    },
+                    "writes": []
+                },
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.$valid",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 84,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pov",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 8,
+            "container_type": "mocha",
+            "gress": "egress",
+            "phv_deparser_group_number": 32,
+            "phv_mau_group_number": 4,
+            "phv_number": 92,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "eg_intr_md_for_dprsr.mirror_io_select",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 92,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "imeta",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "$entry_point.start",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 8,
+            "container_type": "normal",
+            "gress": "egress",
+            "phv_deparser_group_number": 32,
+            "phv_mau_group_number": 4,
+            "phv_number": 80,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 80,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pov",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "$entry_point.start",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "fields": [
+        {
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "IntConstraint",
+                            "value": 0,
+                            "id": 12,
+                            "name": "Alignment",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 40
+                            }
+                        },
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 14,
+                            "name": "ExactContainer",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 40
+                            }
+                        }
+                    ]
+                }
+            ],
+            "field_info": {
+                "bit_width": 48,
+                "field_class": "pkt",
+                "field_name": "hdr.ethernet.dst_addr",
+                "gress": "ingress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "hdr.ethernet.dst_addr",
+                    "slice_info": {
+                        "lsb": 32,
+                        "msb": 47
+                    }
+                },
+                {
+                    "field_name": "hdr.ethernet.dst_addr",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.dst_addr",
+                        "slice_info": {
+                            "lsb": 32,
+                            "msb": 47
+                        }
+                    },
+                    "phv_number": 172,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pkt",
+                                "type": "deparser"
+                            }
+                        },
+                        {
+                            "location": {
+                                "detail": "xbar",
+                                "stage": 0,
+                                "type": "mau",
+                                "table": "SwitchIngress.dmac"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 15
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.dst_addr",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 12,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pkt",
+                                "type": "deparser"
+                            }
+                        },
+                        {
+                            "location": {
+                                "detail": "xbar",
+                                "stage": 0,
+                                "type": "mau",
+                                "table": "SwitchIngress.dmac"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "hdr.ethernet"
+        },
+        {
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "IntConstraint",
+                            "value": 0,
+                            "id": 12,
+                            "name": "Alignment",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 41
+                            }
+                        },
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 14,
+                            "name": "ExactContainer",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 41
+                            }
+                        }
+                    ]
+                }
+            ],
+            "field_info": {
+                "bit_width": 48,
+                "field_class": "pkt",
+                "field_name": "hdr.ethernet.src_addr",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "allocated",
+            "structure": "hdr.ethernet"
+        },
+        {
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "IntConstraint",
+                            "value": 0,
+                            "id": 12,
+                            "name": "Alignment",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 42
+                            }
+                        },
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 14,
+                            "name": "ExactContainer",
+                            "source": {
+                                "file": "/root/ring-buffer/include/headers.p4",
+                                "line": 42
+                            }
+                        }
+                    ]
+                }
+            ],
+            "field_info": {
+                "bit_width": 16,
+                "field_class": "pkt",
+                "field_name": "hdr.ethernet.ether_type",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "allocated",
+            "structure": "hdr.ethernet"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "pov",
+                "field_name": "hdr.ethernet.$valid",
+                "gress": "ingress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "hdr.ethernet.$valid",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "hdr.ethernet.$valid",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 84,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pov",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "TofinoIngressParser_parse_port_metadata",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "hdr.ethernet"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 32,
+                "field_class": "meta",
+                "field_name": "Enqueue_tail_tmp",
+                "gress": "ingress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "Enqueue_tail_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_tail_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 0,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.inc_tail",
+                                "table": "SwitchIngress.Enqueue.inc_tail_table"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "Enqueue_tail_tmp"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "Enqueue_first_tmp",
+                "gress": "ingress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "Enqueue_first_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_first_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 84,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 1,
+                        "msb": 1
+                    },
+                    "writes": []
+                }
+            ],
+            "status": "allocated",
+            "structure": "Enqueue_first_tmp"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 3,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.drop_ctl",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 4,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_type",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.coalesce_flush",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 7,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.coalesce_length",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 10,
+                            "name": "NoSplit",
+                            "source": {
+                                "file": "/root/bf-sde-9.8.0/install/share/p4c/p4include/tofino2_base.p4",
+                                "line": 353
+                            }
+                        }
+                    ]
+                }
+            ],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_io_select",
+                "gress": "egress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_io_select",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "eg_intr_md_for_dprsr.mirror_io_select",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 92,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "imeta",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "$entry_point.start",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 13,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_hash",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 3,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_ingress_cos",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_deflect_on_drop",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_multicast_ctrl",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 9,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_egress_port",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 7,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_qid",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 8,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_coalesce_length",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 32,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.adv_flow_ctl",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 14,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mtu_trunc_len",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "imeta",
+                "field_name": "eg_intr_md_for_dprsr.mtu_trunc_err_f",
+                "gress": "egress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "eg_intr_md_for_dprsr"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid",
+                "gress": "egress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 0
+                        }
+                    },
+                    "phv_number": 80,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "pov",
+                                "type": "deparser"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "ibuf",
+                                "state": "$entry_point.start",
+                                "type": "parser"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "eg_intr_md_for_dprsr.mirror_io_select"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 10,
+                "field_class": "meta",
+                "field_name": "first$index",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "first$index"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "first$ena",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "first$ena"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 10,
+                "field_class": "meta",
+                "field_name": "tail$index",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "tail$index"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "tail$ena",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "tail$ena"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 10,
+                "field_class": "meta",
+                "field_name": "buffer_size$index",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "buffer_size$index"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "buffer_size$ena",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "buffer_size$ena"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 10,
+                "field_class": "meta",
+                "field_name": "ring_buffer$index",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "ring_buffer$index"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "ring_buffer$ena",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "ring_buffer$ena"
+        }
+    ],
+    "nStages": 20,
+    "pov_structure": [],
+    "program_name": "ring_buffer.p4",
+    "resources": [
+        {
+            "addresses": [
+                96,
+                97,
+                98,
+                99
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                116,
+                117,
+                118,
+                119
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                136,
+                137,
+                138,
+                139
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                156,
+                157,
+                158,
+                159
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                176,
+                177,
+                178,
+                179
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                196,
+                197,
+                198,
+                199
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                216,
+                217,
+                218,
+                219
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                236,
+                237,
+                238,
+                239
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                256,
+                257,
+                258,
+                259
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                276,
+                277,
+                278,
+                279
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                16,
+                17,
+                18,
+                19
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                36,
+                37,
+                38,
+                39
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                56,
+                57,
+                58,
+                59
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                76,
+                77,
+                78,
+                79
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                92,
+                93,
+                94,
+                95
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                112,
+                113,
+                114,
+                115
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                132,
+                133,
+                134,
+                135
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                152,
+                153,
+                154,
+                155
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                172,
+                173,
+                174,
+                175
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                192,
+                193,
+                194,
+                195
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                212,
+                213,
+                214,
+                215
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                232,
+                233,
+                234,
+                235
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                252,
+                253,
+                254,
+                255
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                272,
+                273,
+                274,
+                275
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                12,
+                13,
+                14,
+                15
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                32,
+                33,
+                34,
+                35
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                52,
+                53,
+                54,
+                55
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                72,
+                73,
+                74,
+                75
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                110,
+                111
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                120,
+                121,
+                122,
+                123,
+                124,
+                125,
+                126,
+                127,
+                128,
+                129,
+                130,
+                131
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150,
+                151
+            ],
+            "bit_width": 8,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                160,
+                161,
+                162,
+                163,
+                164,
+                165,
+                166,
+                167,
+                168,
+                169,
+                170,
+                171
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                180,
+                181,
+                182,
+                183,
+                184,
+                185,
+                186,
+                187,
+                188,
+                189,
+                190,
+                191
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                200,
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                209,
+                210,
+                211
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                220,
+                221,
+                222,
+                223,
+                224,
+                225,
+                226,
+                227,
+                228,
+                229,
+                230,
+                231
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                240,
+                241,
+                242,
+                243,
+                244,
+                245,
+                246,
+                247,
+                248,
+                249,
+                250,
+                251
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                260,
+                261,
+                262,
+                263,
+                264,
+                265,
+                266,
+                267,
+                268,
+                269,
+                270,
+                271
+            ],
+            "bit_width": 16,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71
+            ],
+            "bit_width": 32,
+            "group_type": "mau",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                76,
+                77,
+                78,
+                79
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                92,
+                93,
+                94,
+                95
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                108,
+                109,
+                110,
+                111
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                124,
+                125,
+                126,
+                127
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                140,
+                141,
+                142,
+                143
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                156,
+                157,
+                158,
+                159
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                172,
+                173,
+                174,
+                175
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                188,
+                189,
+                190,
+                191
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                204,
+                205,
+                206,
+                207
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                220,
+                221,
+                222,
+                223
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                12,
+                13,
+                14,
+                15
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                28,
+                29,
+                30,
+                31
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                44,
+                45,
+                46,
+                47
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                60,
+                61,
+                62,
+                63
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 4
+        },
+        {
+            "addresses": [
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                120,
+                121,
+                122,
+                123
+            ],
+            "bit_width": 8,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                128,
+                129,
+                130,
+                131,
+                132,
+                133,
+                134,
+                135,
+                136,
+                137,
+                138,
+                139
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150,
+                151,
+                152,
+                153,
+                154,
+                155
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                160,
+                161,
+                162,
+                163,
+                164,
+                165,
+                166,
+                167,
+                168,
+                169,
+                170,
+                171
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                176,
+                177,
+                178,
+                179,
+                180,
+                181,
+                182,
+                183,
+                184,
+                185,
+                186,
+                187
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                192,
+                193,
+                194,
+                195,
+                196,
+                197,
+                198,
+                199,
+                200,
+                201,
+                202,
+                203
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                208,
+                209,
+                210,
+                211,
+                212,
+                213,
+                214,
+                215,
+                216,
+                217,
+                218,
+                219
+            ],
+            "bit_width": 16,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 12
+        },
+        {
+            "addresses": [
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59
+            ],
+            "bit_width": 32,
+            "group_type": "deparser",
+            "num_containers": 12
+        }
+    ],
+    "run_id": "1f645164d3e5f320",
+    "schema_version": "3.0.0",
+    "structures": [
+        {
+            "gress": "ingress",
+            "name": "hdr.ethernet",
+            "ordered_fields": [
+                {
+                    "field_name": "hdr.ethernet.dst_addr",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 47
+                    }
+                },
+                {
+                    "field_name": "hdr.ethernet.src_addr",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 47
+                    }
+                },
+                {
+                    "field_name": "hdr.ethernet.ether_type",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 15
+                    }
+                },
+                {
+                    "field_name": "hdr.ethernet.$valid",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "Enqueue_tail_tmp",
+            "ordered_fields": [
+                {
+                    "field_name": "Enqueue_tail_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "Enqueue_first_tmp",
+            "ordered_fields": [
+                {
+                    "field_name": "Enqueue_first_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "egress",
+            "name": "eg_intr_md_for_dprsr",
+            "ordered_fields": [
+                {
+                    "field_name": "eg_intr_md_for_dprsr.drop_ctl",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 2
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_type",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 3
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.coalesce_flush",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.coalesce_length",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 6
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_io_select",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_hash",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 12
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_ingress_cos",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 2
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_deflect_on_drop",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_multicast_ctrl",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_egress_port",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 8
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_qid",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 6
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_coalesce_length",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 7
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.adv_flow_ctl",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mtu_trunc_len",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 13
+                    }
+                },
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mtu_trunc_err_f",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "egress",
+            "name": "eg_intr_md_for_dprsr.mirror_io_select",
+            "ordered_fields": [
+                {
+                    "field_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "first$index",
+            "ordered_fields": [
+                {
+                    "field_name": "first$index",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 9
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "first$ena",
+            "ordered_fields": [
+                {
+                    "field_name": "first$ena",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "tail$index",
+            "ordered_fields": [
+                {
+                    "field_name": "tail$index",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 9
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "tail$ena",
+            "ordered_fields": [
+                {
+                    "field_name": "tail$ena",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "buffer_size$index",
+            "ordered_fields": [
+                {
+                    "field_name": "buffer_size$index",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 9
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "buffer_size$ena",
+            "ordered_fields": [
+                {
+                    "field_name": "buffer_size$ena",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "ring_buffer$index",
+            "ordered_fields": [
+                {
+                    "field_name": "ring_buffer$index",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 9
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "ring_buffer$ena",
+            "ordered_fields": [
+                {
+                    "field_name": "ring_buffer$ena",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
+                    }
+                }
+            ],
+            "type": "header"
+        }
+    ],
+    "target": "tofino2"
+}

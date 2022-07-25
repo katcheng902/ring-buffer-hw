@@ -54,7 +54,15 @@ parser SwitchIngressParser(
 
     state parse_ethernet {
         pkt.extract(hdr.ethernet);
-        transition accept;
+	transition parse_ipv4;
+    }
+
+    state parse_ipv4 {
+	pkt.extract(hdr.ipv4);
+	transition select(hdr.ipv4.dst_addr) {
+	    16909060: accept;
+	    default: reject;
+	}
     }
 }
 
@@ -68,16 +76,16 @@ control SwitchIngressDeparser(
         in ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md) {
 
     apply {
-        pkt.emit(hdr);
+        // pkt.emit(hdr);
+        pkt.emit(hdr.ethernet);
     }
 }
 
 #define REG_SIZE 32
-#define ELT_SIZE 16
+#define ELT_SIZE 32
 const bit<32> CAPACITY = 1 << 4;
 
 /*REGISTERS*/
-Register<bit<REG_SIZE>, bit<32>> (1,0) head;
 Register<bit<REG_SIZE>, bit<32>> (1,0) tail;
 Register<bit<REG_SIZE>, bit<32>> (1,0) buffer_size;
 Register<bit<ELT_SIZE>, bit<32>> (CAPACITY, 0) ring_buffer;
@@ -96,13 +104,13 @@ control Enqueue(in bit<ELT_SIZE> enq_value) {
      };
 
      action first_action() {
-	set_first_reg_action.execute(0);
+	first_tmp = set_first_reg_action.execute(0);
      }
 
      /*tail*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (tail) inc_tail_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
-	    if ((first_tmp == 0) || (val >= CAPACITY-1)) { /*first time around or reaching cap and need to loop around*/
+	    if ((first_tmp == 0) || (val >= CAPACITY-1)) {
 		val = 0;
 	    } else {
 		val = val+1;
@@ -112,7 +120,7 @@ control Enqueue(in bit<ELT_SIZE> enq_value) {
      };
 
      action inc_tail() {
-	inc_tail_reg_action.execute(0, tail_tmp);
+	tail_tmp = inc_tail_reg_action.execute(0);
      }
 
      /*size*/
@@ -178,6 +186,9 @@ control Enqueue(in bit<ELT_SIZE> enq_value) {
 
 }
 
+/*REGISTERS*/
+Register<bit<REG_SIZE>, bit<32>> (1,0) head;
+
 control Dequeue(out bit<ELT_SIZE> deq_value) {
     bit<REG_SIZE> size_tmp = 0;
     bit<REG_SIZE> head_tmp = 0;
@@ -185,7 +196,7 @@ control Dequeue(out bit<ELT_SIZE> deq_value) {
     /* size (decrement) */
     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (buffer_size) dec_size_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
-	    rv = val;
+	    rv=val;
 	    if (val > 0) {
 		val = val - 1;
 	    }
@@ -193,19 +204,19 @@ control Dequeue(out bit<ELT_SIZE> deq_value) {
     };
 
     action dec_size() {
-	dec_size_reg_action.execute(0, size_tmp);
+	size_tmp = dec_size_reg_action.execute(0);
     }
 
     /* head (increment) */
     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (head) inc_head_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
 	    rv = val;
-	    val = val + 1;
+            val = val + 1;
 	}
     };
 
     action inc_head() {
-	inc_head_reg_action.execute(0, head_tmp);
+	head_tmp = inc_head_reg_action.execute(0);
     }
 
     /* buffer (read) */
@@ -216,7 +227,7 @@ control Dequeue(out bit<ELT_SIZE> deq_value) {
     };
 
     action dequeue_action() {
- 	inc_head_reg_action.execute(0, head_tmp);
+ 	deq_value = read_buffer_reg_action.execute(head_tmp);
     }
 
     /* TABLES */
@@ -259,27 +270,49 @@ control SwitchIngress(
         inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
         inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
 
+   /* 
+     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (tail) try_reg_action = {
+	void apply(inout bit<REG_SIZE> val) {
+	    val = val+1;
+	}
+     };
+
+     action try_reg() {
+	try_reg_action.execute(0);
+     }
+*/
+
+    action drop() {
+	ig_dprsr_md.drop_ctl = 0x1;
+    }
+
     /* define the dmac table, serving as the forwarding table */
     table dmac {
         /* match the ethernet destination address */
         key = {
-            hdr.ethernet.dst_addr: exact;
+            hdr.ethernet.src_addr: exact;
         }
 
         /* define the list of actions */
         actions = {
-            NoAction;
+	    drop;
+	    NoAction;
         }
         size = 256;
         default_action = NoAction;
+
+	const entries = {
+	   (0x000033445566) : drop; 
+	   (0x000011223344) : NoAction;
+	}
     }
 
-
     apply {
+	bit<ELT_SIZE> deq = 0;
 	switch (dmac.apply().action_run) {
-            NoAction: {Enqueue.apply((bit<16>) 0);}
-        }
-
+	    drop: {Enqueue.apply(hdr.ipv4.dst_addr);}
+	    NoAction: {Dequeue.apply(deq);}
+	}
     }
 }
 
