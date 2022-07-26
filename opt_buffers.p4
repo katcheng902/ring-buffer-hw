@@ -61,6 +61,7 @@ parser SwitchIngressParser(
 	pkt.extract(hdr.ipv4);
 	transition select(hdr.ipv4.dst_addr) {
 	    16909060: accept;
+	    16909061: accept;
 	    default: reject;
 	}
     }
@@ -83,25 +84,24 @@ control SwitchIngressDeparser(
 
 #define REG_SIZE 32
 #define ELT_SIZE 32
-const bit<32> CAPACITY = 1 << 4;
+const bit<32> CAPACITY = 1 << 3;
+const bit<32> TOTAL = CAPACITY*2;
 
 /*REGISTERS*/
-Register<bit<REG_SIZE>, bit<32>> (2, 0) lefts; /*HOW TO INITIALIZE THESE???*/
+Register<bit<REG_SIZE>, bit<32>> (2, 0) lefts;
 Register<bit<REG_SIZE>, bit<32>> (2, 0) heads;
 Register<bit<REG_SIZE>, bit<32>> (2,0) tails;
 Register<bit<REG_SIZE>, bit<32>> (2,0) sizes;
 Register<bit<1>, bit<32>> (2,0) firsts;
 
-Register<bit<ELT_SIZE>, bit<32>> (CAPACITY, 0) ring_buffers;
+Register<bit<ELT_SIZE>, bit<32>> (TOTAL, 0) ring_buffers;
 
 
 control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      bit<1> first_tmp = 0;
      bit<REG_SIZE> tail_tmp = 0;
-
      bit<REG_SIZE> left_tmp = 0;
 
-     /*read left bounds*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (lefts) read_left_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
 	    rv = val;
@@ -109,7 +109,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      };
 
      action read_left() {
-	read_left_reg_action.execute((bit<32>) rb_id);
+	left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
      }
 
      /*first*/
@@ -132,12 +132,16 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	    } else {
 		val = val+1;
 	    }	    
-	    rv = val+left_tmp;
+	    rv = val;
 	}
      };
 
      action inc_tail() {
 	tail_tmp = inc_tail_reg_action.execute((bit<32>) rb_id);
+     }
+
+     action shift_tail() {
+	tail_tmp = tail_tmp + left_tmp;
      }
 
      /*size*/
@@ -187,24 +191,32 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	default_action = inc_tail;
     }
 
-   table inc_size_table {
+    table shift_tail_table {
+	actions = {
+	    shift_tail;
+	}
+	default_action = shift_tail;
+    }
+
+    table inc_size_table {
 	actions = {
 	    inc_size;
 	}
 	default_action = inc_size;
-   }
+    }
 
-   table enqueue_table {
+    table enqueue_table {
 	actions = {
 	    enqueue_action;
 	}
 	default_action = enqueue_action;
-   }
+    }
 
    apply {
 	left_table.apply();
 	first_table.apply();
 	inc_tail_table.apply();
+	shift_tail_table.apply();
 	inc_size_table.apply();
 	enqueue_table.apply();
    }
@@ -214,6 +226,19 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
     bit<REG_SIZE> size_tmp = 0;
     bit<REG_SIZE> head_tmp = 0;
+    bit<REG_SIZE> left_tmp = 0;
+
+
+    /*left bounds (read)*/
+    RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (lefts) read_left_reg_action = {
+	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
+	    rv = val;
+	}
+    };
+
+    action read_left() {
+	left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
+    }
 
     /* size (decrement) */
     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (sizes) dec_size_reg_action = {
@@ -241,6 +266,10 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
 	head_tmp = inc_head_reg_action.execute((bit<32>) rb_id);
     }
 
+    action shift_head() {
+	head_tmp = head_tmp + left_tmp;
+    }
+
     /* buffer (read) */
     RegisterAction<bit<ELT_SIZE>, bit<32>, bit<ELT_SIZE>> (ring_buffers) read_buffer_reg_action = {
 	void apply(inout bit<ELT_SIZE> val, out bit<ELT_SIZE> rv) {
@@ -253,6 +282,13 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
     }
 
     /* TABLES */
+    table left_table {
+	actions = {
+	    read_left;
+	}
+	default_action = read_left;
+    }
+
     table dec_size_table {
 	actions = {
 	    dec_size;
@@ -267,6 +303,13 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
 	default_action = inc_head;
     }
 
+    table shift_head_table {
+	actions = {
+	   shift_head;
+	}
+	default_action = shift_head;
+    }
+
     table dequeue_table {
 	actions = {
 	    dequeue_action;
@@ -275,9 +318,11 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
     }
 
     apply {
+	left_table.apply();
 	dec_size_table.apply();
 	if (size_tmp > 0) {
 	    inc_head_table.apply();
+	    shift_head_table.apply();
 	    dequeue_table.apply();
 	}
     }
