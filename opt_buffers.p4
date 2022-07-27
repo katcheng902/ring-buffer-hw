@@ -15,22 +15,7 @@
  *  or implied warranties, other than those that are expressly stated in the
  *  License.
  ******************************************************************************/
-
-
-#include <core.p4>
-#if __TARGET_TOFINO__ == 3
-#include <t3na.p4>
-#elif __TARGET_TOFINO__ == 2
-#include <t2na.p4>
-#else
-#include <tna.p4>
-#endif
-
-#include "include/headers.p4"
-#include "include/util.p4"
-
-
-struct metadata_t {}
+#include "registers.p4"
 
 struct pair {
     bit<32>     first;
@@ -82,25 +67,12 @@ control SwitchIngressDeparser(
     }
 }
 
-#define REG_SIZE 32
-#define ELT_SIZE 32
-const bit<32> CAPACITY = 1 << 3;
-const bit<32> TOTAL = CAPACITY*2;
-
-/*REGISTERS*/
-Register<bit<REG_SIZE>, bit<32>> (2, 0) lefts;
-Register<bit<REG_SIZE>, bit<32>> (2, 0) heads;
-Register<bit<REG_SIZE>, bit<32>> (2,0) tails;
-Register<bit<REG_SIZE>, bit<32>> (2,0) sizes;
-Register<bit<1>, bit<32>> (2,0) firsts;
-
-Register<bit<ELT_SIZE>, bit<32>> (TOTAL, 0) ring_buffers;
-
 
 control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      bit<1> first_tmp = 0;
      bit<REG_SIZE> tail_tmp = 0;
      bit<REG_SIZE> left_tmp = 0;
+     bit<REG_SIZE> cap_tmp = 0;
 
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (lefts) read_left_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
@@ -110,6 +82,16 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 
      action read_left() {
 	left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
+     }
+
+     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (caps) read_cap_reg_action = {
+	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
+	    rv = val;
+	}
+     };
+
+     action read_cap() {
+	cap_tmp = read_cap_reg_action.execute((bit<32>) rb_id)-1;
      }
 
      /*first*/
@@ -127,7 +109,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      /*tail*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (tails) inc_tail_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
-	    if ((first_tmp == 0) || (val >= CAPACITY-1)) {
+	    if ((first_tmp == 0) || (val >= cap_tmp)) {
 		val = 0;
 	    } else {
 		val = val+1;
@@ -147,7 +129,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      /*size*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (sizes) inc_size_reg_action = {
 	void apply(inout bit<REG_SIZE> val) {
-	    if (val < CAPACITY) {
+	    if (val <= cap_tmp) {
 		val = val+1;
 	    }
 	}
@@ -175,6 +157,13 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	    read_left;
 	}
 	default_action = read_left;
+    }
+
+    table cap_table {
+	actions = {
+	    read_cap;
+	}
+	default_action = read_cap;
     }
  
     table first_table {
@@ -214,6 +203,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 
    apply {
 	left_table.apply();
+	cap_table.apply();
 	first_table.apply();
 	inc_tail_table.apply();
 	shift_tail_table.apply();
