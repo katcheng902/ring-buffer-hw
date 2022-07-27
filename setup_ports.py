@@ -23,6 +23,7 @@ class SlimAtpTest(pd_base_tests.ThriftInterface):
             grpc_addr = "localhost:50052"
             self.interface = gc.ClientInterface(grpc_addr, client_id=0, device_id=0)
             self.interface.bind_pipeline_config(p4program)
+            self.bfrt_info = self.interface.bfrt_info_get(p4program)
 
         def stop_grpc(self):
             self.interface.tear_down_stream()
@@ -35,6 +36,16 @@ class SlimAtpTest(pd_base_tests.ThriftInterface):
                 #self.pal.pal_port_add(0, port, pal_port_speed_t.BF_SPEED_100G, pal_fec_type_t.BF_FEC_TYP_NONE) 
                 self.pal.pal_port_an_set(0, port, pal_autoneg_policy_t.BF_AN_FORCE_DISABLE)
                 self.pal.pal_port_enable(0, port)
+
+        def write_register(self, reg_name, reg_idx, reg_val):
+            target = gc.Target(device_id=0, pipe_id=0xffff)
+            table = self.bfrt_info.table_get(reg_name)
+            table.entry_add(
+                            target,
+                            [table.make_key([gc.KeyTuple('$REGISTER_INDEX', reg_idx)])],
+                            [table.make_data(
+                            [gc.DataTuple("{}.f1".format(reg_name), reg_val)])])
+
                                                                                                                                                                                 
 if __name__ == "__main__":
     config["log_dir"] = "log"
@@ -47,4 +58,6 @@ if __name__ == "__main__":
         
     # Enable ports connected (100G / NONE)
     test.enable_ports()                   
+    test.write_register("lefts", 0, 0)
+    test.write_register("lefts", 1, 8)
     test.stop_grpc()
