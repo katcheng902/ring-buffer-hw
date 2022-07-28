@@ -15,7 +15,34 @@
  *  or implied warranties, other than those that are expressly stated in the
  *  License.
  ******************************************************************************/
-#include "registers.p4"
+/*#include "registers.p4"*/
+#include <core.p4>
+#if __TARGET_TOFINO__ == 3
+#include <t3na.p4>
+#elif __TARGET_TOFINO__ == 2
+#include <t2na.p4>
+#else
+#include <tna.p4>
+#endif
+
+#include "include/headers.p4"
+#include "include/util.p4"
+
+struct metadata_t {}
+
+#define REG_SIZE 32
+#define ELT_SIZE 32
+#define ID_LEN 4
+const bit<32> CAPACITY = 1 << 14;
+const bit<32> TOTAL = CAPACITY*16;
+
+Register<bit<REG_SIZE>, bit<32>> (16, 0) lefts;
+Register<bit<REG_SIZE>, bit<32>> (16, 0) heads; 
+Register<bit<REG_SIZE>, bit<32>> (16,0) tails;
+Register<bit<REG_SIZE>, bit<32>> (16,0) sizes;
+Register<bit<1>, bit<32>> (16,0) firsts;
+/*Register<bit<REG_SIZE>, bit<32>> (8, 0) caps;*/
+Register<bit<32>, bit<32>> (TOTAL, 0) ring_buffers;
 
 struct pair {
     bit<32>     first;
@@ -68,11 +95,11 @@ control SwitchIngressDeparser(
 }
 
 
-control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
+control Enqueue(in bit<ID_LEN> rb_id, in bit<ELT_SIZE> enq_value) {
      bit<1> first_tmp = 0;
      bit<REG_SIZE> tail_tmp = 0;
      bit<REG_SIZE> left_tmp = 0;
-     bit<REG_SIZE> cap_tmp = 0;
+     /*bit<REG_SIZE> cap_tmp = 0;*/
 
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (lefts) read_left_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
@@ -84,7 +111,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
      }
 
-     RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (caps) read_cap_reg_action = {
+     /*RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (caps) read_cap_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
 	    rv = val;
 	}
@@ -92,7 +119,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 
      action read_cap() {
 	cap_tmp = read_cap_reg_action.execute((bit<32>) rb_id)-1;
-     }
+     }*/
 
      /*first*/
      RegisterAction<bit<1>, bit<32>, bit<1>> (firsts) set_first_reg_action = {
@@ -109,7 +136,7 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
      /*tail*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (tails) inc_tail_reg_action = {
 	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
-	    if ((first_tmp == 0) || (val >= cap_tmp)) {
+	    if ((first_tmp == 0) || (val >= CAPACITY-1)) {
 		val = 0;
 	    } else {
 		val = val+1;
@@ -120,16 +147,17 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 
      action inc_tail() {
 	tail_tmp = inc_tail_reg_action.execute((bit<32>) rb_id);
-     }
-
-     action shift_tail() {
 	tail_tmp = tail_tmp + left_tmp;
      }
+/*
+     action shift_tail() {
+	tail_tmp = tail_tmp + left_tmp;
+     }*/
 
      /*size*/
      RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (sizes) inc_size_reg_action = {
 	void apply(inout bit<REG_SIZE> val) {
-	    if (val <= cap_tmp) {
+	    if (val < CAPACITY) {
 		val = val+1;
 	    }
 	}
@@ -159,12 +187,12 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	default_action = read_left;
     }
 
-    table cap_table {
+    /*table cap_table {
 	actions = {
 	    read_cap;
 	}
 	default_action = read_cap;
-    }
+    }*/
  
     table first_table {
 	actions = {
@@ -180,12 +208,12 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 	default_action = inc_tail;
     }
 
-    table shift_tail_table {
+    /*table shift_tail_table {
 	actions = {
 	    shift_tail;
 	}
 	default_action = shift_tail;
-    }
+    }*/
 
     table inc_size_table {
 	actions = {
@@ -203,17 +231,17 @@ control Enqueue(in bit<1> rb_id, in bit<ELT_SIZE> enq_value) {
 
    apply {
 	left_table.apply();
-	cap_table.apply();
+/*	cap_table.apply();*/
 	first_table.apply();
 	inc_tail_table.apply();
-	shift_tail_table.apply();
+/*	shift_tail_table.apply();*/
 	inc_size_table.apply();
 	enqueue_table.apply();
    }
 
 }
 
-control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
+control Dequeue(in bit<ID_LEN> rb_id, out bit<ELT_SIZE> deq_value) {
     bit<REG_SIZE> size_tmp = 0;
     bit<REG_SIZE> head_tmp = 0;
     bit<REG_SIZE> left_tmp = 0;
@@ -254,11 +282,12 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
 
     action inc_head() {
 	head_tmp = inc_head_reg_action.execute((bit<32>) rb_id);
-    }
-
-    action shift_head() {
 	head_tmp = head_tmp + left_tmp;
     }
+
+ /*   action shift_head() {
+	head_tmp = head_tmp + left_tmp;
+    }*/
 
     /* buffer (read) */
     RegisterAction<bit<ELT_SIZE>, bit<32>, bit<ELT_SIZE>> (ring_buffers) read_buffer_reg_action = {
@@ -293,12 +322,12 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
 	default_action = inc_head;
     }
 
-    table shift_head_table {
+   /* table shift_head_table {
 	actions = {
 	   shift_head;
 	}
 	default_action = shift_head;
-    }
+    }*/
 
     table dequeue_table {
 	actions = {
@@ -312,7 +341,7 @@ control Dequeue(in bit<1> rb_id, out bit<ELT_SIZE> deq_value) {
 	dec_size_table.apply();
 	if (size_tmp > 0) {
 	    inc_head_table.apply();
-	    shift_head_table.apply();
+	    /*shift_head_table.apply();*/
 	    dequeue_table.apply();
 	}
     }
@@ -355,7 +384,7 @@ control SwitchIngress(
     apply {
 	bit<ELT_SIZE> deq = 0;
 	switch (dmac.apply().action_run) {
-	    drop: {Enqueue.apply(1, hdr.ipv4.dst_addr);}
+	    drop: {Enqueue.apply(0, hdr.ipv4.dst_addr);}
 	    NoAction: {Dequeue.apply(1, deq);}
 	}
     }
