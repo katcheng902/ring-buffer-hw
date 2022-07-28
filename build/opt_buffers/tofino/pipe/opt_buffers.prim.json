@@ -39,7 +39,7 @@
               },
               "idx" : {
                 "type" : "immediate",
-                "name" : "32w1"
+                "name" : "32w0"
               },
               "stateful_alu_details" : {
                 "name" : "Enqueue_read_left_reg_action",
@@ -47,7 +47,8 @@
                 "output_value" : {
                   "operand_1_type" : "memory",
                   "operand_1_value" : "mem_lo"
-                }
+                },
+                "output_dst" : "Enqueue_left_tmp"
               }
             }
           ]
@@ -68,7 +69,7 @@
               },
               "idx" : {
                 "type" : "immediate",
-                "name" : "32w1"
+                "name" : "32w0"
               },
               "stateful_alu_details" : {
                 "name" : "Enqueue_set_first_reg_action",
@@ -98,23 +99,31 @@
               },
               "idx" : {
                 "type" : "immediate",
-                "name" : "32w1"
+                "name" : "32w0"
               },
               "stateful_alu_details" : {
                 "name" : "Enqueue_inc_tail_reg_action",
                 "single_bit_mode" : false,
-                "update_hi_1_value" : {
-                  "operation" : "+",
-                  "operand_1_type" : "memory",
-                  "operand_1_value" : "register_lo",
-                  "operand_2_type" : "phv",
-                  "operand_2_value" : "Enqueue_left_tmp"
-                },
                 "output_value" : {
                   "operand_1_type" : "memory",
-                  "operand_1_value" : "memory_hi"
-                },
-                "output_dst" : "Enqueue_tail_tmp"
+                  "operand_1_value" : "memory_lo"
+                }
+              }
+            },
+            {
+              "name" : "DirectAluPrimitive",
+              "operation" : "add",
+              "dst" : {
+                "type" : "phv",
+                "name" : "Enqueue_tail_tmp"
+              },
+              "dst_mask" : {
+                "type" : "immediate",
+                "name" : "0"
+              },
+              "src2" : {
+                "type" : "phv",
+                "name" : "Enqueue_left_tmp"
               }
             }
           ]
@@ -135,7 +144,7 @@
               },
               "idx" : {
                 "type" : "immediate",
-                "name" : "32w1"
+                "name" : "32w0"
               },
               "stateful_alu_details" : {
                 "name" : "Enqueue_inc_size_reg_action",
@@ -171,6 +180,36 @@
                   "operand_1_type" : "phv",
                   "operand_1_value" : "ingress::hdr.ipv4.dst_addr"
                 }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Dequeue.left_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Dequeue.read_left",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "lefts"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w1"
+              },
+              "stateful_alu_details" : {
+                "name" : "Dequeue_read_left_reg_action",
+                "single_bit_mode" : false,
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "mem_lo"
+                },
+                "output_dst" : "Dequeue_left_tmp"
               }
             }
           ]
@@ -236,8 +275,23 @@
                 "output_value" : {
                   "operand_1_type" : "memory",
                   "operand_1_value" : "mem_lo"
-                },
-                "output_dst" : "Dequeue_head_tmp"
+                }
+              }
+            },
+            {
+              "name" : "DirectAluPrimitive",
+              "operation" : "add",
+              "dst" : {
+                "type" : "phv",
+                "name" : "Dequeue_head_tmp"
+              },
+              "dst_mask" : {
+                "type" : "immediate",
+                "name" : "0"
+              },
+              "src2" : {
+                "type" : "phv",
+                "name" : "Dequeue_left_tmp"
               }
             }
           ]

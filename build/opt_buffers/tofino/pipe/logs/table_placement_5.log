@@ -1,0 +1,582 @@
+Table Placement ignores container conflicts? 1
+table placement starting pipe
+ingress: [2032832]
+  dmac_0{ E 38+1, 0 0K }
+    drop: [2032968] 0 11 000 1110
+      Enqueue_left_table
+        stateful lefts   16
+      Enqueue_first_table
+        stateful firsts   16
+      Enqueue_inc_tail_table
+        stateful tails   16
+      Enqueue_inc_size_table
+        stateful sizes   16
+      Enqueue_enqueue_table
+        stateful ring_buffers 262K
+    NoAction: [2033317] 0 11
+      Dequeue_left_table
+        stateful lefts   16
+      Dequeue_dec_size_table
+        stateful sizes   16
+      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [2033459] 1
+          Dequeue_inc_head_table
+            stateful heads   16
+          Dequeue_dequeue_table
+            stateful ring_buffers 262K
+egress: [2036422]
+
+stage 0, work: [ 2032832 ], partly placed 0, placed 0
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: dmac_0
+dmac_0 is not a gateway! Aborting search for merge choices
+try_place_table(dmac_0, stage=0)
+  Initial stage is 0, initial entries is 256
+Trying to allocate imem for dmac_0
+Trying to allocate imem for dmac_0
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 4096 of dmac_0 in stage 0
+    Pl vector: [ dmac_0 ]
+found 1 tables that could be placed: [ dmac_0 ]
+Initial best is first table seen: dmac_0
+placing 4096 entries of dmac_0 in stage 0(0) FormatType(02)
+stage 0, work: [ 2032968, 2033317 ], partly placed 0, placed 1
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+Enqueue_left_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_left_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_left_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_left_table in stage 0 (need more)
+    Pl vector: [ Enqueue_left_table ]
+Enqueue_first_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_first_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_first_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_first_table in stage 0
+    Pl vector: [ Enqueue_first_table ]
+  - skipping Enqueue_inc_tail_table due to in-sequence control dependence on Enqueue_left_table
+Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_inc_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Enqueue_inc_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
+    Pl vector: [ Enqueue_inc_size_table ]
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_left_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+Dequeue_left_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_left_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_left_table in stage 0 (need more)
+    Pl vector: [ Dequeue_left_table ]
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_dec_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
+    Pl vector: [ Dequeue_dec_size_table ]
+  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+found 5 tables that could be placed: [ Enqueue_left_table, Enqueue_first_table, Enqueue_inc_size_table, Dequeue_left_table, Dequeue_dec_size_table ]
+Initial best is first table seen: Enqueue_left_table
+For trial t : Enqueue_first_table with best: Enqueue_left_table
+    Updating best to Enqueue_first_table from Enqueue_left_table for reason: default choice
+For trial t : Enqueue_inc_size_table with best: Enqueue_first_table
+    Keeping best Enqueue_first_table for reason: longer downward prop control-included dependence tail chain
+For trial t : Dequeue_left_table with best: Enqueue_first_table
+    Updating best to Dequeue_left_table from Enqueue_first_table for reason: default choice
+For trial t : Dequeue_dec_size_table with best: Dequeue_left_table
+    Keeping best Dequeue_left_table for reason: longer control-excluded dependence tail chain
+placing 512 entries of Dequeue_left_table in stage 0(1) FormatType(042) (need more)
+stage 0, work: [ 2032968, 2033317 ], partly placed 1, placed 2
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+Enqueue_left_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_left_table, stage=0)
+    Dequeue_left_table is now also placed (1)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_left_table in stage 0
+    Pl vector: [ Enqueue_left_table ]
+Enqueue_first_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_first_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_first_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_first_table in stage 0
+    Pl vector: [ Enqueue_first_table ]
+  - skipping Enqueue_inc_tail_table due to in-sequence control dependence on Enqueue_left_table
+Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_inc_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_inc_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
+    Pl vector: [ Enqueue_inc_size_table ]
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_left_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+Dequeue_left_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_left_table, stage=0)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Dequeue_dec_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
+    Pl vector: [ Dequeue_dec_size_table ]
+  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+found 4 tables that could be placed: [ Enqueue_left_table, Enqueue_first_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
+Initial best is first table seen: Enqueue_left_table
+For trial t : Enqueue_first_table with best: Enqueue_left_table
+    Keeping best Enqueue_left_table for reason: completes more shared tables
+For trial t : Enqueue_inc_size_table with best: Enqueue_left_table
+    Keeping best Enqueue_left_table for reason: completes more shared tables
+For trial t : Dequeue_dec_size_table with best: Enqueue_left_table
+    Keeping best Enqueue_left_table for reason: completes more shared tables
+placing 512 entries of Enqueue_left_table in stage 0(2) FormatType(022)
+stage 0, work: [ 2032968, 2033317 ], partly placed 0, placed 3
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+Enqueue_first_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_first_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_first_table in stage 0
+    Pl vector: [ Enqueue_first_table ]
+  - skipping Enqueue_inc_tail_table due to in-sequence control dependence on Enqueue_first_table
+Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_inc_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_inc_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
+    Pl vector: [ Enqueue_inc_size_table ]
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_first_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+    - skipping Dequeue_left_table as its already done
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Dequeue_dec_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
+    Pl vector: [ Dequeue_dec_size_table ]
+  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+found 3 tables that could be placed: [ Enqueue_first_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
+Initial best is first table seen: Enqueue_first_table
+For trial t : Enqueue_inc_size_table with best: Enqueue_first_table
+    Keeping best Enqueue_first_table for reason: longer downward prop control-included dependence tail chain
+For trial t : Dequeue_dec_size_table with best: Enqueue_first_table
+    Keeping best Enqueue_first_table for reason: longer control-excluded dependence tail chain
+placing 512 entries of Enqueue_first_table in stage 0(3) FormatType(022)
+stage 0, work: [ 2032968, 2033317 ], partly placed 0, placed 4
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_tail_table, stage=0)
+  - dependency between Enqueue_first_table and table advances stage
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Enqueue_inc_tail_table
+Trying to allocate imem for Enqueue_inc_tail_table
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_tail_table in stage 1
+    Pl vector: [ Enqueue_inc_tail_table ]
+Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Enqueue_inc_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Enqueue_inc_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
+    Pl vector: [ Enqueue_inc_size_table ]
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_inc_tail_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+    - skipping Dequeue_left_table as its already done
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
+    Pl vector: [ Dequeue_dec_size_table ]
+  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+found 3 tables that could be placed: [ Enqueue_inc_tail_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
+Initial best is first table seen: Enqueue_inc_tail_table
+For trial t : Enqueue_inc_size_table with best: Enqueue_inc_tail_table
+    Updating best to Enqueue_inc_size_table from Enqueue_inc_tail_table for reason: earlier stage calculated
+For trial t : Dequeue_dec_size_table with best: Enqueue_inc_size_table
+    Updating best to Dequeue_dec_size_table from Enqueue_inc_size_table for reason: longer downward prop control-included dependence tail chain
+placing 512 entries of Dequeue_dec_size_table in stage 0(4) FormatType(042) (need more)
+stage 0, work: [ 2032968, 2033317 ], partly placed 1, placed 5
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_tail_table, stage=0)
+  - dependency between Enqueue_first_table and table advances stage
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Enqueue_inc_tail_table
+Trying to allocate imem for Enqueue_inc_tail_table
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_tail_table in stage 1
+    Pl vector: [ Enqueue_inc_tail_table ]
+Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_size_table, stage=0)
+    Dequeue_dec_size_table is now also placed (1)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for Enqueue_inc_size_table
+Trying to allocate imem for dmac_0
+Trying to allocate imem for Dequeue_left_table
+Trying to allocate imem for Enqueue_left_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for Enqueue_inc_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_size_table in stage 0
+    Pl vector: [ Enqueue_inc_size_table ]
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_inc_tail_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+    - skipping Dequeue_left_table as its already done
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+found 2 tables that could be placed: [ Enqueue_inc_tail_table, Enqueue_inc_size_table ]
+Initial best is first table seen: Enqueue_inc_tail_table
+For trial t : Enqueue_inc_size_table with best: Enqueue_inc_tail_table
+    Updating best to Enqueue_inc_size_table from Enqueue_inc_tail_table for reason: earlier stage calculated
+placing 512 entries of Enqueue_inc_size_table in stage 0(5) FormatType(022)
+stage 0, work: [ 2032968, 2033317 ], partly placed 0, placed 6
+    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_inc_tail_table, stage=0)
+  - dependency between Enqueue_first_table and table advances stage
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Enqueue_inc_tail_table
+Trying to allocate imem for Enqueue_inc_tail_table
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 512 of Enqueue_inc_tail_table in stage 1
+    Pl vector: [ Enqueue_inc_tail_table ]
+    - skipping Enqueue_inc_size_table as its already done
+  - skipping Enqueue_enqueue_table due to in-sequence control dependence on Enqueue_inc_tail_table
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+    - skipping Dequeue_left_table as its already done
+    - skipping Dequeue_dec_size_table as its already done
+try_place_table(cond-2, stage=0)
+  Merging with match table Dequeue_inc_head_table
+  - dependency between Dequeue_dec_size_table and table advances stage
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Dequeue_inc_head_table
+Trying to allocate imem for Dequeue_inc_head_table
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_inc_head_table in stage 1
+    Pl vector: [ Dequeue_inc_head_table ]
+found 2 tables that could be placed: [ Enqueue_inc_tail_table, Dequeue_inc_head_table ]
+Initial best is first table seen: Enqueue_inc_tail_table
+For trial t : Dequeue_inc_head_table with best: Enqueue_inc_tail_table
+    Keeping best Enqueue_inc_tail_table for reason: longer downward dominance frontier dependence chain
+placing 512 entries of Enqueue_inc_tail_table in stage 1(10) FormatType(022)
+stage 1, work: [ 2032968, 2033317 ], partly placed 0, placed 7
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+    - skipping Enqueue_inc_tail_table as its already done
+    - skipping Enqueue_inc_size_table as its already done
+Enqueue_enqueue_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table, stage=1)
+  - dependency between Enqueue_inc_tail_table and table advances stage
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 512 of Enqueue_enqueue_table in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table ]
+  Group table: Dequeue_left_table
+  Group table: Dequeue_dec_size_table
+  Group table: cond-2
+    - skipping Dequeue_left_table as its already done
+    - skipping Dequeue_dec_size_table as its already done
+try_place_table(cond-2, stage=1)
+  Merging with match table Dequeue_inc_head_table
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Enqueue_inc_tail_table
+Trying to allocate imem for Dequeue_inc_head_table
+Trying to allocate imem for Enqueue_inc_tail_table
+Trying to allocate imem for Dequeue_inc_head_table
+  Selected stage: 1    Furthest stage: 2
+  try_place_table returning 512 of Dequeue_inc_head_table in stage 1
+    Pl vector: [ Dequeue_inc_head_table ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table, Dequeue_inc_head_table ]
+Initial best is first table seen: Enqueue_enqueue_table
+For trial t : Dequeue_inc_head_table with best: Enqueue_enqueue_table
+    Updating best to Dequeue_inc_head_table from Enqueue_enqueue_table for reason: earlier stage calculated
+placing 512 entries of Dequeue_inc_head_table (with gw cond-2) in stage 1(11) FormatType(022)
+stage 1, work: [ 2032968, 2033459 ], partly placed 0, placed 8
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+    - skipping Enqueue_inc_tail_table as its already done
+    - skipping Enqueue_inc_size_table as its already done
+Enqueue_enqueue_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table, stage=1)
+  - dependency between Dequeue_inc_head_table and Dequeue_dequeue_table advances stage
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 512 of Enqueue_enqueue_table in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table ]
+  Group table: Dequeue_inc_head_table
+  Group table: Dequeue_dequeue_table
+    - skipping Dequeue_inc_head_table as its already done
+Dequeue_dequeue_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table, stage=1)
+  - dependency between Dequeue_inc_head_table and table advances stage
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Dequeue_dequeue_table
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 512 of Dequeue_dequeue_table in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table, Dequeue_dequeue_table ]
+Initial best is first table seen: Enqueue_enqueue_table
+For trial t : Dequeue_dequeue_table with best: Enqueue_enqueue_table
+    Updating best to Dequeue_dequeue_table from Enqueue_enqueue_table for reason: default choice
+placing 512 entries of Dequeue_dequeue_table in stage 2(20) FormatType(042) (need more)
+stage 2, work: [ 2032968, 2033459 ], partly placed 1, placed 9
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Enqueue_left_table
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: Enqueue_enqueue_table
+    - skipping Enqueue_left_table as its already done
+    - skipping Enqueue_first_table as its already done
+    - skipping Enqueue_inc_tail_table as its already done
+    - skipping Enqueue_inc_size_table as its already done
+Enqueue_enqueue_table is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table, stage=2)
+    Dequeue_dequeue_table is now also placed (1)
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+    table SwitchIngress.Enqueue.enqueue_table could not fit in stage 2 with 1 entries along with 262144 entries of Register ring_buffers
+    too many map rams
+    Min use of memory allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table
+    table SwitchIngress.Enqueue.enqueue_table could not fit in stage 3 with 1 entries along with 262144 entries of Register ring_buffers
+    too many map rams
+    Min use of memory allocation did not fit
+  Selected stage: 4    Furthest stage: 3
+    Pl vector: []
+  Group table: Dequeue_inc_head_table
+  Group table: Dequeue_dequeue_table
+    - skipping Dequeue_inc_head_table as its already done
+Dequeue_dequeue_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table, stage=2)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+table placement ending with unplaced tables:
+  Enqueue_enqueue_table
+  Dequeue_dequeue_table(pp)(mp)
+Adding complete placement for resource mode:0
+Found a complete solution that fit the number of stages required
+Evaluating complete solution with resource:0
+Placement error(s):1 stages required:3
+Updating best final placement with this one
+Table placement placed 9 tables in 3 stages
+  Table Dequeue_dequeue_table logical id 0x20 entries=512
+    attached table ring_buffers entries=0 (need_more)
+  Table Dequeue_inc_head_table logical id 0x11 entries=512
+    attached table heads entries=16
+  Gateway cond-2 is also logical id 0x11
+  Table Enqueue_inc_tail_table logical id 0x10 entries=512
+    attached table tails entries=16
+  Table Enqueue_inc_size_table logical id 0x5 entries=512
+    attached table sizes entries=16
+  Table Dequeue_dec_size_table logical id 0x4 entries=512
+    attached table sizes entries=16
+  Table Enqueue_first_table logical id 0x3 entries=512
+    attached table firsts entries=16
+  Table Enqueue_left_table logical id 0x2 entries=512
+    attached table lefts entries=16
+  Table Dequeue_left_table logical id 0x1 entries=512
+    attached table lefts entries=16
+  Table dmac_0 logical id 0x0 entries=4096
+Finished table placement decisions pipe
+  Adding Ternary Indirect table to Enqueue_left_table
+  Adding Ternary Indirect table to Enqueue_first_table
+  Adding Ternary Indirect table to Enqueue_inc_tail_table
+  Adding Ternary Indirect table to Enqueue_inc_size_table
+  Adding Ternary Indirect table to Dequeue_left_table
+  Adding Ternary Indirect table to Dequeue_dec_size_table
+folding gateway cond-2 onto Dequeue_inc_head_table
+  Adding Ternary Indirect table to Dequeue_inc_head_table
+table placement completed pipe
+ingress: [2032832]
+  0: dmac_0{ E 38+1, 0 [1x1 1K 1K 1K 1K] }
+    drop: [2032968] 0 00 000 0000
+      2: Enqueue_left_table{ E 0+10, 0 0K }
+        stateful lefts   16
+      3: Enqueue_first_table{ E 0+10, 0 0K }
+        stateful firsts   16
+      5: Enqueue_inc_size_table{ E 0+10, 0 0K }
+        stateful sizes   16
+      10: Enqueue_inc_tail_table{ E 0+10, 0 0K }
+        stateful tails   16
+      Enqueue_enqueue_table
+        stateful ring_buffers 262K
+    NoAction: [2033317] 0 00
+      1: Dequeue_left_table{ E 0+10, 0 0K }
+        stateful lefts   16
+      4: Dequeue_dec_size_table{ E 0+10, 0 0K }
+        stateful sizes   16
+      11: Dequeue_inc_head_table(ingress::Dequeue_size_tmp == 0; => $false, 1){ GE 0+10, 0 0K }
+        stateful heads   16
+        $default: [2033459]
+          20: Dequeue_dequeue_table{ E 0+18, 0 0K }
+            stateful ring_buffers 262K
+        $false: [2146911]
+egress: [2036422]
+

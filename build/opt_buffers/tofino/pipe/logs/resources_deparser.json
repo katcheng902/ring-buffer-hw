@@ -41,10 +41,10 @@
         "pov_bit": 0,
         "pov_name": "hdr.ethernet.$valid",
         "chunks": [
-          { "chunk_number": 0, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 1, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 2, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 3, "chunk": { "phv_container": 0 } }
+          { "chunk_number": 0, "chunk": { "phv_container": 2 } },
+          { "chunk_number": 1, "chunk": { "phv_container": 2 } },
+          { "chunk_number": 2, "chunk": { "phv_container": 2 } },
+          { "chunk_number": 3, "chunk": { "phv_container": 2 } }
         ]
       }
     ],

@@ -1,25 +1,83 @@
 digraph table_deps {
   splines=ortho; rankdir=LR;
   label="Program: multiple_buffers
-RunId: f770ce0ff0f1ebcb
+RunId: b2357547dc2e8213
 ";
   labelloc=t; labeljust=l;
-  { "SwitchIngress.dmac"; "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Enqueue.inc_size_table"; "SwitchIngress.Dequeue.dec_size_table"; }
-  { rank = same; "SwitchIngress.Enqueue.inc_tail_table"; "SwitchIngress.Dequeue.inc_head_table"; }
-  { rank = same; "SwitchIngress.Enqueue.enqueue_table_two"; "SwitchIngress.Dequeue.dequeue_table_two"; }
-   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.first_table" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_size_table" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.enqueue_table_two" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Dequeue.dec_size_table" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=green ];
-   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_two" [ label= "",color=green ];
-   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=gold ];
-   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_two" [ label= "",color=gold ];
+  { "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Dequeue.dec_size_table"; "SwitchIngress.Enqueue.inc_size_table"; }
+  { rank = same; "SwitchIngress.Dequeue.inc_head_table"; "SwitchIngress.Enqueue.inc_tail_table"; }
+  { rank = same; "SwitchIngress.Dequeue.dequeue_table_1"; "SwitchIngress.Dequeue.dequeue_table_2"; "SwitchIngress.Dequeue.dequeue_table_3"; "SwitchIngress.Dequeue.dequeue_table_4"; "SwitchIngress.Dequeue.dequeue_table_5"; "SwitchIngress.Dequeue.dequeue_table_6"; "SwitchIngress.Dequeue.dequeue_table_7"; "SwitchIngress.Dequeue.dequeue_table_8"; "SwitchIngress.Dequeue.dequeue_table_9"; "SwitchIngress.Dequeue.dequeue_table_10"; "SwitchIngress.Dequeue.dequeue_table_11"; "SwitchIngress.Dequeue.dequeue_table_12"; "SwitchIngress.Dequeue.dequeue_table_13"; "SwitchIngress.Dequeue.dequeue_table_14"; "SwitchIngress.Dequeue.dequeue_table_15"; "SwitchIngress.Dequeue.dequeue_table_16"; "SwitchIngress.Enqueue.enqueue_table_1"; "SwitchIngress.Enqueue.enqueue_table_2"; "SwitchIngress.Enqueue.enqueue_table_3"; "SwitchIngress.Enqueue.enqueue_table_4"; "SwitchIngress.Enqueue.enqueue_table_5"; "SwitchIngress.Enqueue.enqueue_table_6"; "SwitchIngress.Enqueue.enqueue_table_7"; "SwitchIngress.Enqueue.enqueue_table_8"; "SwitchIngress.Enqueue.enqueue_table_9"; "SwitchIngress.Enqueue.enqueue_table_10"; "SwitchIngress.Enqueue.enqueue_table_11"; "SwitchIngress.Enqueue.enqueue_table_12"; "SwitchIngress.Enqueue.enqueue_table_13"; "SwitchIngress.Enqueue.enqueue_table_14"; "SwitchIngress.Enqueue.enqueue_table_15"; "SwitchIngress.Enqueue.enqueue_table_16"; }
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Dequeue.dec_size_table" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_1" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_1" -> "SwitchIngress.Dequeue.dequeue_table_2" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_2" -> "SwitchIngress.Dequeue.dequeue_table_3" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_3" -> "SwitchIngress.Dequeue.dequeue_table_4" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_4" -> "SwitchIngress.Dequeue.dequeue_table_5" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_5" -> "SwitchIngress.Dequeue.dequeue_table_6" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_6" -> "SwitchIngress.Dequeue.dequeue_table_7" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_7" -> "SwitchIngress.Dequeue.dequeue_table_8" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_8" -> "SwitchIngress.Dequeue.dequeue_table_9" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_9" -> "SwitchIngress.Dequeue.dequeue_table_10" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_10" -> "SwitchIngress.Dequeue.dequeue_table_11" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_11" -> "SwitchIngress.Dequeue.dequeue_table_12" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_12" -> "SwitchIngress.Dequeue.dequeue_table_13" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_13" -> "SwitchIngress.Dequeue.dequeue_table_14" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_14" -> "SwitchIngress.Dequeue.dequeue_table_15" [ label= "",color=green ];
+   "SwitchIngress.Dequeue.dequeue_table_15" -> "SwitchIngress.Dequeue.dequeue_table_16" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_size_table" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.enqueue_table_1" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_1" -> "SwitchIngress.Enqueue.enqueue_table_2" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_2" -> "SwitchIngress.Enqueue.enqueue_table_3" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_3" -> "SwitchIngress.Enqueue.enqueue_table_4" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_4" -> "SwitchIngress.Enqueue.enqueue_table_5" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_5" -> "SwitchIngress.Enqueue.enqueue_table_6" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_6" -> "SwitchIngress.Enqueue.enqueue_table_7" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_7" -> "SwitchIngress.Enqueue.enqueue_table_8" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_8" -> "SwitchIngress.Enqueue.enqueue_table_9" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_9" -> "SwitchIngress.Enqueue.enqueue_table_10" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_10" -> "SwitchIngress.Enqueue.enqueue_table_11" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_11" -> "SwitchIngress.Enqueue.enqueue_table_12" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_12" -> "SwitchIngress.Enqueue.enqueue_table_13" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_13" -> "SwitchIngress.Enqueue.enqueue_table_14" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_14" -> "SwitchIngress.Enqueue.enqueue_table_15" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.enqueue_table_15" -> "SwitchIngress.Enqueue.enqueue_table_16" [ label= "",color=green ];
    "SwitchIngress.Dequeue.dec_size_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=blue ];
-   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_two" [ label= "",color=gold ];
-   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_two" [ label= "",color=pink ];
-   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=pink ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_1" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_2" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_3" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_4" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_5" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_6" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_7" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_8" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_9" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_10" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_11" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_12" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_13" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_14" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_15" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_16" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_1" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_2" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_3" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_4" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_5" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_6" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_7" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_8" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_9" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_10" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_11" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_12" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_13" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_14" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_15" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_16" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_1" [ label= "",color=pink ];
    "SwitchIngress.Dequeue.dec_size_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=pink ];
   { rank=max;
     subgraph cluster_legend { node [ shape=record; fontsize=10];

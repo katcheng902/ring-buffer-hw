@@ -36,7 +36,7 @@
               }
             ],
             "min_stage" : 0,
-            "dep_chain" : 0
+            "dep_chain" : 2
           }
         },
         {
@@ -116,6 +116,24 @@
           "metadata" : {
             "tables" : [
               {
+                "name" : "SwitchIngress.Dequeue.left_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "lefts",
+                "table_type" : "stateful"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "7",
+          "metadata" : {
+            "tables" : [
+              {
                 "name" : "SwitchIngress.Dequeue.dec_size_table",
                 "table_type" : "match",
                 "match_type" : "ternary"
@@ -130,7 +148,7 @@
           }
         },
         {
-          "id" : "7",
+          "id" : "8",
           "metadata" : {
             "tables" : [
               {
@@ -144,7 +162,7 @@
           }
         },
         {
-          "id" : "8",
+          "id" : "9",
           "metadata" : {
             "tables" : [
               {
@@ -162,7 +180,7 @@
           }
         },
         {
-          "id" : "9",
+          "id" : "10",
           "metadata" : {
             "tables" : [
               {
@@ -180,7 +198,7 @@
           }
         },
         {
-          "id" : "10",
+          "id" : "11",
           "metadata" : {
             "tables" : [
               {
@@ -273,13 +291,25 @@
             "type" : "control",
             "sub_type" : "action",
             "action_name" : "NoAction",
+            "is_critical" : true,
             "tags" : ["dependency"]
           }
         },
         {
           "id" : "7",
-          "source" : "7",
+          "source" : "0",
           "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "8",
+          "source" : "8",
+          "target" : "9",
           "metadata" : {
             "type" : "control",
             "sub_type" : "condition",
@@ -289,9 +319,9 @@
           }
         },
         {
-          "id" : "8",
-          "source" : "7",
-          "target" : "9",
+          "id" : "9",
+          "source" : "8",
+          "target" : "10",
           "metadata" : {
             "type" : "control",
             "sub_type" : "condition",
@@ -300,7 +330,7 @@
           }
         },
         {
-          "id" : "9",
+          "id" : "10",
           "source" : "2",
           "target" : "3",
           "metadata" : {
@@ -319,7 +349,20 @@
           }
         },
         {
-          "id" : "10",
+          "id" : "11",
+          "source" : "1",
+          "target" : "3",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "12",
           "source" : "3",
           "target" : "5",
           "metadata" : {
@@ -338,9 +381,9 @@
           }
         },
         {
-          "id" : "11",
-          "source" : "6",
-          "target" : "7",
+          "id" : "13",
+          "source" : "7",
+          "target" : "8",
           "metadata" : {
             "type" : "action",
             "sub_type" : "action_read",
@@ -351,9 +394,22 @@
           }
         },
         {
-          "id" : "12",
-          "source" : "8",
+          "id" : "14",
+          "source" : "6",
           "target" : "9",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "15",
+          "source" : "9",
+          "target" : "10",
           "metadata" : {
             "type" : "match",
             "sub_type" : "ixbar_read",
@@ -370,7 +426,7 @@
           }
         },
         {
-          "id" : "13",
+          "id" : "16",
           "source" : "3",
           "target" : "5",
           "metadata" : {
@@ -389,7 +445,45 @@
           }
         },
         {
-          "id" : "14",
+          "id" : "17",
+          "source" : "9",
+          "target" : "10",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_head_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "18",
+          "source" : "1",
+          "target" : "3",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_left_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "19",
           "source" : "2",
           "target" : "3",
           "metadata" : {
@@ -408,9 +502,28 @@
           }
         },
         {
-          "id" : "15",
+          "id" : "20",
           "source" : "6",
-          "target" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_left_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "21",
+          "source" : "7",
+          "target" : "8",
           "metadata" : {
             "type" : "control",
             "sub_type" : "anti",
@@ -427,26 +540,7 @@
           }
         },
         {
-          "id" : "16",
-          "source" : "8",
-          "target" : "9",
-          "metadata" : {
-            "type" : "control",
-            "sub_type" : "anti",
-            "anti_type" : "next_table_data",
-            "dep_fields" : [
-              {
-                "gress" : "ingress",
-                "field_name" : "Dequeue_head_tmp",
-                "start_bit" : 0,
-                "width" : 32
-              }
-            ],
-            "tags" : ["dependency"]
-          }
-        },
-        {
-          "id" : "17",
+          "id" : "22",
           "source" : "0",
           "target" : "1",
           "metadata" : {
@@ -458,7 +552,7 @@
           }
         },
         {
-          "id" : "18",
+          "id" : "23",
           "source" : "0",
           "target" : "6",
           "metadata" : {
@@ -470,7 +564,7 @@
           }
         },
         {
-          "id" : "19",
+          "id" : "24",
           "source" : "1",
           "target" : "2",
           "metadata" : {
@@ -480,7 +574,7 @@
           }
         },
         {
-          "id" : "20",
+          "id" : "25",
           "source" : "2",
           "target" : "3",
           "metadata" : {
@@ -491,7 +585,7 @@
           }
         },
         {
-          "id" : "21",
+          "id" : "26",
           "source" : "3",
           "target" : "4",
           "metadata" : {
@@ -501,7 +595,7 @@
           }
         },
         {
-          "id" : "22",
+          "id" : "27",
           "source" : "4",
           "target" : "5",
           "metadata" : {
@@ -511,9 +605,9 @@
           }
         },
         {
-          "id" : "23",
+          "id" : "28",
           "source" : "5",
-          "target" : "10",
+          "target" : "11",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -521,9 +615,19 @@
           }
         },
         {
-          "id" : "24",
+          "id" : "29",
           "source" : "6",
           "target" : "7",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "30",
+          "source" : "7",
+          "target" : "8",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -532,9 +636,9 @@
           }
         },
         {
-          "id" : "25",
-          "source" : "7",
-          "target" : "8",
+          "id" : "31",
+          "source" : "8",
+          "target" : "9",
           "metadata" : {
             "type" : "control",
             "sub_type" : "condition",
@@ -544,9 +648,9 @@
           }
         },
         {
-          "id" : "26",
-          "source" : "7",
-          "target" : "10",
+          "id" : "32",
+          "source" : "8",
+          "target" : "11",
           "metadata" : {
             "type" : "control",
             "sub_type" : "condition",
@@ -555,9 +659,9 @@
           }
         },
         {
-          "id" : "27",
-          "source" : "8",
-          "target" : "9",
+          "id" : "33",
+          "source" : "9",
+          "target" : "10",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -566,9 +670,9 @@
           }
         },
         {
-          "id" : "28",
-          "source" : "9",
-          "target" : "10",
+          "id" : "34",
+          "source" : "10",
+          "target" : "11",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -606,7 +710,33 @@
           "id" : "1",
           "metadata" : {
             "placement" : {
-              "logical_table_id" : 1,
+              "logical_table_id" : 2,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Enqueue.left_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "lefts",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Enqueue_left_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "2",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 3,
               "stage_number" : 0
             },
             "tables" : [
@@ -629,10 +759,10 @@
           }
         },
         {
-          "id" : "2",
+          "id" : "3",
           "metadata" : {
             "placement" : {
-              "logical_table_id" : 3,
+              "logical_table_id" : 5,
               "stage_number" : 0
             },
             "tables" : [
@@ -647,32 +777,6 @@
               },
               {
                 "name" : "Enqueue_inc_size_table$tind",
-                "table_type" : "ternary_indirect"
-              }
-            ],
-            "min_stage" : 0,
-            "dep_chain" : 0
-          }
-        },
-        {
-          "id" : "3",
-          "metadata" : {
-            "placement" : {
-              "logical_table_id" : 4,
-              "stage_number" : 0
-            },
-            "tables" : [
-              {
-                "name" : "SwitchIngress.Enqueue.left_table",
-                "table_type" : "match",
-                "match_type" : "ternary"
-              },
-              {
-                "name" : "lefts",
-                "table_type" : "stateful"
-              },
-              {
-                "name" : "Enqueue_left_table$tind",
                 "table_type" : "ternary_indirect"
               }
             ],
@@ -732,7 +836,33 @@
           "id" : "6",
           "metadata" : {
             "placement" : {
-              "logical_table_id" : 2,
+              "logical_table_id" : 1,
+              "stage_number" : 0
+            },
+            "tables" : [
+              {
+                "name" : "SwitchIngress.Dequeue.left_table",
+                "table_type" : "match",
+                "match_type" : "ternary"
+              },
+              {
+                "name" : "lefts",
+                "table_type" : "stateful"
+              },
+              {
+                "name" : "Dequeue_left_table$tind",
+                "table_type" : "ternary_indirect"
+              }
+            ],
+            "min_stage" : 0,
+            "dep_chain" : 2
+          }
+        },
+        {
+          "id" : "7",
+          "metadata" : {
+            "placement" : {
+              "logical_table_id" : 4,
               "stage_number" : 0
             },
             "tables" : [
@@ -755,7 +885,7 @@
           }
         },
         {
-          "id" : "7",
+          "id" : "8",
           "metadata" : {
             "placement" : {
               "logical_table_id" : 1,
@@ -781,7 +911,7 @@
           }
         },
         {
-          "id" : "8",
+          "id" : "9",
           "metadata" : {
             "placement" : {
               "logical_table_id" : 0,
@@ -803,7 +933,7 @@
           }
         },
         {
-          "id" : "9",
+          "id" : "10",
           "metadata" : {
             "tables" : [
               {
@@ -896,13 +1026,25 @@
             "type" : "control",
             "sub_type" : "action",
             "action_name" : "NoAction",
+            "is_critical" : true,
             "tags" : ["dependency"]
           }
         },
         {
           "id" : "7",
-          "source" : "7",
+          "source" : "0",
           "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "action",
+            "action_name" : "NoAction",
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "8",
+          "source" : "8",
+          "target" : "9",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -910,8 +1052,8 @@
           }
         },
         {
-          "id" : "8",
-          "source" : "1",
+          "id" : "9",
+          "source" : "2",
           "target" : "4",
           "metadata" : {
             "type" : "match",
@@ -929,7 +1071,20 @@
           }
         },
         {
-          "id" : "9",
+          "id" : "10",
+          "source" : "1",
+          "target" : "4",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "11",
           "source" : "4",
           "target" : "5",
           "metadata" : {
@@ -948,9 +1103,9 @@
           }
         },
         {
-          "id" : "10",
-          "source" : "6",
-          "target" : "7",
+          "id" : "12",
+          "source" : "7",
+          "target" : "8",
           "metadata" : {
             "type" : "action",
             "sub_type" : "action_read",
@@ -961,9 +1116,22 @@
           }
         },
         {
-          "id" : "11",
-          "source" : "7",
+          "id" : "13",
+          "source" : "6",
           "target" : "8",
+          "metadata" : {
+            "type" : "action",
+            "sub_type" : "action_read",
+            "dep_fields" : [],
+            "action_name" : "",
+            "is_critical" : true,
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "14",
+          "source" : "8",
+          "target" : "9",
           "metadata" : {
             "type" : "match",
             "sub_type" : "ixbar_read",
@@ -980,7 +1148,7 @@
           }
         },
         {
-          "id" : "12",
+          "id" : "15",
           "source" : "4",
           "target" : "5",
           "metadata" : {
@@ -999,8 +1167,27 @@
           }
         },
         {
-          "id" : "13",
+          "id" : "16",
           "source" : "1",
+          "target" : "4",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Enqueue_left_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "17",
+          "source" : "2",
           "target" : "4",
           "metadata" : {
             "type" : "control",
@@ -1018,9 +1205,28 @@
           }
         },
         {
-          "id" : "14",
+          "id" : "18",
           "source" : "6",
-          "target" : "7",
+          "target" : "8",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "anti",
+            "anti_type" : "next_table_data",
+            "dep_fields" : [
+              {
+                "gress" : "ingress",
+                "field_name" : "Dequeue_left_tmp",
+                "start_bit" : 0,
+                "width" : 32
+              }
+            ],
+            "tags" : ["dependency"]
+          }
+        },
+        {
+          "id" : "19",
+          "source" : "7",
+          "target" : "8",
           "metadata" : {
             "type" : "control",
             "sub_type" : "anti",
@@ -1037,7 +1243,7 @@
           }
         },
         {
-          "id" : "15",
+          "id" : "20",
           "source" : "0",
           "target" : "1",
           "metadata" : {
@@ -1049,7 +1255,7 @@
           }
         },
         {
-          "id" : "16",
+          "id" : "21",
           "source" : "0",
           "target" : "6",
           "metadata" : {
@@ -1061,7 +1267,7 @@
           }
         },
         {
-          "id" : "17",
+          "id" : "22",
           "source" : "1",
           "target" : "2",
           "metadata" : {
@@ -1071,7 +1277,7 @@
           }
         },
         {
-          "id" : "18",
+          "id" : "23",
           "source" : "2",
           "target" : "3",
           "metadata" : {
@@ -1081,7 +1287,7 @@
           }
         },
         {
-          "id" : "19",
+          "id" : "24",
           "source" : "3",
           "target" : "4",
           "metadata" : {
@@ -1091,7 +1297,7 @@
           }
         },
         {
-          "id" : "20",
+          "id" : "25",
           "source" : "4",
           "target" : "5",
           "metadata" : {
@@ -1102,9 +1308,9 @@
           }
         },
         {
-          "id" : "21",
+          "id" : "26",
           "source" : "5",
-          "target" : "9",
+          "target" : "10",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
@@ -1112,18 +1318,17 @@
           }
         },
         {
-          "id" : "22",
+          "id" : "27",
           "source" : "6",
           "target" : "7",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",
-            "is_critical" : true,
             "tags" : ["flow"]
           }
         },
         {
-          "id" : "23",
+          "id" : "28",
           "source" : "7",
           "target" : "8",
           "metadata" : {
@@ -1134,9 +1339,20 @@
           }
         },
         {
-          "id" : "24",
-          "source" : "7",
+          "id" : "29",
+          "source" : "8",
           "target" : "9",
+          "metadata" : {
+            "type" : "control",
+            "sub_type" : "default_next_table",
+            "is_critical" : true,
+            "tags" : ["flow"]
+          }
+        },
+        {
+          "id" : "30",
+          "source" : "8",
+          "target" : "10",
           "metadata" : {
             "type" : "control",
             "sub_type" : "condition",
@@ -1145,9 +1361,9 @@
           }
         },
         {
-          "id" : "25",
-          "source" : "8",
-          "target" : "9",
+          "id" : "31",
+          "source" : "9",
+          "target" : "10",
           "metadata" : {
             "type" : "control",
             "sub_type" : "default_next_table",

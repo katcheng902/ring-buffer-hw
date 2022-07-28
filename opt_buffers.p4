@@ -15,7 +15,8 @@
  *  or implied warranties, other than those that are expressly stated in the
  *  License.
  ******************************************************************************/
-/*#include "registers.p4"*/
+#include "registers.p4"
+/*
 #include <core.p4>
 #if __TARGET_TOFINO__ == 3
 #include <t3na.p4>
@@ -41,9 +42,8 @@ Register<bit<REG_SIZE>, bit<32>> (16, 0) heads;
 Register<bit<REG_SIZE>, bit<32>> (16,0) tails;
 Register<bit<REG_SIZE>, bit<32>> (16,0) sizes;
 Register<bit<1>, bit<32>> (16,0) firsts;
-/*Register<bit<REG_SIZE>, bit<32>> (8, 0) caps;*/
 Register<bit<32>, bit<32>> (TOTAL, 0) ring_buffers;
-
+*/
 struct pair {
     bit<32>     first;
     bit<32>     second;

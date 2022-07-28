@@ -1,523 +1,11 @@
 {
+  "build_date": "Tue Jul 26 18:01:48 2022",
   "schema_version": "2.4.0",
-  "run_id": "1c4948baa6c6cc69",
-  "program_name": "ring_buffer.p4",
   "compiler_version": "9.8.0",
-  "build_date": "Thu Jul 21 18:01:10 2022",
   "resources": {
-    "parser": {
-      "nParsers": 18,
-      "parsers": [
-        {
-          "states": [
-            {
-              "previous_state_name": "$entry_point.start",
-              "tcam_row": 255,
-              "next_state_name": "END",
-              "previous_state_id": 6,
-              "next_state_id": 2,
-              "shifts": 0,
-              "matchesOn": [],
-              "has_counter": false,
-              "extracts": []
-            }
-          ],
-          "nStates": 256,
-          "gress": "egress",
-          "parser_id": 0
-        },
-        {
-          "phase0": {
-            "used_by": "SwitchIngressParser.$PORT_METADATA",
-            "used_for": "set_port_metadata"
-          },
-          "states": [
-            {
-              "previous_state_name": "$entry_point",
-              "tcam_row": 255,
-              "next_state_name": "start",
-              "previous_state_id": 1,
-              "next_state_id": 0,
-              "shifts": 0,
-              "matchesOn": [],
-              "savesTo": [
-                {
-                  "hardware_id": 2,
-                  "buffer_offset": 0
-                }
-              ],
-              "has_counter": false,
-              "extracts": []
-            },
-            {
-              "previous_state_name": "start",
-              "tcam_row": 254,
-              "next_state_name": "END",
-              "previous_state_id": 0,
-              "next_state_id": 2,
-              "shifts": 8,
-              "matchesOn": [
-                {
-                  "value": "0b1*******",
-                  "hardware_id": 2,
-                  "bit_width": 8
-                }
-              ],
-              "has_counter": false,
-              "extracts": []
-            },
-            {
-              "previous_state_name": "start",
-              "tcam_row": 253,
-              "next_state_name": "TofinoIngressParser_parse_port_metadata",
-              "previous_state_id": 0,
-              "next_state_id": 3,
-              "shifts": 8,
-              "matchesOn": [
-                {
-                  "value": "0b0*******",
-                  "hardware_id": 2,
-                  "bit_width": 8
-                }
-              ],
-              "has_counter": false,
-              "extracts": []
-            },
-            {
-              "previous_state_name": "TofinoIngressParser_parse_port_metadata",
-              "tcam_row": 252,
-              "next_state_name": "TofinoIngressParser_parse_port_metadata.$oob_stall_0",
-              "previous_state_id": 3,
-              "next_state_id": 4,
-              "shifts": 32,
-              "matchesOn": [],
-              "has_counter": false,
-              "extracts": [
-                {
-                  "extractor_id": 0,
-                  "buffer_offset": 8,
-                  "dest_container": 321,
-                  "bit_width": 16
-                },
-                {
-                  "extractor_id": 0,
-                  "buffer_offset": 10,
-                  "dest_container": 256,
-                  "bit_width": 32
-                },
-                {
-                  "extractor_id": 1,
-                  "buffer_offset": 14,
-                  "dest_container": 128,
-                  "bit_width": 16
-                },
-                {
-                  "extractor_id": 1,
-                  "buffer_offset": 16,
-                  "dest_container": 0,
-                  "bit_width": 32
-                },
-                {
-                  "extractor_id": 2,
-                  "buffer_offset": 20,
-                  "dest_container": 320,
-                  "bit_width": 16
-                },
-                {
-                  "extractor_id": 0,
-                  "dest_container": 65,
-                  "constant_value": 1,
-                  "bit_width": 8
-                }
-              ]
-            },
-            {
-              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$oob_stall_0",
-              "tcam_row": 251,
-              "next_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
-              "previous_state_id": 4,
-              "next_state_id": 5,
-              "shifts": 0,
-              "matchesOn": [],
-              "savesTo": [
-                {
-                  "hardware_id": 0,
-                  "buffer_offset": 6
-                },
-                {
-                  "hardware_id": 1,
-                  "buffer_offset": 8
-                },
-                {
-                  "hardware_id": 2,
-                  "buffer_offset": 9
-                }
-              ],
-              "has_counter": false,
-              "extracts": []
-            },
-            {
-              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
-              "tcam_row": 250,
-              "next_state_name": "END",
-              "previous_state_id": 5,
-              "next_state_id": 2,
-              "shifts": 10,
-              "matchesOn": [
-                {
-                  "value": "0x04",
-                  "hardware_id": 2,
-                  "bit_width": 8
-                },
-                {
-                  "value": "0x03",
-                  "hardware_id": 1,
-                  "bit_width": 8
-                },
-                {
-                  "value": "0x0102",
-                  "hardware_id": 0,
-                  "bit_width": 16
-                }
-              ],
-              "has_counter": false,
-              "extracts": [
-                {
-                  "extractor_id": 0,
-                  "buffer_offset": 6,
-                  "dest_container": 1,
-                  "bit_width": 32
-                }
-              ]
-            },
-            {
-              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
-              "tcam_row": 249,
-              "next_state_name": "END",
-              "previous_state_id": 5,
-              "next_state_id": 2,
-              "shifts": 10,
-              "matchesOn": [
-                {
-                  "value": "0x**",
-                  "hardware_id": 2,
-                  "bit_width": 8
-                },
-                {
-                  "value": "0x**",
-                  "hardware_id": 1,
-                  "bit_width": 8
-                },
-                {
-                  "value": "0x****",
-                  "hardware_id": 0,
-                  "bit_width": 16
-                }
-              ],
-              "has_counter": false,
-              "extracts": [
-                {
-                  "extractor_id": 0,
-                  "buffer_offset": 6,
-                  "dest_container": 1,
-                  "bit_width": 32
-                }
-              ]
-            }
-          ],
-          "nStates": 256,
-          "gress": "ingress",
-          "parser_id": 0
-        }
-      ]
-    },
-    "deparser": [
-      {
-        "pov": {
-          "pov_bits": [
-            {
-              "pov_bit": 0,
-              "phv_container": 65,
-              "phv_container_bit": 0,
-              "pov_name": "hdr.ethernet.$valid"
-            }
-          ],
-          "size": 1
-        },
-        "learning_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "gress": "ingress",
-        "mirror_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "resubmit_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "fde_entries": [
-          {
-            "pov_bit": 0,
-            "pov_name": "hdr.ethernet.$valid",
-            "entry": 0,
-            "chunks": [
-              {
-                "chunk_number": 0,
-                "chunk": {
-                  "phv_container": 321
-                }
-              },
-              {
-                "chunk_number": 1,
-                "chunk": {
-                  "phv_container": 321
-                }
-              },
-              {
-                "chunk_number": 2,
-                "chunk": {
-                  "phv_container": 256
-                }
-              },
-              {
-                "chunk_number": 3,
-                "chunk": {
-                  "phv_container": 256
-                }
-              }
-            ]
-          },
-          {
-            "pov_bit": 0,
-            "pov_name": "hdr.ethernet.$valid",
-            "entry": 1,
-            "chunks": [
-              {
-                "chunk_number": 0,
-                "chunk": {
-                  "phv_container": 256
-                }
-              },
-              {
-                "chunk_number": 1,
-                "chunk": {
-                  "phv_container": 256
-                }
-              },
-              {
-                "chunk_number": 2,
-                "chunk": {
-                  "phv_container": 128
-                }
-              },
-              {
-                "chunk_number": 3,
-                "chunk": {
-                  "phv_container": 128
-                }
-              }
-            ]
-          },
-          {
-            "pov_bit": 0,
-            "pov_name": "hdr.ethernet.$valid",
-            "entry": 2,
-            "chunks": [
-              {
-                "chunk_number": 0,
-                "chunk": {
-                  "phv_container": 0
-                }
-              },
-              {
-                "chunk_number": 1,
-                "chunk": {
-                  "phv_container": 0
-                }
-              },
-              {
-                "chunk_number": 2,
-                "chunk": {
-                  "phv_container": 0
-                }
-              },
-              {
-                "chunk_number": 3,
-                "chunk": {
-                  "phv_container": 0
-                }
-              }
-            ]
-          }
-        ],
-        "nFdeEntries": 192
-      },
-      {
-        "pov": {
-          "pov_bits": [],
-          "size": 0
-        },
-        "learning_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "gress": "egress",
-        "mirror_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "resubmit_table": {
-          "nTables": 0,
-          "table_phv": [],
-          "maxBytes": 0
-        },
-        "fde_entries": [],
-        "nFdeEntries": 192
-      }
-    ],
     "phv_containers": {
-      "tagalong": [
-        {
-          "units": 32,
-          "width": 8,
-          "addresses": [
-            288,
-            289,
-            290,
-            291,
-            292,
-            293,
-            294,
-            295,
-            296,
-            297,
-            298,
-            299,
-            300,
-            301,
-            302,
-            303,
-            304,
-            305,
-            306,
-            307,
-            308,
-            309,
-            310,
-            311,
-            312,
-            313,
-            314,
-            315,
-            316,
-            317,
-            318,
-            319
-          ]
-        },
-        {
-          "units": 48,
-          "width": 16,
-          "addresses": [
-            320,
-            321,
-            322,
-            323,
-            324,
-            325,
-            326,
-            327,
-            328,
-            329,
-            330,
-            331,
-            332,
-            333,
-            334,
-            335,
-            336,
-            337,
-            338,
-            339,
-            340,
-            341,
-            342,
-            343,
-            344,
-            345,
-            346,
-            347,
-            348,
-            349,
-            350,
-            351,
-            352,
-            353,
-            354,
-            355,
-            356,
-            357,
-            358,
-            359,
-            360,
-            361,
-            362,
-            363,
-            364,
-            365,
-            366,
-            367
-          ]
-        },
-        {
-          "units": 32,
-          "width": 32,
-          "addresses": [
-            256,
-            257,
-            258,
-            259,
-            260,
-            261,
-            262,
-            263,
-            264,
-            265,
-            266,
-            267,
-            268,
-            269,
-            270,
-            271,
-            272,
-            273,
-            274,
-            275,
-            276,
-            277,
-            278,
-            279,
-            280,
-            281,
-            282,
-            283,
-            284,
-            285,
-            286,
-            287
-          ]
-        }
-      ],
       "normal": [
         {
-          "units": 64,
           "width": 8,
           "addresses": [
             64,
@@ -584,10 +72,10 @@
             125,
             126,
             127
-          ]
+          ],
+          "units": 64
         },
         {
-          "units": 96,
           "width": 16,
           "addresses": [
             128,
@@ -686,10 +174,10 @@
             221,
             222,
             223
-          ]
+          ],
+          "units": 96
         },
         {
-          "units": 64,
           "width": 32,
           "addresses": [
             0,
@@ -756,61 +244,1059 @@
             61,
             62,
             63
-          ]
+          ],
+          "units": 64
+        }
+      ],
+      "tagalong": [
+        {
+          "width": 8,
+          "addresses": [
+            288,
+            289,
+            290,
+            291,
+            292,
+            293,
+            294,
+            295,
+            296,
+            297,
+            298,
+            299,
+            300,
+            301,
+            302,
+            303,
+            304,
+            305,
+            306,
+            307,
+            308,
+            309,
+            310,
+            311,
+            312,
+            313,
+            314,
+            315,
+            316,
+            317,
+            318,
+            319
+          ],
+          "units": 32
+        },
+        {
+          "width": 16,
+          "addresses": [
+            320,
+            321,
+            322,
+            323,
+            324,
+            325,
+            326,
+            327,
+            328,
+            329,
+            330,
+            331,
+            332,
+            333,
+            334,
+            335,
+            336,
+            337,
+            338,
+            339,
+            340,
+            341,
+            342,
+            343,
+            344,
+            345,
+            346,
+            347,
+            348,
+            349,
+            350,
+            351,
+            352,
+            353,
+            354,
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366,
+            367
+          ],
+          "units": 48
+        },
+        {
+          "width": 32,
+          "addresses": [
+            256,
+            257,
+            258,
+            259,
+            260,
+            261,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267,
+            268,
+            269,
+            270,
+            271,
+            272,
+            273,
+            274,
+            275,
+            276,
+            277,
+            278,
+            279,
+            280,
+            281,
+            282,
+            283,
+            284,
+            285,
+            286,
+            287
+          ],
+          "units": 32
         }
       ]
     },
+    "deparser": [
+      {
+        "nFdeEntries": 192,
+        "mirror_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        },
+        "fde_entries": [
+          {
+            "entry": 0,
+            "pov_name": "hdr.ethernet.$valid",
+            "chunks": [
+              {
+                "chunk_number": 0,
+                "chunk": {
+                  "phv_container": 321
+                }
+              },
+              {
+                "chunk_number": 1,
+                "chunk": {
+                  "phv_container": 321
+                }
+              },
+              {
+                "chunk_number": 2,
+                "chunk": {
+                  "phv_container": 256
+                }
+              },
+              {
+                "chunk_number": 3,
+                "chunk": {
+                  "phv_container": 256
+                }
+              }
+            ],
+            "pov_bit": 0
+          },
+          {
+            "entry": 1,
+            "pov_name": "hdr.ethernet.$valid",
+            "chunks": [
+              {
+                "chunk_number": 0,
+                "chunk": {
+                  "phv_container": 256
+                }
+              },
+              {
+                "chunk_number": 1,
+                "chunk": {
+                  "phv_container": 256
+                }
+              },
+              {
+                "chunk_number": 2,
+                "chunk": {
+                  "phv_container": 128
+                }
+              },
+              {
+                "chunk_number": 3,
+                "chunk": {
+                  "phv_container": 128
+                }
+              }
+            ],
+            "pov_bit": 0
+          },
+          {
+            "entry": 2,
+            "pov_name": "hdr.ethernet.$valid",
+            "chunks": [
+              {
+                "chunk_number": 0,
+                "chunk": {
+                  "phv_container": 0
+                }
+              },
+              {
+                "chunk_number": 1,
+                "chunk": {
+                  "phv_container": 0
+                }
+              },
+              {
+                "chunk_number": 2,
+                "chunk": {
+                  "phv_container": 0
+                }
+              },
+              {
+                "chunk_number": 3,
+                "chunk": {
+                  "phv_container": 0
+                }
+              }
+            ],
+            "pov_bit": 0
+          }
+        ],
+        "resubmit_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        },
+        "pov": {
+          "pov_bits": [
+            {
+              "phv_container": 65,
+              "pov_name": "hdr.ethernet.$valid",
+              "phv_container_bit": 0,
+              "pov_bit": 0
+            }
+          ],
+          "size": 1
+        },
+        "gress": "ingress",
+        "learning_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        }
+      },
+      {
+        "nFdeEntries": 192,
+        "mirror_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        },
+        "fde_entries": [],
+        "resubmit_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        },
+        "pov": {
+          "pov_bits": [],
+          "size": 0
+        },
+        "gress": "egress",
+        "learning_table": {
+          "nTables": 0,
+          "table_phv": [],
+          "maxBytes": 0
+        }
+      }
+    ],
     "mau": {
       "mau_stages": [
         {
-          "exm_result_buses": {
-            "ids": [
+          "action_slots": [
+            {
+              "slot_bit_width": 8,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 16,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 32,
+              "maximum_slots": 32,
+              "number_used": 0
+            }
+          ],
+          "stage_number": 0,
+          "hash_bits": {
+            "nFunctions": 8,
+            "nBits": 52,
+            "bits": [
               {
-                "id": 14,
+                "hash_bit": 0,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 1,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 2,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 3,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 4,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 5,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 6,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 7,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 8,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 9,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 10,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 11,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 12,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 13,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 14,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 15,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 16,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 17,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 18,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 19,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 1,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 20,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 21,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 22,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 23,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 24,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 25,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 26,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 27,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 28,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 29,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 2,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 30,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 31,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 32,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 33,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 34,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 35,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 36,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 37,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 38,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              },
+              {
+                "hash_bit": 39,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 3,
+                    "type": "way_line_select"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.dmac",
+                "used_for": "exact_match"
+              }
+            ]
+          },
+          "rams": {
+            "srams": [
+              {
+                "column": 0,
+                "way": 0,
                 "usages": [
                   {
                     "used_by": "SwitchIngress.dmac",
                     "used_for": "match_entry_ram"
                   }
-                ]
+                ],
+                "row": 7
+              },
+              {
+                "column": 1,
+                "way": 1,
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.dmac",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 2,
+                "way": 2,
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.dmac",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 3,
+                "way": 3,
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.dmac",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 4,
+                "usages": [
+                  {
+                    "used_by": "first",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 5
+              },
+              {
+                "column": 5,
+                "usages": [
+                  {
+                    "used_by": "first",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 5
+              },
+              {
+                "column": 4,
+                "usages": [
+                  {
+                    "used_by": "buffer_size",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 5,
+                "usages": [
+                  {
+                    "used_by": "buffer_size",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
               }
             ],
-            "size": 16
+            "nColumns": 10,
+            "nRows": 8
+          },
+          "action_bus_bytes": {
+            "bytes": [
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Enqueue.first_table"
+                ],
+                "byte_number": 96
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Enqueue.first_table"
+                ],
+                "byte_number": 97
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Enqueue.first_table"
+                ],
+                "byte_number": 98
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Enqueue.first_table"
+                ],
+                "byte_number": 99
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Dequeue.dec_size_table",
+                  "SwitchIngress.Enqueue.inc_size_table"
+                ],
+                "byte_number": 104
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Dequeue.dec_size_table",
+                  "SwitchIngress.Enqueue.inc_size_table"
+                ],
+                "byte_number": 105
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Dequeue.dec_size_table",
+                  "SwitchIngress.Enqueue.inc_size_table"
+                ],
+                "byte_number": 106
+              },
+              {
+                "used_by_tables": [
+                  "SwitchIngress.Dequeue.dec_size_table",
+                  "SwitchIngress.Enqueue.inc_size_table"
+                ],
+                "byte_number": 107
+              }
+            ],
+            "size": 128
+          },
+          "map_rams": {
+            "nUnits": 6,
+            "nRows": 8,
+            "maprams": [
+              {
+                "unit_id": 0,
+                "row": 5,
+                "usages": [
+                  {
+                    "used_by": "first",
+                    "used_for": "stateful_ram"
+                  }
+                ]
+              },
+              {
+                "unit_id": 1,
+                "row": 5,
+                "usages": [
+                  {
+                    "used_by": "first",
+                    "used_for": "stateful_ram"
+                  }
+                ]
+              },
+              {
+                "unit_id": 0,
+                "row": 7,
+                "usages": [
+                  {
+                    "used_by": "buffer_size",
+                    "used_for": "stateful_ram"
+                  }
+                ]
+              },
+              {
+                "unit_id": 1,
+                "row": 7,
+                "usages": [
+                  {
+                    "used_by": "buffer_size",
+                    "used_for": "stateful_ram"
+                  }
+                ]
+              }
+            ]
+          },
+          "meter_alus": {
+            "meters": [
+              {
+                "usages": [
+                  {
+                    "used_by": "first",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 5
+              },
+              {
+                "usages": [
+                  {
+                    "used_by": "buffer_size",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              }
+            ],
+            "nAlus": 4
+          },
+          "statistic_alus": {
+            "stats": [],
+            "nAlus": 4
+          },
+          "gateways": {
+            "nUnits": 2,
+            "nRows": 8,
+            "gateways": []
           },
           "tind_result_buses": {
             "ids": [
               {
-                "id": 0,
                 "usages": [
                   {
                     "used_by": "SwitchIngress.Dequeue.dec_size_table",
                     "used_for": "ternary_indirection_ram"
                   }
-                ]
+                ],
+                "id": 0
               },
               {
-                "id": 1,
                 "usages": [
                   {
                     "used_by": "SwitchIngress.Enqueue.first_table",
                     "used_for": "ternary_indirection_ram"
                   }
-                ]
+                ],
+                "id": 1
               },
               {
-                "id": 2,
                 "usages": [
                   {
                     "used_by": "SwitchIngress.Enqueue.inc_size_table",
                     "used_for": "ternary_indirection_ram"
                   }
-                ]
+                ],
+                "id": 2
               }
             ],
             "size": 16
           },
           "stashes": {
-            "nRows": 8,
             "nUnits": 2,
             "stashes": [
               {
@@ -823,539 +1309,8 @@
                   }
                 ]
               }
-            ]
-          },
-          "hash_bits": {
-            "nFunctions": 8,
-            "bits": [
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 0,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 1,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 2,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 3,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 4,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 5,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 6,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 7,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 8,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 9,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 10,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 11,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 12,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 13,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 14,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 15,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 16,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 17,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 18,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 1
-                  }
-                ],
-                "hash_bit": 19,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 20,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 21,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 22,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 23,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 24,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 25,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 26,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 27,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 28,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 2
-                  }
-                ],
-                "hash_bit": 29,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 30,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 31,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 32,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 33,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 34,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 35,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 36,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 37,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 38,
-                "used_for": "exact_match"
-              },
-              {
-                "used_by_table": "SwitchIngress.dmac",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "way_line_select",
-                    "value": 3
-                  }
-                ],
-                "hash_bit": 39,
-                "used_for": "exact_match"
-              }
             ],
-            "nBits": 52
-          },
-          "map_rams": {
-            "maprams": [
-              {
-                "unit_id": 0,
-                "row": 5,
-                "usages": [
-                  {
-                    "used_by": "first",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "unit_id": 1,
-                "row": 5,
-                "usages": [
-                  {
-                    "used_by": "first",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "unit_id": 0,
-                "row": 7,
-                "usages": [
-                  {
-                    "used_by": "buffer_size",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "unit_id": 1,
-                "row": 7,
-                "usages": [
-                  {
-                    "used_by": "buffer_size",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              }
-            ],
-            "nRows": 8,
-            "nUnits": 6
+            "nRows": 8
           },
           "xbar_bytes": {
             "ternary_size": 66,
@@ -1364,16 +1319,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 24,
+                        "offset": 0,
                         "msb": 31
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 3
@@ -1382,16 +1337,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 16,
+                        "offset": 0,
                         "msb": 23
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 2
@@ -1400,16 +1355,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 8,
+                        "offset": 0,
                         "msb": 15
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 1
@@ -1418,16 +1373,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 0,
+                        "offset": 0,
                         "msb": 7
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 0
@@ -1436,16 +1391,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 40,
+                        "offset": 0,
                         "msb": 47
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 5
@@ -1454,16 +1409,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "exact_match",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ethernet.src_addr",
-                        "offset": 0,
                         "lsb": 32,
+                        "offset": 0,
                         "msb": 39
                       }
                     ],
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "exact_match"
+                    "used_by": "SwitchIngress.dmac"
                   }
                 ],
                 "byte_number": 4
@@ -1472,112 +1427,39 @@
             "size": 194,
             "exact_size": 128
           },
-          "gateways": {
-            "nRows": 8,
-            "gateways": [],
-            "nUnits": 2
-          },
-          "meter_alus": {
-            "nAlus": 4,
-            "meters": [
-              {
-                "usages": [
-                  {
-                    "used_by": "first",
-                    "used_for": "stateful_ram"
-                  }
-                ],
-                "row": 5
-              },
-              {
-                "usages": [
-                  {
-                    "used_by": "buffer_size",
-                    "used_for": "stateful_ram"
-                  }
-                ],
-                "row": 7
-              }
-            ]
-          },
-          "action_slots": [
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 8,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 16,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 32,
-              "number_used": 0
-            }
-          ],
-          "statistic_alus": {
-            "stats": [],
-            "nAlus": 4
-          },
-          "exm_search_buses": {
-            "ids": [
-              {
-                "id": 14,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
-              }
-            ],
-            "size": 16
-          },
-          "hash_distribution_units": {
-            "nHashIds": 2,
-            "nUnitIds": 3,
-            "units": []
-          },
-          "tcams": {
-            "nColumns": 2,
-            "nRows": 12,
-            "tcams": []
-          },
           "vliw": {
             "instructions": [
               {
                 "color_usages": [
                   {
-                    "color": 0,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.dmac",
                         "action_names": [
                           "NoAction"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.dmac"
                       },
                       {
-                        "used_by": "SwitchIngress.Enqueue.inc_size_table",
                         "action_names": [
                           "SwitchIngress.Enqueue.inc_size"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.Enqueue.inc_size_table"
                       }
-                    ]
+                    ],
+                    "color": 0,
+                    "gress": "ingress"
                   },
                   {
-                    "color": 1,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.dmac",
                         "action_names": [
                           "SwitchIngress.drop"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.dmac"
                       }
-                    ]
+                    ],
+                    "color": 1,
+                    "gress": "ingress"
                   }
                 ],
                 "instruction_number": 0
@@ -1585,28 +1467,28 @@
               {
                 "color_usages": [
                   {
-                    "color": 0,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.Enqueue.first_table",
                         "action_names": [
                           "SwitchIngress.Enqueue.first_action"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.Enqueue.first_table"
                       }
-                    ]
+                    ],
+                    "color": 0,
+                    "gress": "ingress"
                   },
                   {
-                    "color": 1,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.Dequeue.dec_size_table",
                         "action_names": [
                           "SwitchIngress.Dequeue.dec_size"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.Dequeue.dec_size_table"
                       }
-                    ]
+                    ],
+                    "color": 1,
+                    "gress": "ingress"
                   }
                 ],
                 "instruction_number": 1
@@ -1614,228 +1496,205 @@
             ],
             "size": 32
           },
+          "exm_search_buses": {
+            "ids": [
+              {
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.dmac",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "id": 14
+              }
+            ],
+            "size": 16
+          },
+          "exm_result_buses": {
+            "ids": [
+              {
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.dmac",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "id": 14
+              }
+            ],
+            "size": 16
+          },
+          "tcams": {
+            "nColumns": 2,
+            "nRows": 12,
+            "tcams": []
+          },
+          "logical_tables": {
+            "ids": [
+              {
+                "id": 0,
+                "table_name": "SwitchIngress.dmac"
+              },
+              {
+                "id": 1,
+                "table_name": "SwitchIngress.Enqueue.first_table"
+              },
+              {
+                "id": 3,
+                "table_name": "SwitchIngress.Enqueue.inc_size_table"
+              },
+              {
+                "id": 2,
+                "table_name": "SwitchIngress.Dequeue.dec_size_table"
+              }
+            ],
+            "size": 16
+          },
+          "hash_distribution_units": {
+            "nHashIds": 2,
+            "units": [],
+            "nUnitIds": 3
+          }
+        },
+        {
+          "action_slots": [
+            {
+              "slot_bit_width": 8,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 16,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 32,
+              "maximum_slots": 32,
+              "number_used": 0
+            }
+          ],
+          "stage_number": 1,
+          "hash_bits": {
+            "nFunctions": 8,
+            "nBits": 52,
+            "bits": [
+              {
+                "hash_bit": 0,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 0,
+                    "type": "selection_bit"
+                  }
+                ],
+                "used_by_table": "tail",
+                "used_for": "stateful_alu"
+              }
+            ]
+          },
+          "rams": {
+            "srams": [
+              {
+                "column": 4,
+                "usages": [
+                  {
+                    "used_by": "tail",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 5,
+                "usages": [
+                  {
+                    "used_by": "tail",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 4,
+                "usages": [
+                  {
+                    "used_by": "head",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 5
+              },
+              {
+                "column": 5,
+                "usages": [
+                  {
+                    "used_by": "head",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 5
+              }
+            ],
+            "nColumns": 10,
+            "nRows": 8
+          },
           "action_bus_bytes": {
             "bytes": [
               {
                 "used_by_tables": [
-                  "SwitchIngress.Enqueue.first_table"
+                  "SwitchIngress.Enqueue.inc_tail_table"
                 ],
                 "byte_number": 96
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Enqueue.first_table"
+                  "SwitchIngress.Enqueue.inc_tail_table"
                 ],
                 "byte_number": 97
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Enqueue.first_table"
+                  "SwitchIngress.Enqueue.inc_tail_table"
                 ],
                 "byte_number": 98
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Enqueue.first_table"
+                  "SwitchIngress.Enqueue.inc_tail_table"
                 ],
                 "byte_number": 99
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Dequeue.dec_size_table",
-                  "SwitchIngress.Enqueue.inc_size_table"
+                  "SwitchIngress.Dequeue.inc_head_table"
                 ],
                 "byte_number": 104
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Dequeue.dec_size_table",
-                  "SwitchIngress.Enqueue.inc_size_table"
+                  "SwitchIngress.Dequeue.inc_head_table"
                 ],
                 "byte_number": 105
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Dequeue.dec_size_table",
-                  "SwitchIngress.Enqueue.inc_size_table"
+                  "SwitchIngress.Dequeue.inc_head_table"
                 ],
                 "byte_number": 106
               },
               {
                 "used_by_tables": [
-                  "SwitchIngress.Dequeue.dec_size_table",
-                  "SwitchIngress.Enqueue.inc_size_table"
+                  "SwitchIngress.Dequeue.inc_head_table"
                 ],
                 "byte_number": 107
               }
             ],
             "size": 128
           },
-          "logical_tables": {
-            "ids": [
-              {
-                "table_name": "SwitchIngress.dmac",
-                "id": 0
-              },
-              {
-                "table_name": "SwitchIngress.Enqueue.first_table",
-                "id": 1
-              },
-              {
-                "table_name": "SwitchIngress.Enqueue.inc_size_table",
-                "id": 3
-              },
-              {
-                "table_name": "SwitchIngress.Dequeue.dec_size_table",
-                "id": 2
-              }
-            ],
-            "size": 16
-          },
-          "stage_number": 0,
-          "rams": {
-            "nColumns": 10,
-            "srams": [
-              {
-                "way": 0,
-                "row": 7,
-                "column": 0,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
-              },
-              {
-                "way": 1,
-                "row": 7,
-                "column": 1,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
-              },
-              {
-                "way": 2,
-                "row": 7,
-                "column": 2,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
-              },
-              {
-                "way": 3,
-                "row": 7,
-                "column": 3,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.dmac",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
-              },
-              {
-                "row": 5,
-                "column": 4,
-                "usages": [
-                  {
-                    "used_by": "first",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 5,
-                "column": 5,
-                "usages": [
-                  {
-                    "used_by": "first",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 7,
-                "column": 4,
-                "usages": [
-                  {
-                    "used_by": "buffer_size",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 7,
-                "column": 5,
-                "usages": [
-                  {
-                    "used_by": "buffer_size",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              }
-            ],
-            "nRows": 8
-          }
-        },
-        {
-          "exm_result_buses": {
-            "ids": [],
-            "size": 16
-          },
-          "tind_result_buses": {
-            "ids": [
-              {
-                "id": 0,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.Enqueue.inc_tail_table",
-                    "used_for": "ternary_indirection_ram"
-                  }
-                ]
-              },
-              {
-                "id": 1,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.Dequeue.inc_head_table",
-                    "used_for": "ternary_indirection_ram"
-                  }
-                ]
-              }
-            ],
-            "size": 16
-          },
-          "stashes": {
-            "nRows": 8,
-            "nUnits": 2,
-            "stashes": []
-          },
-          "hash_bits": {
-            "nFunctions": 8,
-            "bits": [
-              {
-                "used_by_table": "tail",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "selection_bit",
-                    "value": 0
-                  }
-                ],
-                "hash_bit": 0,
-                "used_for": "stateful_alu"
-              }
-            ],
-            "nBits": 52
-          },
           "map_rams": {
+            "nUnits": 6,
+            "nRows": 8,
             "maprams": [
               {
                 "unit_id": 0,
@@ -1877,108 +1736,37 @@
                   }
                 ]
               }
-            ],
-            "nRows": 8,
-            "nUnits": 6
+            ]
           },
-          "xbar_bytes": {
-            "ternary_size": 66,
-            "bytes": [
+          "meter_alus": {
+            "meters": [
               {
-                "byte_type": "exact",
                 "usages": [
                   {
-                    "slices": [
-                      {
-                        "field_name": "ingress::Enqueue_first_tmp",
-                        "offset": 0,
-                        "lsb": 0,
-                        "msb": 0
-                      }
-                    ],
                     "used_by": "tail",
-                    "used_for": "stateful_alu"
+                    "used_for": "stateful_ram"
                   }
                 ],
-                "byte_number": 0
+                "row": 7
               },
               {
-                "byte_type": "exact",
                 "usages": [
                   {
-                    "slices": [
-                      {
-                        "field_name": "ingress::Dequeue_size_tmp",
-                        "offset": 0,
-                        "lsb": 24,
-                        "msb": 31
-                      }
-                    ],
-                    "used_by": "cond-2",
-                    "used_for": "gateway"
+                    "used_by": "head",
+                    "used_for": "stateful_ram"
                   }
                 ],
-                "byte_number": 3
-              },
-              {
-                "byte_type": "exact",
-                "usages": [
-                  {
-                    "slices": [
-                      {
-                        "field_name": "ingress::Dequeue_size_tmp",
-                        "offset": 0,
-                        "lsb": 16,
-                        "msb": 23
-                      }
-                    ],
-                    "used_by": "cond-2",
-                    "used_for": "gateway"
-                  }
-                ],
-                "byte_number": 2
-              },
-              {
-                "byte_type": "exact",
-                "usages": [
-                  {
-                    "slices": [
-                      {
-                        "field_name": "ingress::Dequeue_size_tmp",
-                        "offset": 0,
-                        "lsb": 8,
-                        "msb": 15
-                      }
-                    ],
-                    "used_by": "cond-2",
-                    "used_for": "gateway"
-                  }
-                ],
-                "byte_number": 1
-              },
-              {
-                "byte_type": "exact",
-                "usages": [
-                  {
-                    "slices": [
-                      {
-                        "field_name": "ingress::Dequeue_size_tmp",
-                        "offset": 0,
-                        "lsb": 0,
-                        "msb": 7
-                      }
-                    ],
-                    "used_by": "cond-2",
-                    "used_for": "gateway"
-                  }
-                ],
-                "byte_number": 4
+                "row": 5
               }
             ],
-            "size": 194,
-            "exact_size": 128
+            "nAlus": 4
+          },
+          "statistic_alus": {
+            "stats": [],
+            "nAlus": 4
           },
           "gateways": {
+            "nUnits": 2,
             "nRows": 8,
             "gateways": [
               {
@@ -1991,92 +1779,148 @@
                   }
                 ]
               }
-            ],
-            "nUnits": 2
+            ]
           },
-          "meter_alus": {
-            "nAlus": 4,
-            "meters": [
+          "tind_result_buses": {
+            "ids": [
               {
                 "usages": [
                   {
-                    "used_by": "tail",
-                    "used_for": "stateful_ram"
+                    "used_by": "SwitchIngress.Enqueue.inc_tail_table",
+                    "used_for": "ternary_indirection_ram"
                   }
                 ],
-                "row": 7
+                "id": 0
               },
               {
                 "usages": [
                   {
-                    "used_by": "head",
-                    "used_for": "stateful_ram"
+                    "used_by": "SwitchIngress.Dequeue.inc_head_table",
+                    "used_for": "ternary_indirection_ram"
                   }
                 ],
-                "row": 5
-              }
-            ]
-          },
-          "action_slots": [
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 8,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 16,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 32,
-              "number_used": 0
-            }
-          ],
-          "statistic_alus": {
-            "stats": [],
-            "nAlus": 4
-          },
-          "exm_search_buses": {
-            "ids": [
-              {
-                "id": 0,
-                "usages": [
-                  {
-                    "used_by": "cond-2",
-                    "used_for": "gateway"
-                  }
-                ]
+                "id": 1
               }
             ],
             "size": 16
           },
-          "hash_distribution_units": {
-            "nHashIds": 2,
-            "nUnitIds": 3,
-            "units": []
+          "stashes": {
+            "nUnits": 2,
+            "stashes": [],
+            "nRows": 8
           },
-          "tcams": {
-            "nColumns": 2,
-            "nRows": 12,
-            "tcams": []
+          "xbar_bytes": {
+            "ternary_size": 66,
+            "bytes": [
+              {
+                "byte_type": "exact",
+                "usages": [
+                  {
+                    "used_for": "stateful_alu",
+                    "slices": [
+                      {
+                        "field_name": "ingress::Enqueue_first_tmp",
+                        "lsb": 0,
+                        "offset": 0,
+                        "msb": 0
+                      }
+                    ],
+                    "used_by": "tail"
+                  }
+                ],
+                "byte_number": 0
+              },
+              {
+                "byte_type": "exact",
+                "usages": [
+                  {
+                    "used_for": "gateway",
+                    "slices": [
+                      {
+                        "field_name": "ingress::Dequeue_size_tmp",
+                        "lsb": 24,
+                        "offset": 0,
+                        "msb": 31
+                      }
+                    ],
+                    "used_by": "cond-2"
+                  }
+                ],
+                "byte_number": 3
+              },
+              {
+                "byte_type": "exact",
+                "usages": [
+                  {
+                    "used_for": "gateway",
+                    "slices": [
+                      {
+                        "field_name": "ingress::Dequeue_size_tmp",
+                        "lsb": 16,
+                        "offset": 0,
+                        "msb": 23
+                      }
+                    ],
+                    "used_by": "cond-2"
+                  }
+                ],
+                "byte_number": 2
+              },
+              {
+                "byte_type": "exact",
+                "usages": [
+                  {
+                    "used_for": "gateway",
+                    "slices": [
+                      {
+                        "field_name": "ingress::Dequeue_size_tmp",
+                        "lsb": 8,
+                        "offset": 0,
+                        "msb": 15
+                      }
+                    ],
+                    "used_by": "cond-2"
+                  }
+                ],
+                "byte_number": 1
+              },
+              {
+                "byte_type": "exact",
+                "usages": [
+                  {
+                    "used_for": "gateway",
+                    "slices": [
+                      {
+                        "field_name": "ingress::Dequeue_size_tmp",
+                        "lsb": 0,
+                        "offset": 0,
+                        "msb": 7
+                      }
+                    ],
+                    "used_by": "cond-2"
+                  }
+                ],
+                "byte_number": 4
+              }
+            ],
+            "size": 194,
+            "exact_size": 128
           },
           "vliw": {
             "instructions": [
               {
                 "color_usages": [
                   {
-                    "color": 1,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.Enqueue.inc_tail_table",
                         "action_names": [
                           "SwitchIngress.Enqueue.inc_tail"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.Enqueue.inc_tail_table"
                       }
-                    ]
+                    ],
+                    "color": 1,
+                    "gress": "ingress"
                   }
                 ],
                 "instruction_number": 0
@@ -2084,16 +1928,16 @@
               {
                 "color_usages": [
                   {
-                    "color": 0,
-                    "gress": "ingress",
                     "usages": [
                       {
-                        "used_by": "SwitchIngress.Dequeue.inc_head_table",
                         "action_names": [
                           "SwitchIngress.Dequeue.inc_head"
-                        ]
+                        ],
+                        "used_by": "SwitchIngress.Dequeue.inc_head_table"
                       }
-                    ]
+                    ],
+                    "color": 0,
+                    "gress": "ingress"
                   }
                 ],
                 "instruction_number": 1
@@ -2101,712 +1945,658 @@
             ],
             "size": 32
           },
-          "action_bus_bytes": {
-            "bytes": [
+          "exm_search_buses": {
+            "ids": [
               {
-                "used_by_tables": [
-                  "SwitchIngress.Enqueue.inc_tail_table"
+                "usages": [
+                  {
+                    "used_by": "cond-2",
+                    "used_for": "gateway"
+                  }
                 ],
-                "byte_number": 96
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Enqueue.inc_tail_table"
-                ],
-                "byte_number": 97
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Enqueue.inc_tail_table"
-                ],
-                "byte_number": 98
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Enqueue.inc_tail_table"
-                ],
-                "byte_number": 99
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Dequeue.inc_head_table"
-                ],
-                "byte_number": 104
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Dequeue.inc_head_table"
-                ],
-                "byte_number": 105
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Dequeue.inc_head_table"
-                ],
-                "byte_number": 106
-              },
-              {
-                "used_by_tables": [
-                  "SwitchIngress.Dequeue.inc_head_table"
-                ],
-                "byte_number": 107
+                "id": 0
               }
             ],
-            "size": 128
+            "size": 16
+          },
+          "exm_result_buses": {
+            "ids": [],
+            "size": 16
+          },
+          "tcams": {
+            "nColumns": 2,
+            "nRows": 12,
+            "tcams": []
           },
           "logical_tables": {
             "ids": [
               {
-                "table_name": "SwitchIngress.Enqueue.inc_tail_table",
-                "id": 0
-              },
-              {
-                "table_name": "SwitchIngress.Dequeue.inc_head_table",
-                "id": 1
-              }
-            ],
-            "size": 16
-          },
-          "stage_number": 1,
-          "rams": {
-            "nColumns": 10,
-            "srams": [
-              {
-                "row": 7,
-                "column": 4,
-                "usages": [
-                  {
-                    "used_by": "tail",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 7,
-                "column": 5,
-                "usages": [
-                  {
-                    "used_by": "tail",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 5,
-                "column": 4,
-                "usages": [
-                  {
-                    "used_by": "head",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 5,
-                "column": 5,
-                "usages": [
-                  {
-                    "used_by": "head",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              }
-            ],
-            "nRows": 8
-          }
-        },
-        {
-          "exm_result_buses": {
-            "ids": [
-              {
                 "id": 0,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
+                "table_name": "SwitchIngress.Enqueue.inc_tail_table"
               },
               {
                 "id": 1,
-                "usages": [
-                  {
-                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                    "used_for": "match_entry_ram"
-                  }
-                ]
+                "table_name": "SwitchIngress.Dequeue.inc_head_table"
               }
             ],
             "size": 16
           },
-          "tind_result_buses": {
-            "ids": [],
-            "size": 16
-          },
-          "stashes": {
-            "nRows": 8,
-            "nUnits": 2,
-            "stashes": []
-          },
+          "hash_distribution_units": {
+            "nHashIds": 2,
+            "units": [],
+            "nUnitIds": 3
+          }
+        },
+        {
+          "action_slots": [
+            {
+              "slot_bit_width": 8,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 16,
+              "maximum_slots": 32,
+              "number_used": 0
+            },
+            {
+              "slot_bit_width": 32,
+              "maximum_slots": 32,
+              "number_used": 0
+            }
+          ],
+          "stage_number": 2,
           "hash_bits": {
             "nFunctions": 8,
+            "nBits": 52,
             "bits": [
               {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "dist_bit",
-                    "value": 0
-                  }
-                ],
                 "hash_bit": 16,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 1
+                    "value": 0,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 17,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 2
+                    "value": 1,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 18,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 3
+                    "value": 2,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 19,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 4
+                    "value": 3,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 20,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 5
+                    "value": 4,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 21,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 6
+                    "value": 5,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 22,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 7
+                    "value": 6,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 23,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 8
+                    "value": 7,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 24,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 9
+                    "value": 8,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 25,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 10
+                    "value": 9,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 26,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 11
+                    "value": 10,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 27,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 12
+                    "value": 11,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 28,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 13
+                    "value": 12,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 29,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 14
+                    "value": 13,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 30,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 15
+                    "value": 14,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 31,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 16
+                    "value": 15,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 39,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 17
+                    "value": 16,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 40,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 18
+                    "value": 17,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 41,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 19
+                    "value": 18,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 42,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 20
+                    "value": 19,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 43,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 21
+                    "value": 20,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 44,
-                "used_for": "meter address"
-              },
-              {
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 21,
+                    "type": "dist_bit"
+                  }
+                ],
                 "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
-                "hash_function": 0,
-                "usages": [
-                  {
-                    "type": "dist_bit",
-                    "value": 22
-                  }
-                ],
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 45,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 0
+                    "value": 22,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Enqueue.enqueue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 0,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 1
+                    "value": 0,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 1,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 2
+                    "value": 1,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 2,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 3
+                    "value": 2,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 3,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 4
+                    "value": 3,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 4,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 5
+                    "value": 4,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 5,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 6
+                    "value": 5,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 6,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 7
+                    "value": 6,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 7,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 8
+                    "value": 7,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 8,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 9
+                    "value": 8,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 9,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 10
+                    "value": 9,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 10,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 11
+                    "value": 10,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 11,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 12
+                    "value": 11,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 12,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 13
+                    "value": 12,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 13,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 14
+                    "value": 13,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 14,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 15
+                    "value": 14,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 15,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 16
+                    "value": 15,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 32,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 17
+                    "value": 16,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 33,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 18
+                    "value": 17,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 34,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 19
+                    "value": 18,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 35,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 20
+                    "value": 19,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 36,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 21
+                    "value": 20,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 37,
-                "used_for": "meter address"
-              },
-              {
-                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "hash_function": 0,
                 "usages": [
                   {
-                    "type": "dist_bit",
-                    "value": 22
+                    "value": 21,
+                    "type": "dist_bit"
                   }
                 ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
+                "used_for": "meter address"
+              },
+              {
                 "hash_bit": 38,
+                "hash_function": 0,
+                "usages": [
+                  {
+                    "value": 22,
+                    "type": "dist_bit"
+                  }
+                ],
+                "used_by_table": "SwitchIngress.Dequeue.dequeue_table",
                 "used_for": "meter address"
               }
+            ]
+          },
+          "rams": {
+            "srams": [
+              {
+                "column": 4,
+                "usages": [
+                  {
+                    "used_by": "ring_buffer",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              },
+              {
+                "column": 5,
+                "usages": [
+                  {
+                    "used_by": "ring_buffer",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              }
             ],
-            "nBits": 52
+            "nColumns": 10,
+            "nRows": 8
+          },
+          "action_bus_bytes": {
+            "bytes": [],
+            "size": 128
           },
           "map_rams": {
+            "nUnits": 6,
+            "nRows": 8,
             "maprams": [
               {
                 "unit_id": 0,
@@ -2828,9 +2618,60 @@
                   }
                 ]
               }
+            ]
+          },
+          "meter_alus": {
+            "meters": [
+              {
+                "usages": [
+                  {
+                    "used_by": "ring_buffer",
+                    "used_for": "stateful_ram"
+                  }
+                ],
+                "row": 7
+              }
             ],
+            "nAlus": 4
+          },
+          "statistic_alus": {
+            "stats": [],
+            "nAlus": 4
+          },
+          "gateways": {
+            "nUnits": 2,
             "nRows": 8,
-            "nUnits": 6
+            "gateways": [
+              {
+                "unit_id": 1,
+                "row": 0,
+                "usages": [
+                  {
+                    "used_by": "Enqueue_enqueue_table-gateway",
+                    "used_for": "gateway"
+                  }
+                ]
+              },
+              {
+                "unit_id": 0,
+                "row": 0,
+                "usages": [
+                  {
+                    "used_by": "Dequeue_dequeue_table-gateway",
+                    "used_for": "gateway"
+                  }
+                ]
+              }
+            ]
+          },
+          "tind_result_buses": {
+            "ids": [],
+            "size": 16
+          },
+          "stashes": {
+            "nUnits": 2,
+            "stashes": [],
+            "nRows": 8
           },
           "xbar_bytes": {
             "ternary_size": 66,
@@ -2839,16 +2680,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "stateful_alu",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ipv4.dst_addr",
-                        "offset": 0,
                         "lsb": 0,
+                        "offset": 0,
                         "msb": 7
                       }
                     ],
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_alu"
+                    "used_by": "ring_buffer"
                   }
                 ],
                 "byte_number": 8
@@ -2857,16 +2698,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "stateful_alu",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ipv4.dst_addr",
-                        "offset": 0,
                         "lsb": 8,
+                        "offset": 0,
                         "msb": 15
                       }
                     ],
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_alu"
+                    "used_by": "ring_buffer"
                   }
                 ],
                 "byte_number": 9
@@ -2875,16 +2716,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "stateful_alu",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ipv4.dst_addr",
-                        "offset": 0,
                         "lsb": 16,
+                        "offset": 0,
                         "msb": 23
                       }
                     ],
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_alu"
+                    "used_by": "ring_buffer"
                   }
                 ],
                 "byte_number": 10
@@ -2893,16 +2734,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "stateful_alu",
                     "slices": [
                       {
                         "field_name": "ingress::hdr.ipv4.dst_addr",
-                        "offset": 0,
                         "lsb": 24,
+                        "offset": 0,
                         "msb": 31
                       }
                     ],
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_alu"
+                    "used_by": "ring_buffer"
                   }
                 ],
                 "byte_number": 11
@@ -2911,16 +2752,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Enqueue_tail_tmp",
-                        "offset": 0,
                         "lsb": 0,
+                        "offset": 0,
                         "msb": 7
                       }
                     ],
-                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Enqueue.enqueue_table"
                   }
                 ],
                 "byte_number": 4
@@ -2929,16 +2770,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Enqueue_tail_tmp",
-                        "offset": 0,
                         "lsb": 8,
+                        "offset": 0,
                         "msb": 15
                       }
                     ],
-                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Enqueue.enqueue_table"
                   }
                 ],
                 "byte_number": 5
@@ -2947,16 +2788,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Enqueue_tail_tmp",
-                        "offset": 0,
                         "lsb": 16,
+                        "offset": 0,
                         "msb": 23
                       }
                     ],
-                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Enqueue.enqueue_table"
                   }
                 ],
                 "byte_number": 6
@@ -2965,16 +2806,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Enqueue_tail_tmp",
-                        "offset": 0,
                         "lsb": 24,
+                        "offset": 0,
                         "msb": 31
                       }
                     ],
-                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Enqueue.enqueue_table"
                   }
                 ],
                 "byte_number": 7
@@ -2983,16 +2824,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Dequeue_head_tmp",
-                        "offset": 0,
                         "lsb": 0,
+                        "offset": 0,
                         "msb": 7
                       }
                     ],
-                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Dequeue.dequeue_table"
                   }
                 ],
                 "byte_number": 0
@@ -3001,16 +2842,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Dequeue_head_tmp",
-                        "offset": 0,
                         "lsb": 8,
+                        "offset": 0,
                         "msb": 15
                       }
                     ],
-                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Dequeue.dequeue_table"
                   }
                 ],
                 "byte_number": 1
@@ -3019,16 +2860,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Dequeue_head_tmp",
-                        "offset": 0,
                         "lsb": 16,
+                        "offset": 0,
                         "msb": 23
                       }
                     ],
-                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Dequeue.dequeue_table"
                   }
                 ],
                 "byte_number": 2
@@ -3037,16 +2878,16 @@
                 "byte_type": "exact",
                 "usages": [
                   {
+                    "used_for": "meter address",
                     "slices": [
                       {
                         "field_name": "ingress::Dequeue_head_tmp",
-                        "offset": 0,
                         "lsb": 24,
+                        "offset": 0,
                         "msb": 31
                       }
                     ],
-                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                    "used_for": "meter address"
+                    "used_by": "SwitchIngress.Dequeue.dequeue_table"
                   }
                 ],
                 "byte_number": 3
@@ -3055,71 +2896,37 @@
             "size": 194,
             "exact_size": 128
           },
-          "gateways": {
-            "nRows": 8,
-            "gateways": [
+          "vliw": {
+            "instructions": [
               {
-                "unit_id": 1,
-                "row": 0,
-                "usages": [
+                "color_usages": [
                   {
-                    "used_by": "Enqueue_enqueue_table-gateway",
-                    "used_for": "gateway"
-                  }
-                ]
-              },
-              {
-                "unit_id": 0,
-                "row": 0,
-                "usages": [
-                  {
-                    "used_by": "Dequeue_dequeue_table-gateway",
-                    "used_for": "gateway"
-                  }
-                ]
-              }
-            ],
-            "nUnits": 2
-          },
-          "meter_alus": {
-            "nAlus": 4,
-            "meters": [
-              {
-                "usages": [
-                  {
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_ram"
+                    "usages": [
+                      {
+                        "action_names": [
+                          "SwitchIngress.Enqueue.enqueue_action"
+                        ],
+                        "used_by": "SwitchIngress.Enqueue.enqueue_table"
+                      },
+                      {
+                        "action_names": [
+                          "SwitchIngress.Dequeue.dequeue_action"
+                        ],
+                        "used_by": "SwitchIngress.Dequeue.dequeue_table"
+                      }
+                    ],
+                    "color": 0,
+                    "gress": "ingress"
                   }
                 ],
-                "row": 7
+                "instruction_number": 0
               }
-            ]
-          },
-          "action_slots": [
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 8,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 16,
-              "number_used": 0
-            },
-            {
-              "maximum_slots": 32,
-              "slot_bit_width": 32,
-              "number_used": 0
-            }
-          ],
-          "statistic_alus": {
-            "stats": [],
-            "nAlus": 4
+            ],
+            "size": 32
           },
           "exm_search_buses": {
             "ids": [
               {
-                "id": 0,
                 "usages": [
                   {
                     "used_by": "Enqueue_enqueue_table-gateway",
@@ -3129,18 +2936,59 @@
                     "used_by": "Dequeue_dequeue_table-gateway",
                     "used_for": "gateway"
                   }
-                ]
+                ],
+                "id": 0
+              }
+            ],
+            "size": 16
+          },
+          "exm_result_buses": {
+            "ids": [
+              {
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.Dequeue.dequeue_table",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "id": 0
+              },
+              {
+                "usages": [
+                  {
+                    "used_by": "SwitchIngress.Enqueue.enqueue_table",
+                    "used_for": "match_entry_ram"
+                  }
+                ],
+                "id": 1
+              }
+            ],
+            "size": 16
+          },
+          "tcams": {
+            "nColumns": 2,
+            "nRows": 12,
+            "tcams": []
+          },
+          "logical_tables": {
+            "ids": [
+              {
+                "id": 1,
+                "table_name": "SwitchIngress.Enqueue.enqueue_table"
+              },
+              {
+                "id": 0,
+                "table_name": "SwitchIngress.Dequeue.dequeue_table"
               }
             ],
             "size": 16
           },
           "hash_distribution_units": {
             "nHashIds": 2,
-            "nUnitIds": 3,
             "units": [
               {
-                "hash_id": 0,
                 "unit_id": 1,
+                "hash_id": 0,
                 "usages": [
                   {
                     "used_by": "Enqueue_enqueue_table",
@@ -3149,8 +2997,8 @@
                 ]
               },
               {
-                "hash_id": 0,
                 "unit_id": 0,
+                "hash_id": 0,
                 "usages": [
                   {
                     "used_by": "Dequeue_dequeue_table",
@@ -3158,88 +3006,240 @@
                   }
                 ]
               }
-            ]
-          },
-          "tcams": {
-            "nColumns": 2,
-            "nRows": 12,
-            "tcams": []
-          },
-          "vliw": {
-            "instructions": [
-              {
-                "color_usages": [
-                  {
-                    "color": 0,
-                    "gress": "ingress",
-                    "usages": [
-                      {
-                        "used_by": "SwitchIngress.Enqueue.enqueue_table",
-                        "action_names": [
-                          "SwitchIngress.Enqueue.enqueue_action"
-                        ]
-                      },
-                      {
-                        "used_by": "SwitchIngress.Dequeue.dequeue_table",
-                        "action_names": [
-                          "SwitchIngress.Dequeue.dequeue_action"
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "instruction_number": 0
-              }
             ],
-            "size": 32
-          },
-          "action_bus_bytes": {
-            "bytes": [],
-            "size": 128
-          },
-          "logical_tables": {
-            "ids": [
-              {
-                "table_name": "SwitchIngress.Enqueue.enqueue_table",
-                "id": 1
-              },
-              {
-                "table_name": "SwitchIngress.Dequeue.dequeue_table",
-                "id": 0
-              }
-            ],
-            "size": 16
-          },
-          "stage_number": 2,
-          "rams": {
-            "nColumns": 10,
-            "srams": [
-              {
-                "row": 7,
-                "column": 4,
-                "usages": [
-                  {
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              },
-              {
-                "row": 7,
-                "column": 5,
-                "usages": [
-                  {
-                    "used_by": "ring_buffer",
-                    "used_for": "stateful_ram"
-                  }
-                ]
-              }
-            ],
-            "nRows": 8
+            "nUnitIds": 3
           }
         }
       ],
       "nStages": 12
+    },
+    "parser": {
+      "parsers": [
+        {
+          "states": [
+            {
+              "previous_state_name": "$entry_point.start",
+              "next_state_id": 2,
+              "tcam_row": 255,
+              "has_counter": false,
+              "extracts": [],
+              "next_state_name": "END",
+              "previous_state_id": 6,
+              "shifts": 0,
+              "matchesOn": []
+            }
+          ],
+          "gress": "egress",
+          "parser_id": 0,
+          "nStates": 256
+        },
+        {
+          "states": [
+            {
+              "previous_state_name": "$entry_point",
+              "next_state_id": 0,
+              "tcam_row": 255,
+              "has_counter": false,
+              "extracts": [],
+              "next_state_name": "start",
+              "previous_state_id": 1,
+              "savesTo": [
+                {
+                  "buffer_offset": 0,
+                  "hardware_id": 2
+                }
+              ],
+              "shifts": 0,
+              "matchesOn": []
+            },
+            {
+              "previous_state_name": "start",
+              "next_state_id": 2,
+              "tcam_row": 254,
+              "has_counter": false,
+              "extracts": [],
+              "next_state_name": "END",
+              "previous_state_id": 0,
+              "shifts": 8,
+              "matchesOn": [
+                {
+                  "value": "0b1*******",
+                  "hardware_id": 2,
+                  "bit_width": 8
+                }
+              ]
+            },
+            {
+              "previous_state_name": "start",
+              "next_state_id": 3,
+              "tcam_row": 253,
+              "has_counter": false,
+              "extracts": [],
+              "next_state_name": "TofinoIngressParser_parse_port_metadata",
+              "previous_state_id": 0,
+              "shifts": 8,
+              "matchesOn": [
+                {
+                  "value": "0b0*******",
+                  "hardware_id": 2,
+                  "bit_width": 8
+                }
+              ]
+            },
+            {
+              "previous_state_name": "TofinoIngressParser_parse_port_metadata",
+              "next_state_id": 4,
+              "tcam_row": 252,
+              "has_counter": false,
+              "extracts": [
+                {
+                  "buffer_offset": 8,
+                  "dest_container": 321,
+                  "extractor_id": 0,
+                  "bit_width": 16
+                },
+                {
+                  "buffer_offset": 10,
+                  "dest_container": 256,
+                  "extractor_id": 0,
+                  "bit_width": 32
+                },
+                {
+                  "buffer_offset": 14,
+                  "dest_container": 128,
+                  "extractor_id": 1,
+                  "bit_width": 16
+                },
+                {
+                  "buffer_offset": 16,
+                  "dest_container": 0,
+                  "extractor_id": 1,
+                  "bit_width": 32
+                },
+                {
+                  "buffer_offset": 20,
+                  "dest_container": 320,
+                  "extractor_id": 2,
+                  "bit_width": 16
+                },
+                {
+                  "constant_value": 1,
+                  "dest_container": 65,
+                  "extractor_id": 0,
+                  "bit_width": 8
+                }
+              ],
+              "next_state_name": "TofinoIngressParser_parse_port_metadata.$oob_stall_0",
+              "previous_state_id": 3,
+              "shifts": 32,
+              "matchesOn": []
+            },
+            {
+              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$oob_stall_0",
+              "next_state_id": 5,
+              "tcam_row": 251,
+              "has_counter": false,
+              "extracts": [],
+              "next_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
+              "previous_state_id": 4,
+              "savesTo": [
+                {
+                  "buffer_offset": 6,
+                  "hardware_id": 0
+                },
+                {
+                  "buffer_offset": 8,
+                  "hardware_id": 1
+                },
+                {
+                  "buffer_offset": 9,
+                  "hardware_id": 2
+                }
+              ],
+              "shifts": 0,
+              "matchesOn": []
+            },
+            {
+              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
+              "next_state_id": 2,
+              "tcam_row": 250,
+              "has_counter": false,
+              "extracts": [
+                {
+                  "buffer_offset": 6,
+                  "dest_container": 1,
+                  "extractor_id": 0,
+                  "bit_width": 32
+                }
+              ],
+              "next_state_name": "END",
+              "previous_state_id": 5,
+              "shifts": 10,
+              "matchesOn": [
+                {
+                  "value": "0x04",
+                  "hardware_id": 2,
+                  "bit_width": 8
+                },
+                {
+                  "value": "0x03",
+                  "hardware_id": 1,
+                  "bit_width": 8
+                },
+                {
+                  "value": "0x0102",
+                  "hardware_id": 0,
+                  "bit_width": 16
+                }
+              ]
+            },
+            {
+              "previous_state_name": "TofinoIngressParser_parse_port_metadata.$split_0",
+              "next_state_id": 2,
+              "tcam_row": 249,
+              "has_counter": false,
+              "extracts": [
+                {
+                  "buffer_offset": 6,
+                  "dest_container": 1,
+                  "extractor_id": 0,
+                  "bit_width": 32
+                }
+              ],
+              "next_state_name": "END",
+              "previous_state_id": 5,
+              "shifts": 10,
+              "matchesOn": [
+                {
+                  "value": "0x**",
+                  "hardware_id": 2,
+                  "bit_width": 8
+                },
+                {
+                  "value": "0x**",
+                  "hardware_id": 1,
+                  "bit_width": 8
+                },
+                {
+                  "value": "0x****",
+                  "hardware_id": 0,
+                  "bit_width": 16
+                }
+              ]
+            }
+          ],
+          "gress": "ingress",
+          "phase0": {
+            "used_by": "SwitchIngressParser.$PORT_METADATA",
+            "used_for": "set_port_metadata"
+          },
+          "parser_id": 0,
+          "nStates": 256
+        }
+      ],
+      "nParsers": 18
     }
-  }
+  },
+  "run_id": "1066809d471d4986",
+  "program_name": "ring_buffer.p4"
 }

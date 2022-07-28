@@ -1,8 +1,8 @@
 {
-    "build_date": "Mon Jul 25 22:05:33 2022",
+    "build_date": "Thu Jul 28 20:02:44 2022",
     "compiler_version": "9.8.0",
     "program_name": "opt_buffers.p4",
-    "run_id": "89d8164a6d3259e2",
+    "run_id": "a5814967fd135097",
     "schema_version": "1.0.1",
     "stage_characteristics": [
         {
@@ -617,12 +617,27 @@
                         {
                             "access_type": "read",
                             "memory_type": "sram",
+                            "num_memories": 2
+                        },
+                        {
+                            "access_type": "write",
+                            "memory_type": "sram",
+                            "num_memories": 1
+                        },
+                        {
+                            "access_type": "read",
+                            "memory_type": "map_ram",
+                            "num_memories": 2
+                        },
+                        {
+                            "access_type": "write",
+                            "memory_type": "map_ram",
                             "num_memories": 1
                         }
                     ],
                     "on_critical_path": false,
                     "stage_number": 0,
-                    "weight": 6.3269754768392369
+                    "weight": 28.31008174386921
                 }
             ]
         },
@@ -696,6 +711,25 @@
         },
         {
             "gress": "ingress",
+            "name": "SwitchIngress.Dequeue.left_table",
+            "stages": [
+                {
+                    "always_runs": false,
+                    "memories": [
+                        {
+                            "access_type": "read",
+                            "memory_type": "sram",
+                            "num_memories": 1
+                        }
+                    ],
+                    "on_critical_path": false,
+                    "stage_number": 0,
+                    "weight": 6.3269754768392369
+                }
+            ]
+        },
+        {
+            "gress": "ingress",
             "name": "SwitchIngress.Enqueue.enqueue_table",
             "stages": [
                 {
@@ -751,27 +785,12 @@
                         {
                             "access_type": "read",
                             "memory_type": "sram",
-                            "num_memories": 2
-                        },
-                        {
-                            "access_type": "write",
-                            "memory_type": "sram",
-                            "num_memories": 1
-                        },
-                        {
-                            "access_type": "read",
-                            "memory_type": "map_ram",
-                            "num_memories": 2
-                        },
-                        {
-                            "access_type": "write",
-                            "memory_type": "map_ram",
                             "num_memories": 1
                         }
                     ],
                     "on_critical_path": true,
                     "stage_number": 0,
-                    "weight": 28.31008174386921
+                    "weight": 6.3269754768392369
                 }
             ]
         },
@@ -879,7 +898,7 @@
         {
             "gress": "ingress",
             "pipe_number": 0,
-            "power": 2.1094611764159998
+            "power": 1.7747581666319999
         },
         {
             "gress": "egress",

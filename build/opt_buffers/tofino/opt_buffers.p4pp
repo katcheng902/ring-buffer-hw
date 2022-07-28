@@ -19,8 +19,7 @@
  *  or implied warranties, other than those that are expressly stated in the
  *  License.
  ******************************************************************************/
-
-
+# 1 "/root/ring-buffer/registers.p4" 1
 # 1 "/root/bf-sde-9.8.0/install/share/p4c/p4include/core.p4" 1
 /*
 Copyright 2013-present Barefoot Networks, Inc.
@@ -104,7 +103,7 @@ match_kind {
     /// Longest-prefix match.
     lpm
 }
-# 21 "/root/ring-buffer/opt_buffers.p4" 2
+# 2 "/root/ring-buffer/registers.p4" 2
 
 
 
@@ -1199,7 +1198,7 @@ package MultiParserSwitch<IH0, IM0, EH0, EM0, IH1, IM1, EH1, EM1,
     @optional MultiParserPipeline<IH2, IM2, EH2, EM2> pipe2,
     @optional MultiParserPipeline<IH3, IM3, EH3, EM3> pipe3);
 # 29 "/root/bf-sde-9.8.0/install/share/p4c/p4include/tna.p4" 2
-# 27 "/root/ring-buffer/opt_buffers.p4" 2
+# 8 "/root/ring-buffer/registers.p4" 2
 
 
 # 1 "/root/ring-buffer/include/headers.p4" 1
@@ -1369,7 +1368,7 @@ struct header_t {
 struct empty_header_t {}
 
 struct empty_metadata_t {}
-# 30 "/root/ring-buffer/opt_buffers.p4" 2
+# 11 "/root/ring-buffer/registers.p4" 2
 # 1 "/root/ring-buffer/include/util.p4" 1
 /*******************************************************************************
  *  INTEL CONFIDENTIAL
@@ -1471,11 +1470,50 @@ control EmptyEgress(
         inout egress_intrinsic_metadata_for_output_port_t eg_intr_oport_md) {
     apply {}
 }
-# 31 "/root/ring-buffer/opt_buffers.p4" 2
-
+# 12 "/root/ring-buffer/registers.p4" 2
 
 struct metadata_t {}
 
+const bit<32> CAPACITY = 3;
+const bit<32> TOTAL = CAPACITY*3;
+
+
+
+Register<bit<32>, bit<32>> (3, 0) lefts;
+Register<bit<32>, bit<32>> (3, 0) heads;
+Register<bit<32>, bit<32>> (3,0) tails;
+Register<bit<32>, bit<32>> (3,0) sizes;
+Register<bit<1>, bit<32>> (3,0) firsts;
+Register<bit<32>, bit<32>> (TOTAL, 0) ring_buffers;
+# 19 "/root/ring-buffer/opt_buffers.p4" 2
+/*
+#include <core.p4>
+#if __TARGET_TOFINO__ == 3
+#include <t3na.p4>
+#elif __TARGET_TOFINO__ == 2
+#include <t2na.p4>
+#else
+#include <tna.p4>
+#endif
+
+#include "include/headers.p4"
+#include "include/util.p4"
+
+struct metadata_t {}
+
+#define REG_SIZE 32
+#define ELT_SIZE 32
+#define ID_LEN 4
+const bit<32> CAPACITY = 1 << 14;
+const bit<32> TOTAL = CAPACITY*16;
+
+Register<bit<REG_SIZE>, bit<32>> (16, 0) lefts;
+Register<bit<REG_SIZE>, bit<32>> (16, 0) heads; 
+Register<bit<REG_SIZE>, bit<32>> (16,0) tails;
+Register<bit<REG_SIZE>, bit<32>> (16,0) sizes;
+Register<bit<1>, bit<32>> (16,0) firsts;
+Register<bit<32>, bit<32>> (TOTAL, 0) ring_buffers;
+*/
 struct pair {
     bit<32> first;
     bit<32> second;
@@ -1505,6 +1543,7 @@ parser SwitchIngressParser(
  pkt.extract(hdr.ipv4);
  transition select(hdr.ipv4.dst_addr) {
      16909060: accept;
+     16909061: accept;
      default: reject;
  }
     }
@@ -1526,26 +1565,12 @@ control SwitchIngressDeparser(
 }
 
 
-
-const bit<32> CAPACITY = 1 << 4;
-
-/*REGISTERS*/
-Register<bit<32>, bit<32>> (2, 0, 4) lefts;
-Register<bit<32>, bit<32>> (2, 0) heads;
-Register<bit<32>, bit<32>> (2,0) tails;
-Register<bit<32>, bit<32>> (2,0) sizes;
-Register<bit<1>, bit<32>> (2,0) firsts;
-
-Register<bit<32>, bit<32>> (CAPACITY, 0) ring_buffers;
-
-
-control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
+control Enqueue(in bit<2> rb_id, in bit<32> enq_value) {
      bit<1> first_tmp = 0;
      bit<32> tail_tmp = 0;
-
      bit<32> left_tmp = 0;
+     /*bit<REG_SIZE> cap_tmp = 0;*/
 
-     /*read left bounds*/
      RegisterAction<bit<32>, bit<32>, bit<32>> (lefts) read_left_reg_action = {
  void apply(inout bit<32> val, out bit<32> rv) {
      rv = val;
@@ -1553,8 +1578,18 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
      };
 
      action read_left() {
- read_left_reg_action.execute((bit<32>) rb_id);
+ left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
      }
+
+     /*RegisterAction<bit<REG_SIZE>, bit<32>, bit<REG_SIZE>> (caps) read_cap_reg_action = {
+	void apply(inout bit<REG_SIZE> val, out bit<REG_SIZE> rv) {
+	    rv = val;
+	}
+     };
+
+     action read_cap() {
+	cap_tmp = read_cap_reg_action.execute((bit<32>) rb_id)-1;
+     }*/
 
      /*first*/
      RegisterAction<bit<1>, bit<32>, bit<1>> (firsts) set_first_reg_action = {
@@ -1576,13 +1611,18 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
      } else {
   val = val+1;
      }
-     rv = val+left_tmp;
+     rv = val;
  }
      };
 
      action inc_tail() {
  tail_tmp = inc_tail_reg_action.execute((bit<32>) rb_id);
+ tail_tmp = tail_tmp + left_tmp;
      }
+/*
+     action shift_tail() {
+	tail_tmp = tail_tmp + left_tmp;
+     }*/
 
      /*size*/
      RegisterAction<bit<32>, bit<32>, bit<32>> (sizes) inc_size_reg_action = {
@@ -1617,6 +1657,13 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
  default_action = read_left;
     }
 
+    /*table cap_table {
+	actions = {
+	    read_cap;
+	}
+	default_action = read_cap;
+    }*/
+
     table first_table {
  actions = {
      first_action;
@@ -1631,33 +1678,55 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
  default_action = inc_tail;
     }
 
-   table inc_size_table {
+    /*table shift_tail_table {
+	actions = {
+	    shift_tail;
+	}
+	default_action = shift_tail;
+    }*/
+
+    table inc_size_table {
  actions = {
      inc_size;
  }
  default_action = inc_size;
-   }
+    }
 
-   table enqueue_table {
+    table enqueue_table {
  actions = {
      enqueue_action;
  }
  default_action = enqueue_action;
-   }
+    }
 
    apply {
  left_table.apply();
+/*	cap_table.apply();*/
  first_table.apply();
  inc_tail_table.apply();
+/*	shift_tail_table.apply();*/
  inc_size_table.apply();
  enqueue_table.apply();
    }
 
 }
 
-control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
+control Dequeue(in bit<2> rb_id, out bit<32> deq_value) {
     bit<32> size_tmp = 0;
     bit<32> head_tmp = 0;
+    bit<32> left_tmp = 0;
+
+
+    /*left bounds (read)*/
+    RegisterAction<bit<32>, bit<32>, bit<32>> (lefts) read_left_reg_action = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    action read_left() {
+ left_tmp = read_left_reg_action.execute((bit<32>) rb_id);
+    }
 
     /* size (decrement) */
     RegisterAction<bit<32>, bit<32>, bit<32>> (sizes) dec_size_reg_action = {
@@ -1683,7 +1752,12 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
 
     action inc_head() {
  head_tmp = inc_head_reg_action.execute((bit<32>) rb_id);
+ head_tmp = head_tmp + left_tmp;
     }
+
+ /*   action shift_head() {
+	head_tmp = head_tmp + left_tmp;
+    }*/
 
     /* buffer (read) */
     RegisterAction<bit<32>, bit<32>, bit<32>> (ring_buffers) read_buffer_reg_action = {
@@ -1697,6 +1771,13 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
     }
 
     /* TABLES */
+    table left_table {
+ actions = {
+     read_left;
+ }
+ default_action = read_left;
+    }
+
     table dec_size_table {
  actions = {
      dec_size;
@@ -1711,6 +1792,13 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
  default_action = inc_head;
     }
 
+   /* table shift_head_table {
+	actions = {
+	   shift_head;
+	}
+	default_action = shift_head;
+    }*/
+
     table dequeue_table {
  actions = {
      dequeue_action;
@@ -1719,9 +1807,11 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
     }
 
     apply {
+ left_table.apply();
  dec_size_table.apply();
  if (size_tmp > 0) {
      inc_head_table.apply();
+     /*shift_head_table.apply();*/
      dequeue_table.apply();
  }
     }
@@ -1764,7 +1854,7 @@ control SwitchIngress(
     apply {
  bit<32> deq = 0;
  switch (dmac.apply().action_run) {
-     drop: {Enqueue.apply(1, hdr.ipv4.dst_addr);}
+     drop: {Enqueue.apply(0, hdr.ipv4.dst_addr);}
      NoAction: {Dequeue.apply(1, deq);}
  }
     }

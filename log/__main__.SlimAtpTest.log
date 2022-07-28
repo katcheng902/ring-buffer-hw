@@ -186,3 +186,199 @@
 22:06:00.518  bfruntime_grpc_client: INFO    : Subscribe response received 0
 22:06:00.519  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
 22:06:00.519  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+16:10:13.219  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:10:13.221  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:10:13.222  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer
+16:10:13.223  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer successful!!
+16:10:13.260  bfruntime_grpc_client: INFO    : Received ring_buffer on GetForwarding on client 0, device 0
+16:10:35.617  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:10:35.619  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:10:35.619  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer
+16:10:35.620  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer successful!!
+16:10:35.656  bfruntime_grpc_client: INFO    : Received ring_buffer on GetForwarding on client 0, device 0
+16:10:51.040  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:10:51.041  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:10:51.041  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer
+16:10:51.042  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer successful!!
+16:10:51.075  bfruntime_grpc_client: INFO    : Received ring_buffer on GetForwarding on client 0, device 0
+16:45:13.687  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:45:13.689  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:45:13.689  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+16:45:13.690  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+16:45:13.727  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+16:45:37.421  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:45:37.422  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:45:37.422  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+16:45:37.423  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+16:45:37.453  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+16:48:21.399  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:48:21.400  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:48:21.401  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+16:48:21.402  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+16:48:21.432  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+16:54:28.323  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+16:54:28.325  bfruntime_grpc_client: INFO    : Subscribe response received 0
+16:54:28.325  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+16:54:28.326  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+16:54:28.361  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+17:24:09.202  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+17:24:09.204  bfruntime_grpc_client: INFO    : Subscribe response received 0
+17:24:09.204  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+17:24:09.205  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+17:24:09.244  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+17:47:55.597  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+17:47:55.599  bfruntime_grpc_client: INFO    : Subscribe response received 0
+17:47:55.600  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+17:47:55.600  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+17:47:55.639  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+17:50:42.727  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+17:50:42.729  bfruntime_grpc_client: INFO    : Subscribe response received 0
+17:50:42.729  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+17:50:42.730  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+17:50:42.764  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+17:54:47.467  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+17:54:47.469  bfruntime_grpc_client: INFO    : Subscribe response received 0
+17:54:47.469  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+17:54:47.470  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+17:54:47.506  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+17:58:30.115  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+17:58:30.117  bfruntime_grpc_client: INFO    : Subscribe response received 0
+17:58:30.118  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+17:58:30.119  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+17:58:30.157  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:02:21.787  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:02:21.789  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:02:21.789  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer
+18:02:21.790  bfruntime_grpc_client: INFO    : Binding with p4_name ring_buffer successful!!
+18:02:21.828  bfruntime_grpc_client: INFO    : Received ring_buffer on GetForwarding on client 0, device 0
+18:05:02.564  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:05:02.565  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:05:02.566  bfruntime_grpc_client: INFO    : Binding with p4_name multiple_buffers
+18:05:02.567  bfruntime_grpc_client: INFO    : Binding with p4_name multiple_buffers successful!!
+18:05:02.602  bfruntime_grpc_client: INFO    : Received multiple_buffers on GetForwarding on client 0, device 0
+18:10:37.834  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:10:37.836  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:10:37.836  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:10:37.837  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:10:37.869  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:12:52.529  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:12:52.531  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:12:52.532  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:12:52.533  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:12:52.571  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:19:53.366  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:19:53.368  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:19:53.368  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:19:53.369  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:19:53.399  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:27:37.617  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:27:37.619  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:27:37.619  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:27:37.620  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:27:37.656  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:31:45.125  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:31:45.127  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:31:45.127  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:31:45.128  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:31:45.165  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:47:51.231  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:47:51.232  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:47:51.233  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:47:51.233  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:47:51.267  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:55:15.942  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:55:15.943  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:55:15.943  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:55:15.944  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:55:15.980  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+18:56:26.051  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+18:56:26.053  bfruntime_grpc_client: INFO    : Subscribe response received 0
+18:56:26.053  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+18:56:26.054  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+18:56:26.091  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:01:50.824  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:01:50.826  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:01:50.826  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:01:50.828  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:01:50.860  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:03:56.259  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:03:56.261  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:03:56.262  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:03:56.263  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:03:56.303  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:09:13.953  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:09:13.955  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:09:13.955  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:09:13.956  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:09:13.989  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:15:26.758  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:15:26.760  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:15:26.760  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:15:26.761  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:15:26.797  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:18:30.631  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:18:30.634  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:18:30.634  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:18:30.635  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:18:30.676  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+19:29:44.254  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+19:29:44.255  bfruntime_grpc_client: INFO    : Subscribe response received 0
+19:29:44.256  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+19:29:44.257  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+19:29:44.289  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+03:12:01.342  thrift.transport.TSocket: ERROR   : Could not connect to any of [('0.0.0.0', 9090), ('::', 9090, 0, 0)]
+14:12:38.384  thrift.transport.TSocket: ERROR   : Could not connect to any of [('0.0.0.0', 9090), ('::', 9090, 0, 0)]
+14:12:41.164  thrift.transport.TSocket: ERROR   : Could not connect to any of [('0.0.0.0', 9090), ('::', 9090, 0, 0)]
+14:40:04.448  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:40:04.450  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:40:04.450  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:40:04.451  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:40:04.486  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:44:18.428  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:44:18.430  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:44:18.430  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:44:18.430  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:44:18.467  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:47:47.754  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:47:47.756  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:47:47.756  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:47:47.757  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:47:47.796  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:50:06.520  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:50:06.521  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:50:06.522  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:50:06.522  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:50:06.556  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:50:21.091  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:50:21.093  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:50:21.093  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:50:21.093  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:50:21.128  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:50:29.024  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:50:29.025  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:50:29.025  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:50:29.026  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:50:29.054  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:50:45.652  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:50:45.654  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:50:45.654  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:50:45.655  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:50:45.693  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+14:50:54.376  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+14:50:54.378  bfruntime_grpc_client: INFO    : Subscribe response received 0
+14:50:54.378  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+14:50:54.379  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+14:50:54.414  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+15:04:40.232  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+15:04:40.233  bfruntime_grpc_client: INFO    : Subscribe response received 0
+15:04:40.234  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+15:04:40.235  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+15:04:40.277  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0
+20:03:21.371  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+20:03:21.373  bfruntime_grpc_client: INFO    : Subscribe response received 0
+20:03:21.374  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers.p4
+20:03:23.831  bfruntime_grpc_client: INFO    : Subscribe attempt #1
+20:03:23.832  bfruntime_grpc_client: INFO    : Subscribe response received 0
+20:03:23.832  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers
+20:03:23.833  bfruntime_grpc_client: INFO    : Binding with p4_name opt_buffers successful!!
+20:03:23.868  bfruntime_grpc_client: INFO    : Received opt_buffers on GetForwarding on client 0, device 0

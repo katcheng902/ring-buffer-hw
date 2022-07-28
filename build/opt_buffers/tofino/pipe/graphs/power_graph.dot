@@ -1,26 +1,31 @@
 digraph table_deps {
   splines=ortho; rankdir=LR;
   label="Program: opt_buffers
-RunId: 89d8164a6d3259e2
+RunId: a5814967fd135097
 ";
   labelloc=t; labeljust=l;
-  { "SwitchIngress.dmac"; "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Enqueue.inc_size_table"; "SwitchIngress.Enqueue.left_table"; "SwitchIngress.Dequeue.dec_size_table"; }
+  { "SwitchIngress.dmac"; "SwitchIngress.Enqueue.left_table"; "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Enqueue.inc_size_table"; "SwitchIngress.Dequeue.left_table"; "SwitchIngress.Dequeue.dec_size_table"; }
   { rank = same; "SwitchIngress.Enqueue.inc_tail_table"; "SwitchIngress.Dequeue.inc_head_table"; }
   { rank = same; "SwitchIngress.Enqueue.enqueue_table"; "SwitchIngress.Dequeue.dequeue_table"; }
+   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.left_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.first_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_size_table" [ label= "",color=green ];
-   "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.left_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Enqueue.enqueue_table" [ label= "",color=green ];
+   "SwitchIngress.dmac" -> "SwitchIngress.Dequeue.left_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Dequeue.dec_size_table" [ label= "",color=green ];
    "SwitchIngress.dmac" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=green ];
    "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table" [ label= "",color=green ];
    "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.left_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=blue ];
    "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table" [ label= "",color=gold ];
    "SwitchIngress.Dequeue.dec_size_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=blue ];
+   "SwitchIngress.Dequeue.left_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=blue ];
    "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table" [ label= "",color=gold ];
    "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table" [ label= "",color=pink ];
+   "SwitchIngress.Enqueue.left_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=pink ];
    "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=pink ];
+   "SwitchIngress.Dequeue.left_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=pink ];
    "SwitchIngress.Dequeue.dec_size_table" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=pink ];
   { rank=max;
     subgraph cluster_legend { node [ shape=record; fontsize=10];

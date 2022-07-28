@@ -1,29 +1,29 @@
 {
     "program_name": "multiple_buffers.p4", 
-    "build_date": "Mon Jul 25 21:44:59 2022", 
-    "run_id": "f770ce0ff0f1ebcb", 
+    "build_date": "Thu Jul 28 19:46:55 2022", 
+    "run_id": "b2357547dc2e8213", 
     "compiler_version": "9.8.0", 
     "schema_version": "1.1.0", 
     "target": "tofino", 
-    "compilation_time": "11.091830015182495", 
+    "compilation_time": "21.03107738494873", 
     "phv": {
         "normal": [
             {
                 "bit_width": 8, 
-                "containers_occupied": 2, 
-                "bits_occupied": 4, 
+                "containers_occupied": 1, 
+                "bits_occupied": 1, 
                 "bits_overlaid": 0
             }, 
             {
                 "bit_width": 16, 
-                "containers_occupied": 1, 
-                "bits_occupied": 16, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
                 "bits_overlaid": 0
             }, 
             {
                 "bit_width": 32, 
-                "containers_occupied": 4, 
-                "bits_occupied": 128, 
+                "containers_occupied": 3, 
+                "bits_occupied": 96, 
                 "bits_overlaid": 33
             }
         ], 
@@ -36,14 +36,14 @@
             }, 
             {
                 "bit_width": 16, 
-                "containers_occupied": 2, 
-                "bits_occupied": 32, 
+                "containers_occupied": 3, 
+                "bits_occupied": 48, 
                 "bits_overlaid": 0
             }, 
             {
                 "bit_width": 32, 
-                "containers_occupied": 1, 
-                "bits_occupied": 32, 
+                "containers_occupied": 2, 
+                "bits_occupied": 64, 
                 "bits_overlaid": 0
             }
         ]
@@ -57,17 +57,17 @@
         }
     }, 
     "mau": {
-        "srams": 14, 
+        "srams": 152, 
         "tcams": 0, 
-        "map_rams": 10, 
-        "logical_tables": 8, 
+        "map_rams": 152, 
+        "logical_tables": 37, 
         "action_bus_bytes": 16, 
-        "exact_crossbar_bytes": 23, 
+        "exact_crossbar_bytes": 104, 
         "ternary_crossbar_bytes": 0, 
         "latency": [
             {
                 "gress": "ingress", 
-                "cycles": 108
+                "cycles": 104
             }, 
             {
                 "gress": "egress", 
@@ -77,7 +77,7 @@
         "power": [
             {
                 "gress": "ingress", 
-                "estimate": "1.34372401469"
+                "estimate": "7.26691934443"
             }, 
             {
                 "gress": "egress", 

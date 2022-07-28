@@ -1,7 +1,7 @@
 Parser Characterization Report:
 Number of states on ingress: 5
 
-Number of matches on ingress: 7
+Number of matches on ingress: 8
 
 Longest path (5 states) on ingress:
     $entry_point
@@ -26,6 +26,7 @@ Extractor usage:
 |TofinoIngressParser_parse_port_metadata               |*           |1      |3       |2       |6                 |       |
 |TofinoIngressParser_parse_port_metadata.$oob_stall_0  |*           |0      |0       |0       |0                 |       |
 |TofinoIngressParser_parse_port_metadata.$split_0      |0x01020304  |0      |0       |1       |1                 |       |
+|-                                                     |0x01020305  |0      |0       |1       |1                 |       |
 |-                                                     |0x********  |0      |0       |1       |1                 |       |
 +------------------------------------------------------+------------+-------+--------+--------+------------------+-------+
 Number of states on egress: 1

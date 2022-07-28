@@ -1,7 +1,7 @@
 {
-    "build_date": "Mon Jul 25 22:05:33 2022", 
+    "build_date": "Thu Jul 28 20:02:44 2022", 
     "program_name": "opt_buffers", 
-    "run_id": "89d8164a6d3259e2", 
+    "run_id": "a5814967fd135097", 
     "compiler_version": "9.8.0 (989b4bf)", 
     "schema_version": "1.0.0", 
     "tables": [
@@ -110,6 +110,61 @@
             "stage_allocation": [
                 {
                     "stage_number": 1, 
+                    "memories": [
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 0, 
+                            "memory_word_width": 44, 
+                            "entries_per_table_word": 1, 
+                            "table_type": "match", 
+                            "num_memories": 0, 
+                            "entries_requested": 0, 
+                            "entries_allocated": 0, 
+                            "imm_bit_width_in_overhead_requested": 0, 
+                            "imm_bit_width_in_overhead_allocated": 0, 
+                            "entry_bit_width_requested": 0, 
+                            "entry_bit_width_allocated": 0, 
+                            "ideal_entries_per_table_word": 0, 
+                            "ideal_table_word_bit_width": 0
+                        }, 
+                        {
+                            "memory_type": "sram", 
+                            "table_word_width": 128, 
+                            "memory_word_width": 128, 
+                            "entries_per_table_word": 4, 
+                            "table_type": "stateful", 
+                            "num_memories": 2
+                        }
+                    ], 
+                    "overhead_fields": [], 
+                    "match_format": {
+                        "entries": [
+                            {
+                                "entry_number": 0, 
+                                "fields": []
+                            }
+                        ]
+                    }, 
+                    "action_formats": []
+                }
+            ]
+        }, 
+        {
+            "name": "SwitchIngress.Dequeue.left_table", 
+            "gress": "ingress", 
+            "lookup_types": [], 
+            "entries_requested": 512, 
+            "entries_allocated": 0, 
+            "match_fields": [], 
+            "action_parameters": [
+                {
+                    "action_name": "SwitchIngress.Dequeue.read_left", 
+                    "parameters": []
+                }
+            ], 
+            "stage_allocation": [
+                {
+                    "stage_number": 0, 
                     "memories": [
                         {
                             "memory_type": "sram", 

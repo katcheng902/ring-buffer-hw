@@ -1,42 +1,35 @@
 version:
   version: 1.0.1
-  run_id: "f770ce0ff0f1ebcb"
+  run_id: "b2357547dc2e8213"
   target: Tofino
 phv ingress:
-  hdr.ethernet.dst_addr.0-31: TW0
-  hdr.ethernet.dst_addr.32-47: TH1
-  hdr.ethernet.src_addr.0-31: W0
-  hdr.ethernet.src_addr.32-47: H0
+  hdr.ethernet.dst_addr.0-31: TW1
+  hdr.ethernet.dst_addr.32-47: TH2
+  hdr.ethernet.src_addr.0-31: TW0
+  hdr.ethernet.src_addr.32-47: TH1
   hdr.ethernet.ether_type: TH0
-  hdr.ipv4.dst_addr: W1
-  ig_intr_md_for_dprsr.drop_ctl: B0(0..2)
-  Enqueue_first_tmp: W3(0)
-  Enqueue_tail_tmp: W2
-  Dequeue_size_tmp: W2
-  Dequeue_head_tmp: W3
-  hdr.ethernet.$valid: B1(0)
+  hdr.ipv4.dst_addr: W0
+  Dequeue_size_tmp: W1
+  Dequeue_head_tmp: W2
+  Enqueue_first_tmp: W2(0)
+  Enqueue_tail_tmp: W1
+  hdr.ethernet.$valid: B0(0)
   context_json:
     B0:
-    - { name : ig_intr_md_for_dprsr.drop_ctl, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
-    B1:
     - { name : hdr.ethernet.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
-    H0:
-    - { name : hdr.ethernet.src_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
     W0:
-    - { name : hdr.ethernet.src_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.ipv4.dst_addr, live_start : parser, live_end : 5, mutually_exclusive_with: [  ] }
     W1:
-    - { name : hdr.ipv4.dst_addr, live_start : parser, live_end : 2, mutually_exclusive_with: [  ] }
-    W2:
-    - { name : Enqueue_tail_tmp, live_start : 2, live_end : 2, mutually_exclusive_with: [ Dequeue_size_tmp ] }
     - { name : Dequeue_size_tmp, live_start : 1, live_end : 1, mutually_exclusive_with: [ Enqueue_tail_tmp ] }
-    W3:
+    - { name : Enqueue_tail_tmp, live_start : 2, live_end : 5, mutually_exclusive_with: [ Dequeue_size_tmp ] }
+    W2:
+    - { name : Dequeue_head_tmp, live_start : 2, live_end : 5, mutually_exclusive_with: [ Enqueue_first_tmp ] }
     - { name : Enqueue_first_tmp, live_start : 1, live_end : 1, mutually_exclusive_with: [ Dequeue_head_tmp ] }
-    - { name : Dequeue_head_tmp, live_start : 2, live_end : 2, mutually_exclusive_with: [ Enqueue_first_tmp ] }
 phv egress:
   context_json:
 parser ingress:
   start: $entry_point
-  init_zero: [ B0, W3, W2, B1 ]
+  init_zero: [ W1, W2, B0 ]
   hdr_len_adj: 16
   states:
     $entry_point:
@@ -56,12 +49,12 @@ parser ingress:
         next: TofinoIngressParser_parse_port_metadata
     TofinoIngressParser_parse_port_metadata:
       *:
-        8..9: TH1  # ingress::hdr.ethernet.dst_addr[47:32].32-47
-        10..13: TW0  # ingress::hdr.ethernet.dst_addr[31:0].0-31
-        14..15: H0  # ingress::hdr.ethernet.src_addr[47:32].32-47
-        16..19: W0  # ingress::hdr.ethernet.src_addr[31:0].0-31
+        8..9: TH2  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        10..13: TW1  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        14..15: TH1  # ingress::hdr.ethernet.src_addr[47:32].32-47
+        16..19: TW0  # ingress::hdr.ethernet.src_addr[31:0].0-31
         20..21: TH0  # ingress::hdr.ethernet.ether_type
-        B1: 1  # value 1 -> B1 bit[0]: ingress::hdr.ethernet.$valid
+        B0: 1  # value 1 -> B0 bit[0]: ingress::hdr.ethernet.$valid
         shift: 32
         buf_req: 32
         next: TofinoIngressParser_parse_port_metadata.$oob_stall_0
@@ -73,23 +66,22 @@ parser ingress:
     TofinoIngressParser_parse_port_metadata.$split_0:
       match: [ half, byte0, byte1 ]
       0x01020304:
-        6..9: W1  # ingress::hdr.ipv4.dst_addr
+        6..9: W0  # ingress::hdr.ipv4.dst_addr
         shift: 10
         buf_req: 10
         next: end
       0x********:
-        6..9: W1  # ingress::hdr.ipv4.dst_addr
+        6..9: W0  # ingress::hdr.ipv4.dst_addr
         shift: 10
         buf_req: 10
         next: end
 deparser ingress:
   dictionary:
-    TH1: B1(0)  # ingress::hdr.ethernet.dst_addr.32-47 if ingress::hdr.ethernet.$valid
-    TW0: B1(0)  # ingress::hdr.ethernet.dst_addr.0-31 if ingress::hdr.ethernet.$valid
-    H0: B1(0)  # ingress::hdr.ethernet.src_addr.32-47 if ingress::hdr.ethernet.$valid
-    W0: B1(0)  # ingress::hdr.ethernet.src_addr.0-31 if ingress::hdr.ethernet.$valid
-    TH0: B1(0)  # ingress::hdr.ethernet.ether_type if ingress::hdr.ethernet.$valid
-  drop_ctl: B0(0..2)  # bit[2..0]: ingress::ig_intr_md_for_dprsr.drop_ctl
+    TH2: B0(0)  # ingress::hdr.ethernet.dst_addr.32-47 if ingress::hdr.ethernet.$valid
+    TW1: B0(0)  # ingress::hdr.ethernet.dst_addr.0-31 if ingress::hdr.ethernet.$valid
+    TH1: B0(0)  # ingress::hdr.ethernet.src_addr.32-47 if ingress::hdr.ethernet.$valid
+    TW0: B0(0)  # ingress::hdr.ethernet.src_addr.0-31 if ingress::hdr.ethernet.$valid
+    TH0: B0(0)  # ingress::hdr.ethernet.ether_type if ingress::hdr.ethernet.$valid
 parser egress:
   start: $entry_point.start
   hdr_len_adj: 0
@@ -117,80 +109,52 @@ stage 0 ingress:
       set_port_metadata:
       - handle: 0x20000000
       - p4_param_order: { ig_intr_md: 64 } 
-  exact_match dmac_0 0:
-    p4: { name: SwitchIngress.dmac, size: 256 }
-    p4_param_order: 
-      hdr.ethernet.src_addr: { type: exact, size: 48, full_size: 48 }
-    row: 7
-    bus: 0
-    column: [ 2, 3, 4, 5 ]
-    stash: 
-      row: [ 7 ]
-      col: [ 2 ]
-      unit: [ 0 ]
-    ways:
-      - [0, 0, 0x0, [7, 2]]
-      - [0, 1, 0x0, [7, 3]]
-      - [0, 2, 0x0, [7, 4]]
-      - [0, 3, 0x0, [7, 5]]
+  hash_action Enqueue_first_table 0:
+    p4: { name: SwitchIngress.Enqueue.first_table, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0xf, shift: 0 }
     input_xbar:
-      exact group 0: { 0: hdr.ethernet.src_addr.0-31, 32: hdr.ethernet.src_addr.32-47 }
+      exact group 0: { 0: hdr.ipv4.dst_addr(0..3) }
       hash 0:
-        0..7: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(0..7)
-        8..9: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(8..9)
-        11..18: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(0..7)
-        19: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(8)
-        10: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(9)
-        22..29: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(0..7)
-        20..21: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(8..9)
-        33..39: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(0..6)
-        30: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(7)
-        31..32: random(hdr.ethernet.src_addr.0-31, hdr.ethernet.src_addr.32-47(10..15)) ^ hdr.ethernet.src_addr.32-47(8..9)
+        0..3: hdr.ipv4.dst_addr(0..3)
       hash group 0:
         table: [0]
-        seed: 0xd8874fabc4
-    format: { action(0): 0..0, version(0): 112..115, match(0): [66..71, 32..63 ] }
-    match: [ hdr.ethernet.src_addr.32-47(10..15), hdr.ethernet.src_addr.0-31(0..7), hdr.ethernet.src_addr.0-31(8..15), hdr.ethernet.src_addr.0-31(16..23), hdr.ethernet.src_addr.0-31(24..31) ]
-    match_group_map: [ [ 0 ] ]
-    hit: [  Enqueue_first_table,  Dequeue_dec_size_table ]
-    miss:  END
-    context_json:
-      static_entries:
-      - priority: 0
-        match_key_fields_values:
-        - field_name: hdr.ethernet.src_addr
-          value: "0x33445566"
-        action_handle: 0x20000001
-        is_default_entry: false
-        action_parameters_values: []
-      - priority: 1
-        match_key_fields_values:
-        - field_name: hdr.ethernet.src_addr
-          value: "0x11223344"
-        action_handle: 0x20000006
-        is_default_entry: false
-        action_parameters_values: []
-    instruction: dmac_0(action, $DEFAULT)
+        seed: 0x0
+    gateway:
+      name: cond-33
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x1801
+      format: { action: 0..0, meter_addr: 1..10, meter_pfe: 11..11, meter_type: 12..14 }
+      match: { 0: hdr.ipv4.dst_addr(0) }
+      0b*******0: run_table
+      miss:  Enqueue_inc_size_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[0:0] == 0)"
+        true:  Dequeue_dec_size_table
+        false:  Enqueue_inc_size_table
+    next:  Dequeue_dec_size_table
+    action_bus: { 96..99 : Enqueue_first_table$salu.firsts(0..31) }
+    stateful: Enqueue_first_table$salu.firsts(hash_dist 0, meter_pfe, meter_type)
+    instruction: Enqueue_first_table(action, $DEFAULT)
     actions:
-      SwitchIngress.drop(0, 1):
+      SwitchIngress.Enqueue.first_action(1, 1):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
-      - handle: 0x20000001
+      - handle: 0x20000013
       - next_table: 0
-      - set ig_intr_md_for_dprsr.drop_ctl, 1
-      NoAction(1, 0):
-      - hit_allowed: { allowed: true }
-      - default_action: { allowed: true }
-      - handle: 0x20000006
-      - next_table: 1
-    default_action: NoAction
-  ternary_match Enqueue_first_table 1:
-    p4: { name: SwitchIngress.Enqueue.first_table, size: 512 }
-    hit: [  Enqueue_inc_size_table ]
-    miss:  Enqueue_inc_size_table
-    indirect: Enqueue_first_table$tind
+      - set Enqueue_first_tmp, Enqueue_first_table$salu.firsts
+      - Enqueue_first_table$salu.firsts(Enqueue_set_first_reg_action, $hash_dist)
+    default_action: SwitchIngress.Enqueue.first_action
   stateful Enqueue_first_table$salu.firsts:
-    p4: { name: firsts, size: 2 }
+    p4: { name: firsts, size: 16 }
     row: 11
     logical_bus: S
     column: [ 0, 1 ]
@@ -203,48 +167,45 @@ stage 0 ingress:
       - output alu_lo
       clr_bit_alu$0:
       - clr_bit
-  ternary_indirect Enqueue_first_table$tind:
-    row: 0
-    bus: 1
-    format: { action: 0..0, meter_addr: 1..10 }
-    action_bus: { 96..99 : Enqueue_first_table$salu.firsts(0..31) }
-    stateful: Enqueue_first_table$salu.firsts(meter_addr, $DEFAULT, $DEFAULT)
-    instruction: Enqueue_first_table$tind(action, $DEFAULT)
-    actions:
-      SwitchIngress.Enqueue.first_action(0, 2):
-      - hit_allowed: { allowed: true }
-      - default_action: { allowed: true }
-      - handle: 0x20000002
-      - next_table: 0
-      - set Enqueue_first_tmp, Enqueue_first_table$salu.firsts
-      - Enqueue_first_table$salu.firsts(Enqueue_set_first_reg_action, 1)
-    default_action: SwitchIngress.Enqueue.first_action
-  ternary_match Enqueue_inc_size_table 3:
-    p4: { name: SwitchIngress.Enqueue.inc_size_table, size: 512 }
-    hit: [  Enqueue_inc_tail_table ]
-    miss:  Enqueue_inc_tail_table
-    indirect: Enqueue_inc_size_table$tind
-  ternary_indirect Enqueue_inc_size_table$tind:
-    row: 1
-    bus: 0
-    format: { action: 0..0, meter_addr: 1..10 }
-    stateful: Dequeue_dec_size_table$salu.sizes(meter_addr, $DEFAULT, $DEFAULT)
-    instruction: Enqueue_inc_size_table$tind(action, $DEFAULT)
-    actions:
-      SwitchIngress.Enqueue.inc_size(0, 0):
-      - hit_allowed: { allowed: true }
-      - default_action: { allowed: true }
-      - handle: 0x20000004
-      - next_table: 0
-      - Dequeue_dec_size_table$salu.sizes(Enqueue_inc_size_reg_action, 1)
-    default_action: SwitchIngress.Enqueue.inc_size
-  ternary_match Dequeue_dec_size_table 2:
+  hash_action Dequeue_dec_size_table 1:
     p4: { name: SwitchIngress.Dequeue.dec_size_table, size: 512 }
-    hit: [  Dequeue_inc_head_table ]
-    miss:  Dequeue_inc_head_table
-    indirect: Dequeue_dec_size_table$tind
+    row: 0
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0xf, shift: 5 }
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      hash 1:
+        16..19: hdr.ipv4.dst_addr(0..3)
+      hash group 0:
+        table: [1]
+        seed: 0x0
+    gateway:
+      name: Dequeue_dec_size_table-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  Dequeue_inc_head_table
+      miss:  Dequeue_inc_head_table
+      condition: 
+        expression: "true(always hit)"
+        true:  Dequeue_inc_head_table
+        false:  Dequeue_inc_head_table
+    next: []
+    action_bus: { 104..107 : Dequeue_dec_size_table$salu.sizes(0..31) }
+    stateful: Dequeue_dec_size_table$salu.sizes(hash_dist 1, $DEFAULT, $DEFAULT)
+    instruction: Dequeue_dec_size_table($DEFAULT, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dec_size(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000001
+      - next_table: 0
+      - set Dequeue_size_tmp, Dequeue_dec_size_table$salu.sizes
+      - Dequeue_dec_size_table$salu.sizes(Dequeue_dec_size_reg_action, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dec_size
   stateful Dequeue_dec_size_table$salu.sizes:
-    p4: { name: sizes, size: 2 }
+    p4: { name: sizes, size: 16 }
     row: 15
     logical_bus: S
     column: [ 0, 1 ]
@@ -252,38 +213,145 @@ stage 0 ingress:
     home_row: 15
     format: { lo: 32 }
     actions:
-      Enqueue_inc_size_reg_action:
-      - lss.u lo, lo, -16
-      - add cmplo, lo, lo, 1
       Dequeue_dec_size_reg_action:
       - grt.u lo, lo
       - add cmplo, lo, lo, 4294967295
       - output mem_lo
-  ternary_indirect Dequeue_dec_size_table$tind:
-    row: 0
-    bus: 0
-    format: { action: 0..0, meter_addr: 1..10 }
-    action_bus: { 104..107 : Dequeue_dec_size_table$salu.sizes(0..31) }
-    stateful: Dequeue_dec_size_table$salu.sizes(meter_addr, $DEFAULT, $DEFAULT)
-    instruction: Dequeue_dec_size_table$tind(action, $DEFAULT)
+      Enqueue_inc_size_reg_action:
+      - lss.u lo, lo, -32768
+      - add cmplo, lo, lo, 1
+  hash_action Enqueue_inc_size_table 2:
+    p4: { name: SwitchIngress.Enqueue.inc_size_table, size: 512 }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0xf, shift: 5 }
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      hash 1:
+        16..19: hdr.ipv4.dst_addr(0..3)
+      hash group 0:
+        table: [1]
+        seed: 0x0
+    gateway:
+      name: Enqueue_inc_size_table-gateway
+      row: 1
+      bus: 0
+      unit: 0
+      0x0:  Enqueue_inc_tail_table
+      miss:  Enqueue_inc_tail_table
+      condition: 
+        expression: "true(always hit)"
+        true:  Enqueue_inc_tail_table
+        false:  Enqueue_inc_tail_table
+    next: []
+    stateful: Dequeue_dec_size_table$salu.sizes(hash_dist 1, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_inc_size_table($DEFAULT, $DEFAULT)
     actions:
-      SwitchIngress.Dequeue.dec_size(0, 3):
+      SwitchIngress.Enqueue.inc_size(0, 0):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
-      - handle: 0x20000007
+      - handle: 0x20000015
       - next_table: 0
-      - set Dequeue_size_tmp, Dequeue_dec_size_table$salu.sizes
-      - Dequeue_dec_size_table$salu.sizes(Dequeue_dec_size_reg_action, 1)
-    default_action: SwitchIngress.Dequeue.dec_size
+      - Dequeue_dec_size_table$salu.sizes(Enqueue_inc_size_reg_action, $hash_dist)
+    default_action: SwitchIngress.Enqueue.inc_size
 stage 1 ingress:
   dependency: match
-  ternary_match Enqueue_inc_tail_table 0:
+  hash_action Dequeue_inc_head_table 1:
+    p4: { name: SwitchIngress.Dequeue.inc_head_table, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 1, mask: 0xf, shift: 5 }
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      hash 1:
+        0..3: hdr.ipv4.dst_addr(0..3)
+      hash group 1:
+        table: [1]
+        seed: 0x0
+    gateway:
+      name: cond-34
+      input_xbar:
+        exact group 0: { 8: Dequeue_size_tmp(8..31), 32: Dequeue_size_tmp(0..7) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x1801
+      format: { action: 0..0, meter_addr: 1..10, meter_pfe: 11..11, meter_type: 12..14 }
+      match: { 0: Dequeue_size_tmp(0..7), 8: Dequeue_size_tmp(8..15), 16: Dequeue_size_tmp(16..23), 24: Dequeue_size_tmp(24..31) }
+      0x00000000: run_table
+      miss:  Dequeue_dequeue_table
+      condition: 
+        expression: "(Dequeue_size_tmp > 0)"
+        true:  Dequeue_dequeue_table
+        false:  END
+    next:  END
+    action_bus: { 104..107 : Dequeue_inc_head_table$salu.heads(0..31) }
+    stateful: Dequeue_inc_head_table$salu.heads(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_inc_head_table(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.inc_head(1, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000002
+      - next_table: 0
+      - set Dequeue_head_tmp, Dequeue_inc_head_table$salu.heads
+      - Dequeue_inc_head_table$salu.heads(Dequeue_inc_head_reg_action, $hash_dist)
+    default_action: SwitchIngress.Dequeue.inc_head
+  stateful Dequeue_inc_head_table$salu.heads:
+    p4: { name: heads, size: 16 }
+    row: 11
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 11
+    format: { lo: 32 }
+    actions:
+      Dequeue_inc_head_reg_action:
+      - add lo, lo, 1
+      - output mem_lo
+  hash_action Enqueue_inc_tail_table 0:
     p4: { name: SwitchIngress.Enqueue.inc_tail_table, size: 512 }
-    hit: [  Enqueue_enqueue_table_two ]
-    miss:  Enqueue_enqueue_table_two
-    indirect: Enqueue_inc_tail_table$tind
+    row: 0
+    result_bus: 1
+    hash_dist:
+      0: { hash: 1, mask: 0xf, shift: 5 }
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      hash 1:
+        0..3: hdr.ipv4.dst_addr(0..3)
+      hash group 1:
+        table: [1]
+        seed: 0x0
+    gateway:
+      name: Enqueue_inc_tail_table-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  Enqueue_enqueue_table
+      miss:  Enqueue_enqueue_table
+      condition: 
+        expression: "true(always hit)"
+        true:  Enqueue_enqueue_table
+        false:  Enqueue_enqueue_table
+    next: []
+    action_bus: { 96..99 : Enqueue_inc_tail_table$salu.tails(0..31) }
+    stateful: Enqueue_inc_tail_table$salu.tails(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_inc_tail_table($DEFAULT, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.inc_tail(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000014
+      - next_table: 0
+      - set Enqueue_tail_tmp, Enqueue_inc_tail_table$salu.tails
+      - Enqueue_inc_tail_table$salu.tails(Enqueue_inc_tail_reg_action, $hash_dist)
+    default_action: SwitchIngress.Enqueue.inc_tail
   stateful Enqueue_inc_tail_table$salu.tails:
-    p4: { name: tails, size: 2 }
+    p4: { name: tails, size: 16 }
     row: 15
     logical_bus: S
     column: [ 0, 1 ]
@@ -301,77 +369,312 @@ stage 1 ingress:
     actions:
       Enqueue_inc_tail_reg_action:
       - equ lo, phv_lo(0..7)
-      - geq.u hi, lo, -15
+      - geq.u hi, lo, -32767
       - alu_a (cmplo | cmphi), lo, 0
       - add (!cmplo & !cmphi), lo, lo, 1
       - output alu_lo
-  ternary_indirect Enqueue_inc_tail_table$tind:
-    row: 0
-    bus: 0
-    format: { action: 0..0, meter_addr: 1..10 }
-    action_bus: { 96..99 : Enqueue_inc_tail_table$salu.tails(0..31) }
-    stateful: Enqueue_inc_tail_table$salu.tails(meter_addr, $DEFAULT, $DEFAULT)
-    instruction: Enqueue_inc_tail_table$tind(action, $DEFAULT)
+stage 2 ingress:
+  dependency: match
+  hash_action Dequeue_dequeue_table 0:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_1, size: 512 }
+    row: 3
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-35
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 0
+      unit: 0
+      payload_row: 3
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*0:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 0)"
+        true:  END
+        false:  Dequeue_dequeue_table_0
+    next:  Dequeue_dequeue_table_0
+    stateful: Enqueue_enqueue_table$salu.rb1(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table(action, $DEFAULT)
     actions:
-      SwitchIngress.Enqueue.inc_tail(0, 1):
+      SwitchIngress.Dequeue.dequeue_action_1(1, 0):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
       - handle: 0x20000003
       - next_table: 0
-      - set Enqueue_tail_tmp, Enqueue_inc_tail_table$salu.tails
-      - Enqueue_inc_tail_table$salu.tails(Enqueue_inc_tail_reg_action, 1)
-    default_action: SwitchIngress.Enqueue.inc_tail
-  ternary_match Dequeue_inc_head_table 1:
-    p4: { name: SwitchIngress.Dequeue.inc_head_table, size: 512 }
+      - Enqueue_enqueue_table$salu.rb1(Dequeue_read_buffer_reg_action, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_1
+  hash_action Dequeue_dequeue_table_0 3:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_2, size: 512 }
+    row: 1
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
     gateway:
-      name: cond-2
+      name: cond-36
       input_xbar:
-        exact group 0: { 8: Dequeue_size_tmp(8..31), 32: Dequeue_size_tmp(0..7) }
-      row: 0
-      bus: 0
-      unit: 0
-      match: { 0: Dequeue_size_tmp(0..7), 8: Dequeue_size_tmp(8..15), 16: Dequeue_size_tmp(16..23), 24: Dequeue_size_tmp(24..31) }
-      0x00000000:  END
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 1
+      unit: 1
+      payload_row: 1
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*1:  END
       miss: run_table
       condition: 
-        expression: "(Dequeue_size_tmp > 0)"
-        true:  Dequeue_inc_head_table
-        false:  END
-    hit: [  Dequeue_dequeue_table_two ]
-    miss:  Dequeue_dequeue_table_two
-    indirect: Dequeue_inc_head_table$tind
-  stateful Dequeue_inc_head_table$salu.heads:
-    p4: { name: heads, size: 2 }
-    row: 11
-    logical_bus: S
-    column: [ 0, 1 ]
-    maprams: [ 0, 1 ]
-    home_row: 11
-    format: { lo: 32 }
+        expression: "(hdr.ipv4.dst_addr[3:0] == 1)"
+        true:  END
+        false:  Dequeue_dequeue_table_1
+    next:  Dequeue_dequeue_table_1
+    stateful: Dequeue_dequeue_table_0$salu.rb2(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_0(action, $DEFAULT)
     actions:
-      Dequeue_inc_head_reg_action:
-      - add lo, lo, 1
-      - output mem_lo
-  ternary_indirect Dequeue_inc_head_table$tind:
-    row: 0
-    bus: 1
-    format: { action: 0..0, meter_addr: 1..10, meter_pfe: 11..11, meter_type: 12..14 }
-    action_bus: { 104..107 : Dequeue_inc_head_table$salu.heads(0..31) }
-    stateful: Dequeue_inc_head_table$salu.heads(meter_addr, meter_pfe, meter_type)
-    instruction: Dequeue_inc_head_table$tind(action, $DEFAULT)
-    actions:
-      SwitchIngress.Dequeue.inc_head(1, 2):
+      SwitchIngress.Dequeue.dequeue_action_2(1, 0):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
-      - handle: 0x20000008
+      - handle: 0x20000004
       - next_table: 0
-      - set Dequeue_head_tmp, Dequeue_inc_head_table$salu.heads
-      - Dequeue_inc_head_table$salu.heads(Dequeue_inc_head_reg_action, 1)
-    default_action: SwitchIngress.Dequeue.inc_head
-stage 2 ingress:
-  dependency: match
-  hash_action Enqueue_enqueue_table_two 1:
-    p4: { name: SwitchIngress.Enqueue.enqueue_table_two, size: 512 }
+      - Dequeue_dequeue_table_0$salu.rb2(Dequeue_read_buffer_reg_action_0, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_2
+  stateful Dequeue_dequeue_table_0$salu.rb2:
+    p4: { name: rb2, size: 32768 }
+    row: [ 7, 5 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 7
+    input_xbar:
+      exact group 1: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_0:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_0:
+      - alu_a lo, phv_lo
+  hash_action Dequeue_dequeue_table_1 4:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_3, size: 512 }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-37
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 0
+      unit: 0
+      payload_row: 1
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*2:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 2)"
+        true:  END
+        false:  Dequeue_dequeue_table_2
+    next:  Dequeue_dequeue_table_2
+    stateful: Enqueue_enqueue_table_1$salu.rb3(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_1(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_3(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000005
+      - next_table: 0
+      - Enqueue_enqueue_table_1$salu.rb3(Dequeue_read_buffer_reg_action_1, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_3
+  hash_action Dequeue_dequeue_table_2 7:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_4, size: 512 }
+    row: 3
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-38
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 1
+      unit: 1
+      payload_row: 3
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*3:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 3)"
+        true:  END
+        false:  Dequeue_dequeue_table_3
+    next:  Dequeue_dequeue_table_3
+    stateful: Enqueue_enqueue_table_2$salu.rb4(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_2(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_4(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000006
+      - next_table: 0
+      - Enqueue_enqueue_table_2$salu.rb4(Dequeue_read_buffer_reg_action_2, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_4
+  hash_action Enqueue_enqueue_table 1:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_1, size: 512 }
+    row: 2
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-50
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 1
+      unit: 1
+      payload_row: 2
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*0:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 0)"
+        true:  END
+        false:  Enqueue_enqueue_table_0
+    next:  Enqueue_enqueue_table_0
+    stateful: Enqueue_enqueue_table$salu.rb1(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_1(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000016
+      - next_table: 0
+      - Enqueue_enqueue_table$salu.rb1(Enqueue_write_buffer_reg_action, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_1
+  stateful Enqueue_enqueue_table$salu.rb1:
+    p4: { name: rb1, size: 32768 }
+    row: [ 3, 1 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 3
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_0 2:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_2, size: 512 }
+    row: 2
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-51
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 0
+      unit: 0
+      payload_row: 2
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*1:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 1)"
+        true:  END
+        false:  Enqueue_enqueue_table_1
+    next:  Enqueue_enqueue_table_1
+    stateful: Dequeue_dequeue_table_0$salu.rb2(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_0(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_2(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000017
+      - next_table: 0
+      - Dequeue_dequeue_table_0$salu.rb2(Enqueue_write_buffer_reg_action_0, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_2
+  hash_action Enqueue_enqueue_table_1 5:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_3, size: 512 }
     row: 0
     result_bus: 1
     hash_dist:
@@ -385,30 +688,122 @@ stage 2 ingress:
         table: [0]
         seed: 0x0
     gateway:
-      name: Enqueue_enqueue_table_two-gateway
+      name: cond-52
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
       row: 0
-      bus: 0
+      bus: 1
       unit: 1
-      0x0:  END
-      miss:  END
+      payload_row: 0
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*2:  END
+      miss: run_table
       condition: 
-        expression: "true(always hit)"
+        expression: "(hdr.ipv4.dst_addr[3:0] == 2)"
         true:  END
-        false:  END
-    next: []
-    stateful: Dequeue_dequeue_table_two$salu.rb2(hash_dist 1, $DEFAULT, $DEFAULT)
-    instruction: Enqueue_enqueue_table_two($DEFAULT, $DEFAULT)
+        false:  Enqueue_enqueue_table_2
+    next:  Enqueue_enqueue_table_2
+    stateful: Enqueue_enqueue_table_1$salu.rb3(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_1(action, $DEFAULT)
     actions:
-      SwitchIngress.Enqueue.enqueue_action_2(0, 0):
+      SwitchIngress.Enqueue.enqueue_action_3(1, 0):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
-      - handle: 0x20000005
+      - handle: 0x20000018
       - next_table: 0
-      - Dequeue_dequeue_table_two$salu.rb2(Enqueue_write_buffer_reg_action_two, $hash_dist)
-    default_action: SwitchIngress.Enqueue.enqueue_action_2
-  hash_action Dequeue_dequeue_table_two 0:
-    p4: { name: SwitchIngress.Dequeue.dequeue_table_two, size: 512 }
+      - Enqueue_enqueue_table_1$salu.rb3(Enqueue_write_buffer_reg_action_1, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_3
+  stateful Enqueue_enqueue_table_1$salu.rb3:
+    p4: { name: rb3, size: 32768 }
+    row: [ 11, 9 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 11
+    input_xbar:
+      exact group 2: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_1:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_1:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_2 6:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_4, size: 512 }
     row: 0
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-53
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*3:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 3)"
+        true:  END
+        false:  Enqueue_enqueue_table_3
+    next:  Enqueue_enqueue_table_3
+    stateful: Enqueue_enqueue_table_2$salu.rb4(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_2(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_4(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000019
+      - next_table: 0
+      - Enqueue_enqueue_table_2$salu.rb4(Enqueue_write_buffer_reg_action_2, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_4
+  stateful Enqueue_enqueue_table_2$salu.rb4:
+    p4: { name: rb4, size: 32768 }
+    row: [ 15, 13 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    input_xbar:
+      exact group 3: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_2:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_2:
+      - alu_a lo, phv_lo
+stage 3 ingress:
+  dependency: concurrent
+  hash_action Dequeue_dequeue_table_3 0:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_5, size: 512 }
+    row: 3
     result_bus: 0
     hash_dist:
       0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
@@ -421,8 +816,1214 @@ stage 2 ingress:
         table: [0]
         seed: 0x0
     gateway:
-      name: Dequeue_dequeue_table_two-gateway
+      name: cond-39
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 0
+      unit: 0
+      payload_row: 3
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*4:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 4)"
+        true:  END
+        false:  Dequeue_dequeue_table_4
+    next:  Dequeue_dequeue_table_4
+    stateful: Enqueue_enqueue_table_3$salu.rb5(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_3(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_5(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000007
+      - next_table: 0
+      - Enqueue_enqueue_table_3$salu.rb5(Dequeue_read_buffer_reg_action_3, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_5
+  hash_action Dequeue_dequeue_table_4 3:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_6, size: 512 }
+    row: 1
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-40
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 1
+      unit: 1
+      payload_row: 1
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*5:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 5)"
+        true:  END
+        false:  Dequeue_dequeue_table_5
+    next:  Dequeue_dequeue_table_5
+    stateful: Dequeue_dequeue_table_4$salu.rb6(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_4(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_6(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000008
+      - next_table: 0
+      - Dequeue_dequeue_table_4$salu.rb6(Dequeue_read_buffer_reg_action_4, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_6
+  stateful Dequeue_dequeue_table_4$salu.rb6:
+    p4: { name: rb6, size: 32768 }
+    row: [ 7, 5 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 7
+    input_xbar:
+      exact group 1: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_4:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_4:
+      - alu_a lo, phv_lo
+  hash_action Dequeue_dequeue_table_5 4:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_7, size: 512 }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-41
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 0
+      unit: 0
+      payload_row: 1
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*6:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 6)"
+        true:  END
+        false:  Dequeue_dequeue_table_6
+    next:  Dequeue_dequeue_table_6
+    stateful: Enqueue_enqueue_table_5$salu.rb7(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_5(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_7(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000009
+      - next_table: 0
+      - Enqueue_enqueue_table_5$salu.rb7(Dequeue_read_buffer_reg_action_5, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_7
+  hash_action Dequeue_dequeue_table_6 7:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_8, size: 512 }
+    row: 3
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-42
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 1
+      unit: 1
+      payload_row: 3
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*7:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 7)"
+        true:  END
+        false:  Dequeue_dequeue_table_7
+    next:  Dequeue_dequeue_table_7
+    stateful: Enqueue_enqueue_table_6$salu.rb8(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_6(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_8(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000a
+      - next_table: 0
+      - Enqueue_enqueue_table_6$salu.rb8(Dequeue_read_buffer_reg_action_6, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_8
+  hash_action Enqueue_enqueue_table_3 1:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_5, size: 512 }
+    row: 2
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-54
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 1
+      unit: 1
+      payload_row: 2
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*4:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 4)"
+        true:  END
+        false:  Enqueue_enqueue_table_4
+    next:  Enqueue_enqueue_table_4
+    stateful: Enqueue_enqueue_table_3$salu.rb5(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_3(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_5(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001a
+      - next_table: 0
+      - Enqueue_enqueue_table_3$salu.rb5(Enqueue_write_buffer_reg_action_3, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_5
+  stateful Enqueue_enqueue_table_3$salu.rb5:
+    p4: { name: rb5, size: 32768 }
+    row: [ 3, 1 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 3
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_3:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_3:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_4 2:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_6, size: 512 }
+    row: 2
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-55
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 0
+      unit: 0
+      payload_row: 2
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*5:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 5)"
+        true:  END
+        false:  Enqueue_enqueue_table_5
+    next:  Enqueue_enqueue_table_5
+    stateful: Dequeue_dequeue_table_4$salu.rb6(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_4(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_6(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001b
+      - next_table: 0
+      - Dequeue_dequeue_table_4$salu.rb6(Enqueue_write_buffer_reg_action_4, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_6
+  hash_action Enqueue_enqueue_table_5 5:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_7, size: 512 }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-56
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
       row: 0
+      bus: 1
+      unit: 1
+      payload_row: 0
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*6:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 6)"
+        true:  END
+        false:  Enqueue_enqueue_table_6
+    next:  Enqueue_enqueue_table_6
+    stateful: Enqueue_enqueue_table_5$salu.rb7(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_5(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_7(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001c
+      - next_table: 0
+      - Enqueue_enqueue_table_5$salu.rb7(Enqueue_write_buffer_reg_action_5, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_7
+  stateful Enqueue_enqueue_table_5$salu.rb7:
+    p4: { name: rb7, size: 32768 }
+    row: [ 11, 9 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 11
+    input_xbar:
+      exact group 2: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_5:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_5:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_6 6:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_8, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-57
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*7:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 7)"
+        true:  END
+        false:  Enqueue_enqueue_table_7
+    next:  Enqueue_enqueue_table_7
+    stateful: Enqueue_enqueue_table_6$salu.rb8(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_6(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_8(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001d
+      - next_table: 0
+      - Enqueue_enqueue_table_6$salu.rb8(Enqueue_write_buffer_reg_action_6, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_8
+  stateful Enqueue_enqueue_table_6$salu.rb8:
+    p4: { name: rb8, size: 32768 }
+    row: [ 15, 13 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    input_xbar:
+      exact group 3: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_6:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_6:
+      - alu_a lo, phv_lo
+stage 4 ingress:
+  dependency: concurrent
+  hash_action Dequeue_dequeue_table_7 0:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_9, size: 512 }
+    row: 3
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-43
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 0
+      unit: 0
+      payload_row: 3
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*8:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 8)"
+        true:  END
+        false:  Dequeue_dequeue_table_8
+    next:  Dequeue_dequeue_table_8
+    stateful: Enqueue_enqueue_table_7$salu.rb9(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_7(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_9(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000b
+      - next_table: 0
+      - Enqueue_enqueue_table_7$salu.rb9(Dequeue_read_buffer_reg_action_7, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_9
+  hash_action Dequeue_dequeue_table_8 3:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_10, size: 512 }
+    row: 1
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-44
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 1
+      unit: 1
+      payload_row: 1
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*9:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 9)"
+        true:  END
+        false:  Dequeue_dequeue_table_9
+    next:  Dequeue_dequeue_table_9
+    stateful: Dequeue_dequeue_table_8$salu.rb10(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_8(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_10(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000c
+      - next_table: 0
+      - Dequeue_dequeue_table_8$salu.rb10(Dequeue_read_buffer_reg_action_8, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_10
+  stateful Dequeue_dequeue_table_8$salu.rb10:
+    p4: { name: rb10, size: 32768 }
+    row: [ 7, 5 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 7
+    input_xbar:
+      exact group 1: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_8:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_8:
+      - alu_a lo, phv_lo
+  hash_action Dequeue_dequeue_table_9 4:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_11, size: 512 }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-45
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 0
+      unit: 0
+      payload_row: 1
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*a:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 10)"
+        true:  END
+        false:  Dequeue_dequeue_table_10
+    next:  Dequeue_dequeue_table_10
+    stateful: Enqueue_enqueue_table_9$salu.rb11(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_9(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_11(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000d
+      - next_table: 0
+      - Enqueue_enqueue_table_9$salu.rb11(Dequeue_read_buffer_reg_action_9, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_11
+  hash_action Dequeue_dequeue_table_10 7:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_12, size: 512 }
+    row: 3
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-46
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 3
+      bus: 1
+      unit: 1
+      payload_row: 3
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*b:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 11)"
+        true:  END
+        false:  Dequeue_dequeue_table_11
+    next:  Dequeue_dequeue_table_11
+    stateful: Enqueue_enqueue_table_10$salu.rb12(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_10(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_12(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000e
+      - next_table: 0
+      - Enqueue_enqueue_table_10$salu.rb12(Dequeue_read_buffer_reg_action_10, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_12
+  hash_action Enqueue_enqueue_table_7 1:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_9, size: 512 }
+    row: 2
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-58
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 1
+      unit: 1
+      payload_row: 2
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*8:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 8)"
+        true:  END
+        false:  Enqueue_enqueue_table_8
+    next:  Enqueue_enqueue_table_8
+    stateful: Enqueue_enqueue_table_7$salu.rb9(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_7(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_9(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001e
+      - next_table: 0
+      - Enqueue_enqueue_table_7$salu.rb9(Enqueue_write_buffer_reg_action_7, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_9
+  stateful Enqueue_enqueue_table_7$salu.rb9:
+    p4: { name: rb9, size: 32768 }
+    row: [ 3, 1 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 3
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_7:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_7:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_8 2:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_10, size: 512 }
+    row: 2
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-59
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 0
+      unit: 0
+      payload_row: 2
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*9:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 9)"
+        true:  END
+        false:  Enqueue_enqueue_table_9
+    next:  Enqueue_enqueue_table_9
+    stateful: Dequeue_dequeue_table_8$salu.rb10(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_8(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_10(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000001f
+      - next_table: 0
+      - Dequeue_dequeue_table_8$salu.rb10(Enqueue_write_buffer_reg_action_8, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_10
+  hash_action Enqueue_enqueue_table_9 5:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_11, size: 512 }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-60
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 1
+      unit: 1
+      payload_row: 0
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*a:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 10)"
+        true:  END
+        false:  Enqueue_enqueue_table_10
+    next:  Enqueue_enqueue_table_10
+    stateful: Enqueue_enqueue_table_9$salu.rb11(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_9(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_11(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000020
+      - next_table: 0
+      - Enqueue_enqueue_table_9$salu.rb11(Enqueue_write_buffer_reg_action_9, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_11
+  stateful Enqueue_enqueue_table_9$salu.rb11:
+    p4: { name: rb11, size: 32768 }
+    row: [ 11, 9 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 11
+    input_xbar:
+      exact group 2: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_9:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_9:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_10 6:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_12, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-61
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*b:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 11)"
+        true:  END
+        false:  Enqueue_enqueue_table_11
+    next:  Enqueue_enqueue_table_11
+    stateful: Enqueue_enqueue_table_10$salu.rb12(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_10(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_12(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000021
+      - next_table: 0
+      - Enqueue_enqueue_table_10$salu.rb12(Enqueue_write_buffer_reg_action_10, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_12
+  stateful Enqueue_enqueue_table_10$salu.rb12:
+    p4: { name: rb12, size: 32768 }
+    row: [ 15, 13 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    input_xbar:
+      exact group 3: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_10:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_10:
+      - alu_a lo, phv_lo
+stage 5 ingress:
+  dependency: concurrent
+  hash_action Dequeue_dequeue_table_11 0:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_13, size: 512 }
+    row: 2
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-47
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 1
+      unit: 1
+      payload_row: 2
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*c:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 12)"
+        true:  END
+        false:  Dequeue_dequeue_table_12
+    next:  Dequeue_dequeue_table_12
+    stateful: Enqueue_enqueue_table_11$salu.rb13(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_11(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_13(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x2000000f
+      - next_table: 0
+      - Enqueue_enqueue_table_11$salu.rb13(Dequeue_read_buffer_reg_action_11, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_13
+  hash_action Dequeue_dequeue_table_12 3:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_14, size: 512 }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-48
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 0
+      unit: 0
+      payload_row: 1
+      payload_unit: 0
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*d:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 13)"
+        true:  END
+        false:  Dequeue_dequeue_table_13
+    next:  Dequeue_dequeue_table_13
+    stateful: Dequeue_dequeue_table_12$salu.rb14(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_12(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_14(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000010
+      - next_table: 0
+      - Dequeue_dequeue_table_12$salu.rb14(Dequeue_read_buffer_reg_action_12, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_14
+  stateful Dequeue_dequeue_table_12$salu.rb14:
+    p4: { name: rb14, size: 32768 }
+    row: [ 7, 5 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 7
+    input_xbar:
+      exact group 1: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_12:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_12:
+      - alu_a lo, phv_lo
+  hash_action Dequeue_dequeue_table_13 4:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_15, size: 512 }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-49
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 1
+      unit: 1
+      payload_row: 0
+      payload_unit: 1
+      payload: 0x30001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*e:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 14)"
+        true:  END
+        false:  Dequeue_dequeue_table_14
+    next:  Dequeue_dequeue_table_14
+    stateful: Enqueue_enqueue_table_13$salu.rb15(hash_dist 0, meter_pfe, meter_type)
+    instruction: Dequeue_dequeue_table_13(action, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_15(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000011
+      - next_table: 0
+      - Enqueue_enqueue_table_13$salu.rb15(Dequeue_read_buffer_reg_action_13, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_15
+  hash_action Dequeue_dequeue_table_14 7:
+    p4: { name: SwitchIngress.Dequeue.dequeue_table_16, size: 512 }
+    row: 3
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Dequeue_head_tmp }
+      hash 0:
+        0..15: Dequeue_head_tmp(0..15)
+        32..38: Dequeue_head_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: Dequeue_dequeue_table_14-gateway
+      row: 3
+      bus: 0
+      unit: 1
+      0x0:  END
+      miss:  END
+      condition: 
+        expression: "true(always hit)"
+        true:  END
+        false:  END
+    next: []
+    stateful: Enqueue_enqueue_table_14$salu.rb16(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: Dequeue_dequeue_table_14($DEFAULT, $DEFAULT)
+    actions:
+      SwitchIngress.Dequeue.dequeue_action_16(0, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000012
+      - next_table: 0
+      - Enqueue_enqueue_table_14$salu.rb16(Dequeue_read_buffer_reg_action_14, $hash_dist)
+    default_action: SwitchIngress.Dequeue.dequeue_action_16
+  hash_action Enqueue_enqueue_table_11 1:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_13, size: 512 }
+    row: 2
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-62
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 2
+      bus: 0
+      unit: 0
+      payload_row: 2
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*c:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 12)"
+        true:  END
+        false:  Enqueue_enqueue_table_12
+    next:  Enqueue_enqueue_table_12
+    stateful: Enqueue_enqueue_table_11$salu.rb13(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_11(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_13(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000022
+      - next_table: 0
+      - Enqueue_enqueue_table_11$salu.rb13(Enqueue_write_buffer_reg_action_11, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_13
+  stateful Enqueue_enqueue_table_11$salu.rb13:
+    p4: { name: rb13, size: 32768 }
+    row: [ 3, 1 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 3
+    input_xbar:
+      exact group 0: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_11:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_11:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_12 2:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_14, size: 512 }
+    row: 1
+    result_bus: 1
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-63
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 1
+      bus: 1
+      unit: 1
+      payload_row: 1
+      payload_unit: 1
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*d:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 13)"
+        true:  END
+        false:  Enqueue_enqueue_table_13
+    next:  Enqueue_enqueue_table_13
+    stateful: Dequeue_dequeue_table_12$salu.rb14(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_12(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_14(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000023
+      - next_table: 0
+      - Dequeue_dequeue_table_12$salu.rb14(Enqueue_write_buffer_reg_action_12, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_14
+  hash_action Enqueue_enqueue_table_13 5:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_15, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: cond-64
+      input_xbar:
+        exact group 0: { 64: hdr.ipv4.dst_addr(0..3) }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x70001
+      format: { action: 0..0, meter_addr: 1..15, meter_pfe: 16..16, meter_type: 17..19 }
+      match: { 0: hdr.ipv4.dst_addr(0..3) }
+      0x*e:  END
+      miss: run_table
+      condition: 
+        expression: "(hdr.ipv4.dst_addr[3:0] == 14)"
+        true:  END
+        false:  Enqueue_enqueue_table_14
+    next:  Enqueue_enqueue_table_14
+    stateful: Enqueue_enqueue_table_13$salu.rb15(hash_dist 1, meter_pfe, meter_type)
+    instruction: Enqueue_enqueue_table_13(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action_15(1, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000024
+      - next_table: 0
+      - Enqueue_enqueue_table_13$salu.rb15(Enqueue_write_buffer_reg_action_13, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_15
+  stateful Enqueue_enqueue_table_13$salu.rb15:
+    p4: { name: rb15, size: 32768 }
+    row: [ 11, 9 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 11
+    input_xbar:
+      exact group 2: { 64: hdr.ipv4.dst_addr }
+    data_bytemask: 15
+    format: { lo: 32 }
+    actions:
+      Dequeue_read_buffer_reg_action_13:
+      - output mem_lo
+      Enqueue_write_buffer_reg_action_13:
+      - alu_a lo, phv_lo
+  hash_action Enqueue_enqueue_table_14 6:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table_16, size: 512 }
+    row: 3
+    result_bus: 0
+    hash_dist:
+      1: { hash: 0, mask: 0x7fffff, shift: 5, expand: 7 }
+    input_xbar:
+      exact group 0: { 32: Enqueue_tail_tmp }
+      hash 0:
+        16..31: Enqueue_tail_tmp(0..15)
+        39..45: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: Enqueue_enqueue_table_14-gateway
+      row: 3
       bus: 0
       unit: 0
       0x0:  END
@@ -432,32 +2033,36 @@ stage 2 ingress:
         true:  END
         false:  END
     next: []
-    stateful: Dequeue_dequeue_table_two$salu.rb2(hash_dist 0, $DEFAULT, $DEFAULT)
-    instruction: Dequeue_dequeue_table_two($DEFAULT, $DEFAULT)
+    stateful: Enqueue_enqueue_table_14$salu.rb16(hash_dist 1, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_enqueue_table_14($DEFAULT, $DEFAULT)
     actions:
-      SwitchIngress.Dequeue.dequeue_action_2(0, 0):
+      SwitchIngress.Enqueue.enqueue_action_16(0, 0):
       - hit_allowed: { allowed: true }
       - default_action: { allowed: true }
-      - handle: 0x20000009
+      - handle: 0x20000025
       - next_table: 0
-      - Dequeue_dequeue_table_two$salu.rb2(Dequeue_read_buffer_reg_action_two, $hash_dist)
-    default_action: SwitchIngress.Dequeue.dequeue_action_2
-  stateful Dequeue_dequeue_table_two$salu.rb2:
-    p4: { name: rb2, size: 16 }
-    row: 15
-    logical_bus: S
-    column: [ 0, 1 ]
-    maprams: [ 0, 1 ]
+      - Enqueue_enqueue_table_14$salu.rb16(Enqueue_write_buffer_reg_action_14, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action_16
+  stateful Enqueue_enqueue_table_14$salu.rb16:
+    p4: { name: rb16, size: 32768 }
+    row: [ 15, 13 ]
+    logical_bus: [ S, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
     home_row: 15
     input_xbar:
-      exact group 0: { 64: hdr.ipv4.dst_addr }
+      exact group 3: { 64: hdr.ipv4.dst_addr }
     data_bytemask: 15
     format: { lo: 32 }
     actions:
-      Enqueue_write_buffer_reg_action_two:
-      - alu_a lo, phv_lo
-      Dequeue_read_buffer_reg_action_two:
+      Dequeue_read_buffer_reg_action_14:
       - output mem_lo
+      Enqueue_write_buffer_reg_action_14:
+      - alu_a lo, phv_lo
 
 
 primitives: "multiple_buffers.prim.json"

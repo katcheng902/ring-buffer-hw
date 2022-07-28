@@ -1527,19 +1527,36 @@ control SwitchIngressDeparser(
 
 
 
-const bit<32> CAPACITY = 1 << 4;
+const bit<32> CAPACITY = 1 << 15;
 
 /*REGISTERS*/
-Register<bit<32>, bit<32>> (2, 0) heads;
-Register<bit<32>, bit<32>> (2,0) tails;
-Register<bit<32>, bit<32>> (2,0) sizes;
-Register<bit<1>, bit<32>> (2,0) firsts;
+Register<bit<32>, bit<32>> (16,0) heads;
+Register<bit<32>, bit<32>> (16,0) tails;
+Register<bit<32>, bit<32>> (16,0) sizes;
+Register<bit<1>, bit<32>> (16,0) firsts;
 
 Register<bit<32>, bit<32>> (CAPACITY, 0) rb1;
 Register<bit<32>, bit<32>> (CAPACITY, 0) rb2;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb3;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb4;
+
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb5;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb6;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb7;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb8;
+
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb9;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb10;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb11;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb12;
 
 
-control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb13;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb14;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb15;
+Register<bit<32>, bit<32>> (CAPACITY, 0) rb16;
+
+control Enqueue(in bit<4> rb_id, in bit<32> enq_value) {
      bit<1> first_tmp = 0;
      bit<32> tail_tmp = 0;
 
@@ -1585,24 +1602,167 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
      }
 
      /*buffer (write)*/
-     RegisterAction<bit<32>, bit<32>, bit<32>> (rb1) write_buffer_reg_action_one = {
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb1) write_buffer_reg_action_1 = {
  void apply(inout bit<32> val) {
      val = enq_value;
  }
      };
 
-     RegisterAction<bit<32>, bit<32>, bit<32>> (rb2) write_buffer_reg_action_two = {
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb2) write_buffer_reg_action_2 = {
  void apply(inout bit<32> val) {
      val = enq_value;
  }
      };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb3) write_buffer_reg_action_3 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb4) write_buffer_reg_action_4 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb5) write_buffer_reg_action_5 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb6) write_buffer_reg_action_6 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb7) write_buffer_reg_action_7 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb8) write_buffer_reg_action_8 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb9) write_buffer_reg_action_9 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb10) write_buffer_reg_action_10 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb11) write_buffer_reg_action_11 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb12) write_buffer_reg_action_12 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb13) write_buffer_reg_action_13 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb14) write_buffer_reg_action_14 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+     RegisterAction<bit<32>, bit<32>, bit<32>> (rb15) write_buffer_reg_action_15 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb16) write_buffer_reg_action_16 = {
+ void apply(inout bit<32> val) {
+     val = enq_value;
+ }
+     };
+
 
      action enqueue_action_1() {
- write_buffer_reg_action_one.execute(tail_tmp);
+ write_buffer_reg_action_1.execute(tail_tmp);
      }
 
      action enqueue_action_2() {
- write_buffer_reg_action_two.execute(tail_tmp);
+ write_buffer_reg_action_2.execute(tail_tmp);
+     }
+
+     action enqueue_action_3() {
+ write_buffer_reg_action_3.execute(tail_tmp);
+     }
+
+     action enqueue_action_4() {
+ write_buffer_reg_action_4.execute(tail_tmp);
+     }
+
+     action enqueue_action_5() {
+ write_buffer_reg_action_5.execute(tail_tmp);
+     }
+
+     action enqueue_action_6() {
+ write_buffer_reg_action_6.execute(tail_tmp);
+     }
+
+     action enqueue_action_7() {
+ write_buffer_reg_action_7.execute(tail_tmp);
+     }
+
+     action enqueue_action_8() {
+ write_buffer_reg_action_8.execute(tail_tmp);
+     }
+
+     action enqueue_action_9() {
+ write_buffer_reg_action_9.execute(tail_tmp);
+     }
+
+     action enqueue_action_10() {
+ write_buffer_reg_action_10.execute(tail_tmp);
+     }
+
+     action enqueue_action_11() {
+ write_buffer_reg_action_11.execute(tail_tmp);
+     }
+
+     action enqueue_action_12() {
+ write_buffer_reg_action_12.execute(tail_tmp);
+     }
+
+     action enqueue_action_13() {
+ write_buffer_reg_action_13.execute(tail_tmp);
+     }
+
+     action enqueue_action_14() {
+ write_buffer_reg_action_14.execute(tail_tmp);
+     }
+
+     action enqueue_action_15() {
+ write_buffer_reg_action_15.execute(tail_tmp);
+     }
+
+     action enqueue_action_16() {
+ write_buffer_reg_action_16.execute(tail_tmp);
      }
 
 
@@ -1628,34 +1788,160 @@ control Enqueue(in bit<1> rb_id, in bit<32> enq_value) {
  default_action = inc_size;
    }
 
-   table enqueue_table_one {
+   table enqueue_table_1 {
  actions = {
      enqueue_action_1;
  }
  default_action = enqueue_action_1;
    }
 
-   table enqueue_table_two {
+   table enqueue_table_2 {
  actions = {
      enqueue_action_2;
  }
  default_action = enqueue_action_2;
    }
 
+   table enqueue_table_3 {
+ actions = {
+     enqueue_action_3;
+ }
+ default_action = enqueue_action_3;
+   }
+
+   table enqueue_table_4 {
+ actions = {
+     enqueue_action_4;
+ }
+ default_action = enqueue_action_4;
+   }
+
+   table enqueue_table_5 {
+ actions = {
+     enqueue_action_5;
+ }
+ default_action = enqueue_action_5;
+    }
+
+    table enqueue_table_6 {
+ actions = {
+     enqueue_action_6;
+ }
+ default_action = enqueue_action_6;
+    }
+
+    table enqueue_table_7 {
+ actions = {
+     enqueue_action_7;
+ }
+ default_action = enqueue_action_7;
+    }
+
+    table enqueue_table_8 {
+ actions = {
+     enqueue_action_8;
+ }
+ default_action = enqueue_action_8;
+    }
+
+    table enqueue_table_9 {
+ actions = {
+     enqueue_action_9;
+ }
+ default_action = enqueue_action_9;
+   }
+
+   table enqueue_table_10 {
+ actions = {
+     enqueue_action_10;
+ }
+ default_action = enqueue_action_10;
+   }
+
+   table enqueue_table_11 {
+ actions = {
+     enqueue_action_11;
+ }
+ default_action = enqueue_action_11;
+   }
+
+   table enqueue_table_12 {
+ actions = {
+     enqueue_action_12;
+ }
+ default_action = enqueue_action_12;
+   }
+
+   table enqueue_table_13 {
+ actions = {
+     enqueue_action_13;
+ }
+ default_action = enqueue_action_13;
+    }
+
+    table enqueue_table_14 {
+ actions = {
+     enqueue_action_14;
+ }
+ default_action = enqueue_action_14;
+    }
+
+    table enqueue_table_15 {
+ actions = {
+     enqueue_action_15;
+ }
+ default_action = enqueue_action_15;
+    }
+
+    table enqueue_table_16 {
+ actions = {
+     enqueue_action_16;
+ }
+ default_action = enqueue_action_16;
+    }
+
    apply {
  first_table.apply();
  inc_tail_table.apply();
  inc_size_table.apply();
  if (rb_id == 0) {
-     enqueue_table_one.apply();
+     enqueue_table_1.apply();
+ } else if (rb_id == 1) {
+     enqueue_table_2.apply();
+ } else if (rb_id == 2) {
+     enqueue_table_3.apply();
+ } else if (rb_id == 3) {
+     enqueue_table_4.apply();
+ } else if (rb_id == 4) {
+     enqueue_table_5.apply();
+ } else if (rb_id == 5) {
+     enqueue_table_6.apply();
+ } else if (rb_id == 6) {
+     enqueue_table_7.apply();
+ } else if (rb_id == 7) {
+     enqueue_table_8.apply();
+ } else if (rb_id == 8) {
+     enqueue_table_9.apply();
+ } else if (rb_id == 9) {
+     enqueue_table_10.apply();
+ } else if (rb_id == 10) {
+     enqueue_table_11.apply();
+ } else if (rb_id == 11) {
+     enqueue_table_12.apply();
+ } else if (rb_id == 12) {
+     enqueue_table_13.apply();
+ } else if (rb_id == 13) {
+     enqueue_table_14.apply();
+        } else if (rb_id == 14) {
+     enqueue_table_15.apply();
  } else {
-     enqueue_table_two.apply();
+     enqueue_table_16.apply();
  }
    }
 
 }
 
-control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
+control Dequeue(in bit<4> rb_id, out bit<32> deq_value) {
     bit<32> size_tmp = 0;
     bit<32> head_tmp = 0;
 
@@ -1686,24 +1972,164 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
     }
 
     /* buffer (read) */
-    RegisterAction<bit<32>, bit<32>, bit<32>> (rb1) read_buffer_reg_action_one = {
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb1) read_buffer_reg_action_1 = {
  void apply(inout bit<32> val, out bit<32> rv) {
      rv = val;
  }
     };
 
-    RegisterAction<bit<32>, bit<32>, bit<32>> (rb2) read_buffer_reg_action_two = {
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb2) read_buffer_reg_action_2 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb3) read_buffer_reg_action_3 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb4) read_buffer_reg_action_4 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb5) read_buffer_reg_action_5 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb6) read_buffer_reg_action_6 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb7) read_buffer_reg_action_7 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb8) read_buffer_reg_action_8 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb9) read_buffer_reg_action_9 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb10) read_buffer_reg_action_10 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb11) read_buffer_reg_action_11 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb12) read_buffer_reg_action_12 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb13) read_buffer_reg_action_13 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb14) read_buffer_reg_action_14 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb15) read_buffer_reg_action_15 = {
+ void apply(inout bit<32> val, out bit<32> rv) {
+     rv = val;
+ }
+    };
+
+    RegisterAction<bit<32>, bit<32>, bit<32>> (rb16) read_buffer_reg_action_16 = {
  void apply(inout bit<32> val, out bit<32> rv) {
      rv = val;
  }
     };
 
     action dequeue_action_1() {
-  deq_value = read_buffer_reg_action_one.execute(head_tmp);
+  deq_value = read_buffer_reg_action_1.execute(head_tmp);
     }
 
     action dequeue_action_2() {
- deq_value = read_buffer_reg_action_two.execute(head_tmp);
+ deq_value = read_buffer_reg_action_2.execute(head_tmp);
+    }
+
+    action dequeue_action_3() {
+ deq_value = read_buffer_reg_action_3.execute(head_tmp);
+    }
+
+    action dequeue_action_4() {
+ deq_value = read_buffer_reg_action_4.execute(head_tmp);
+    }
+
+    action dequeue_action_5() {
+  deq_value = read_buffer_reg_action_5.execute(head_tmp);
+    }
+
+    action dequeue_action_6() {
+  deq_value = read_buffer_reg_action_6.execute(head_tmp);
+    }
+
+    action dequeue_action_7() {
+  deq_value = read_buffer_reg_action_7.execute(head_tmp);
+    }
+
+    action dequeue_action_8() {
+  deq_value = read_buffer_reg_action_8.execute(head_tmp);
+    }
+
+    action dequeue_action_9() {
+  deq_value = read_buffer_reg_action_9.execute(head_tmp);
+    }
+
+    action dequeue_action_10() {
+ deq_value = read_buffer_reg_action_10.execute(head_tmp);
+    }
+
+    action dequeue_action_11() {
+ deq_value = read_buffer_reg_action_11.execute(head_tmp);
+    }
+
+    action dequeue_action_12() {
+ deq_value = read_buffer_reg_action_12.execute(head_tmp);
+    }
+
+    action dequeue_action_13() {
+  deq_value = read_buffer_reg_action_13.execute(head_tmp);
+    }
+
+    action dequeue_action_14() {
+  deq_value = read_buffer_reg_action_14.execute(head_tmp);
+    }
+
+    action dequeue_action_15() {
+  deq_value = read_buffer_reg_action_15.execute(head_tmp);
+    }
+
+    action dequeue_action_16() {
+  deq_value = read_buffer_reg_action_16.execute(head_tmp);
     }
 
     /* TABLES */
@@ -1721,18 +2147,116 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
  default_action = inc_head;
     }
 
-    table dequeue_table_one {
+    table dequeue_table_1 {
  actions = {
      dequeue_action_1;
  }
  default_action = dequeue_action_1;
     }
 
-    table dequeue_table_two {
+    table dequeue_table_2 {
  actions = {
      dequeue_action_2;
  }
  default_action = dequeue_action_2;
+    }
+
+    table dequeue_table_3 {
+ actions = {
+     dequeue_action_3;
+ }
+ default_action = dequeue_action_3;
+    }
+
+    table dequeue_table_4 {
+ actions = {
+     dequeue_action_4;
+ }
+ default_action = dequeue_action_4;
+    }
+
+    table dequeue_table_5 {
+ actions = {
+     dequeue_action_5;
+ }
+ default_action = dequeue_action_5;
+    }
+
+    table dequeue_table_6 {
+ actions = {
+     dequeue_action_6;
+ }
+ default_action = dequeue_action_6;
+    }
+
+    table dequeue_table_7 {
+ actions = {
+     dequeue_action_7;
+ }
+ default_action = dequeue_action_7;
+    }
+
+    table dequeue_table_8 {
+ actions = {
+     dequeue_action_8;
+ }
+ default_action = dequeue_action_8;
+    }
+
+    table dequeue_table_9 {
+ actions = {
+     dequeue_action_9;
+ }
+ default_action = dequeue_action_9;
+    }
+
+    table dequeue_table_10 {
+ actions = {
+     dequeue_action_10;
+ }
+ default_action = dequeue_action_10;
+    }
+
+    table dequeue_table_11 {
+ actions = {
+     dequeue_action_11;
+ }
+ default_action = dequeue_action_11;
+    }
+
+    table dequeue_table_12 {
+ actions = {
+     dequeue_action_12;
+ }
+ default_action = dequeue_action_12;
+    }
+
+    table dequeue_table_13 {
+ actions = {
+     dequeue_action_13;
+ }
+ default_action = dequeue_action_13;
+    }
+
+    table dequeue_table_14 {
+ actions = {
+     dequeue_action_14;
+ }
+ default_action = dequeue_action_14;
+    }
+
+    table dequeue_table_15 {
+ actions = {
+     dequeue_action_15;
+ }
+ default_action = dequeue_action_15;
+    }
+
+    table dequeue_table_16 {
+ actions = {
+     dequeue_action_16;
+ }
+ default_action = dequeue_action_16;
     }
 
     apply {
@@ -1740,9 +2264,37 @@ control Dequeue(in bit<1> rb_id, out bit<32> deq_value) {
  if (size_tmp > 0) {
      inc_head_table.apply();
      if (rb_id == 0) {
-         dequeue_table_one.apply();
+  dequeue_table_1.apply();
+     } else if (rb_id == 1) {
+  dequeue_table_2.apply();
+     } else if (rb_id == 2) {
+  dequeue_table_3.apply();
+     } else if (rb_id == 3) {
+  dequeue_table_4.apply();
+     } else if (rb_id == 4) {
+  dequeue_table_5.apply();
+     } else if (rb_id == 5) {
+  dequeue_table_6.apply();
+     } else if (rb_id == 6) {
+  dequeue_table_7.apply();
+     } else if (rb_id == 7) {
+  dequeue_table_8.apply();
+     } else if (rb_id == 8) {
+  dequeue_table_9.apply();
+     } else if (rb_id == 9) {
+  dequeue_table_10.apply();
+     } else if (rb_id == 10) {
+  dequeue_table_11.apply();
+     } else if (rb_id == 11) {
+  dequeue_table_12.apply();
+     } else if (rb_id == 12) {
+  dequeue_table_13.apply();
+     } else if (rb_id == 13) {
+  dequeue_table_14.apply();
+     } else if (rb_id == 14) {
+  dequeue_table_15.apply();
      } else {
-  dequeue_table_two.apply();
+  dequeue_table_16.apply();
      }
  }
     }
@@ -1784,9 +2336,11 @@ control SwitchIngress(
 
     apply {
  bit<32> deq = 0;
- switch (dmac.apply().action_run) {
-     drop: {Enqueue.apply(1, hdr.ipv4.dst_addr);}
-     NoAction: {Dequeue.apply(1, deq);}
+ bit<2> id = 0;
+ if (hdr.ipv4.dst_addr[0:0] == 0) {
+  Dequeue.apply(hdr.ipv4.dst_addr[3:0], deq);
+ } else {
+   Enqueue.apply(hdr.ipv4.dst_addr[3:0], hdr.ipv4.dst_addr);
  }
     }
 }

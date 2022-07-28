@@ -11,5 +11,6 @@ start -> TofinoIngressParser_parse_port_metadata [label="1w0"]
 start -> reject [label="fallthrough"]
 TofinoIngressParser_parse_resubmit -> reject [label="always"]
 TofinoIngressParser_parse_port_metadata -> accept [label="32w16909060"]
+TofinoIngressParser_parse_port_metadata -> accept [label="32w16909061"]
 TofinoIngressParser_parse_port_metadata -> reject [label="default"]
 }

@@ -6,7 +6,7 @@
       "pov_bits": [
         {
           "pov_bit": 0,
-          "phv_container": 65,
+          "phv_container": 64,
           "phv_container_bit": 0,
           "pov_name": "hdr.ethernet.$valid"
         }
@@ -19,10 +19,10 @@
         "pov_bit": 0,
         "pov_name": "hdr.ethernet.$valid",
         "chunks": [
-          { "chunk_number": 0, "chunk": { "phv_container": 321 } },
-          { "chunk_number": 1, "chunk": { "phv_container": 321 } },
-          { "chunk_number": 2, "chunk": { "phv_container": 256 } },
-          { "chunk_number": 3, "chunk": { "phv_container": 256 } }
+          { "chunk_number": 0, "chunk": { "phv_container": 322 } },
+          { "chunk_number": 1, "chunk": { "phv_container": 322 } },
+          { "chunk_number": 2, "chunk": { "phv_container": 257 } },
+          { "chunk_number": 3, "chunk": { "phv_container": 257 } }
         ]
       },
       {
@@ -30,10 +30,10 @@
         "pov_bit": 0,
         "pov_name": "hdr.ethernet.$valid",
         "chunks": [
-          { "chunk_number": 0, "chunk": { "phv_container": 256 } },
-          { "chunk_number": 1, "chunk": { "phv_container": 256 } },
-          { "chunk_number": 2, "chunk": { "phv_container": 128 } },
-          { "chunk_number": 3, "chunk": { "phv_container": 128 } }
+          { "chunk_number": 0, "chunk": { "phv_container": 257 } },
+          { "chunk_number": 1, "chunk": { "phv_container": 257 } },
+          { "chunk_number": 2, "chunk": { "phv_container": 321 } },
+          { "chunk_number": 3, "chunk": { "phv_container": 321 } }
         ]
       },
       {
@@ -41,10 +41,10 @@
         "pov_bit": 0,
         "pov_name": "hdr.ethernet.$valid",
         "chunks": [
-          { "chunk_number": 0, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 1, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 2, "chunk": { "phv_container": 0 } },
-          { "chunk_number": 3, "chunk": { "phv_container": 0 } }
+          { "chunk_number": 0, "chunk": { "phv_container": 256 } },
+          { "chunk_number": 1, "chunk": { "phv_container": 256 } },
+          { "chunk_number": 2, "chunk": { "phv_container": 256 } },
+          { "chunk_number": 3, "chunk": { "phv_container": 256 } }
         ]
       }
     ],

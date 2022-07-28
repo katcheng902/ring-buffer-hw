@@ -1,5 +1,5 @@
 {
-    "build_date": "Mon Jul 25 22:05:33 2022",
+    "build_date": "Thu Jul 28 20:02:44 2022",
     "compiler_version": "9.8.0",
     "constraint_reasons": [
         "Solitary (ALU): This field cannot be packed with anything else due to ALU operation.",
@@ -159,7 +159,7 @@
             "gress": "ingress",
             "phv_deparser_group_number": 0,
             "phv_mau_group_number": 0,
-            "phv_number": 0,
+            "phv_number": 2,
             "slices": [
                 {
                     "field_slice": {
@@ -169,7 +169,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 0,
+                    "phv_number": 2,
                     "reads": [
                         {
                             "location": {
@@ -249,7 +249,7 @@
             "gress": "ingress",
             "phv_deparser_group_number": 0,
             "phv_mau_group_number": 0,
-            "phv_number": 1,
+            "phv_number": 3,
             "slices": [
                 {
                     "field_slice": {
@@ -259,7 +259,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 1,
+                    "phv_number": 3,
                     "reads": [],
                     "slice_info": {
                         "lsb": 0,
@@ -321,12 +321,100 @@
             ]
         },
         {
-            "bit_width": 8,
+            "bit_width": 32,
             "container_type": "normal",
             "gress": "ingress",
-            "phv_deparser_group_number": 4,
-            "phv_mau_group_number": 4,
-            "phv_number": 65,
+            "phv_deparser_group_number": 0,
+            "phv_mau_group_number": 0,
+            "phv_number": 0,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_left_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 0,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.inc_tail",
+                                "table": "SwitchIngress.Enqueue.inc_tail_table"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.read_left",
+                                "table": "SwitchIngress.Enqueue.left_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Dequeue_left_tmp"
+                    ]
+                },
+                {
+                    "field_slice": {
+                        "field_name": "Dequeue_left_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 0,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.inc_head",
+                                "table": "SwitchIngress.Dequeue.inc_head_table"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.read_left",
+                                "table": "SwitchIngress.Dequeue.left_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Enqueue_left_tmp"
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 32,
+            "container_type": "normal",
+            "gress": "ingress",
+            "phv_deparser_group_number": 0,
+            "phv_mau_group_number": 0,
+            "phv_number": 4,
             "slices": [
                 {
                     "field_slice": {
@@ -336,11 +424,11 @@
                             "msb": 0
                         }
                     },
-                    "phv_number": 65,
+                    "phv_number": 4,
                     "reads": [],
                     "slice_info": {
-                        "lsb": 1,
-                        "msb": 1
+                        "lsb": 0,
+                        "msb": 0
                     },
                     "writes": [
                         {
@@ -352,8 +440,118 @@
                                 "table": "SwitchIngress.Enqueue.first_table"
                             }
                         }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Dequeue_size_tmp"
                     ]
                 },
+                {
+                    "field_slice": {
+                        "field_name": "Dequeue_size_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 4,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.dec_size",
+                                "table": "SwitchIngress.Dequeue.dec_size_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Enqueue_first_tmp"
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 32,
+            "container_type": "normal",
+            "gress": "ingress",
+            "phv_deparser_group_number": 0,
+            "phv_mau_group_number": 0,
+            "phv_number": 1,
+            "slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_tail_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 1,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.inc_tail",
+                                "table": "SwitchIngress.Enqueue.inc_tail_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Dequeue_head_tmp"
+                    ]
+                },
+                {
+                    "field_slice": {
+                        "field_name": "Dequeue_head_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 1,
+                    "reads": [],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.inc_head",
+                                "table": "SwitchIngress.Dequeue.inc_head_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Enqueue_tail_tmp"
+                    ]
+                }
+            ]
+        },
+        {
+            "bit_width": 8,
+            "container_type": "normal",
+            "gress": "ingress",
+            "phv_deparser_group_number": 4,
+            "phv_mau_group_number": 4,
+            "phv_number": 65,
+            "slices": [
                 {
                     "field_slice": {
                         "field_name": "hdr.ethernet.$valid",
@@ -383,132 +581,6 @@
                                 "type": "parser"
                             }
                         }
-                    ]
-                }
-            ]
-        },
-        {
-            "bit_width": 32,
-            "container_type": "normal",
-            "gress": "ingress",
-            "phv_deparser_group_number": 0,
-            "phv_mau_group_number": 0,
-            "phv_number": 3,
-            "slices": [
-                {
-                    "field_slice": {
-                        "field_name": "Enqueue_tail_tmp",
-                        "slice_info": {
-                            "lsb": 0,
-                            "msb": 31
-                        }
-                    },
-                    "phv_number": 3,
-                    "reads": [],
-                    "slice_info": {
-                        "lsb": 0,
-                        "msb": 31
-                    },
-                    "writes": [
-                        {
-                            "location": {
-                                "detail": "vliw",
-                                "stage": 1,
-                                "type": "mau",
-                                "action": "SwitchIngress.Enqueue.inc_tail",
-                                "table": "SwitchIngress.Enqueue.inc_tail_table"
-                            }
-                        }
-                    ],
-                    "mutually_exclusive_with": [
-                        "Dequeue_head_tmp"
-                    ]
-                },
-                {
-                    "field_slice": {
-                        "field_name": "Dequeue_head_tmp",
-                        "slice_info": {
-                            "lsb": 0,
-                            "msb": 31
-                        }
-                    },
-                    "phv_number": 3,
-                    "reads": [],
-                    "slice_info": {
-                        "lsb": 0,
-                        "msb": 31
-                    },
-                    "writes": [
-                        {
-                            "location": {
-                                "detail": "vliw",
-                                "stage": 1,
-                                "type": "mau",
-                                "action": "SwitchIngress.Dequeue.inc_head",
-                                "table": "SwitchIngress.Dequeue.inc_head_table"
-                            }
-                        }
-                    ],
-                    "mutually_exclusive_with": [
-                        "Enqueue_tail_tmp"
-                    ]
-                }
-            ]
-        },
-        {
-            "bit_width": 32,
-            "container_type": "normal",
-            "gress": "ingress",
-            "phv_deparser_group_number": 0,
-            "phv_mau_group_number": 0,
-            "phv_number": 2,
-            "slices": [
-                {
-                    "field_slice": {
-                        "field_name": "Enqueue_left_tmp",
-                        "slice_info": {
-                            "lsb": 0,
-                            "msb": 31
-                        }
-                    },
-                    "phv_number": 2,
-                    "reads": [],
-                    "slice_info": {
-                        "lsb": 0,
-                        "msb": 31
-                    },
-                    "writes": [],
-                    "mutually_exclusive_with": [
-                        "Dequeue_size_tmp"
-                    ]
-                },
-                {
-                    "field_slice": {
-                        "field_name": "Dequeue_size_tmp",
-                        "slice_info": {
-                            "lsb": 0,
-                            "msb": 31
-                        }
-                    },
-                    "phv_number": 2,
-                    "reads": [],
-                    "slice_info": {
-                        "lsb": 0,
-                        "msb": 31
-                    },
-                    "writes": [
-                        {
-                            "location": {
-                                "detail": "vliw",
-                                "stage": 0,
-                                "type": "mau",
-                                "action": "SwitchIngress.Dequeue.dec_size",
-                                "table": "SwitchIngress.Dequeue.dec_size_table"
-                            }
-                        }
-                    ],
-                    "mutually_exclusive_with": [
-                        "Enqueue_left_tmp"
                     ]
                 }
             ]
@@ -728,7 +800,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 0,
+                    "phv_number": 2,
                     "reads": [
                         {
                             "location": {
@@ -1078,7 +1150,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 1,
+                    "phv_number": 3,
                     "reads": [],
                     "slice_info": {
                         "lsb": 0,
@@ -1266,6 +1338,82 @@
             "structure": "ig_intr_md_for_dprsr"
         },
         {
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 10,
+                            "name": "NoSplit",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        }
+                    ]
+                }
+            ],
+            "field_info": {
+                "bit_width": 32,
+                "field_class": "meta",
+                "field_name": "Enqueue_left_tmp",
+                "gress": "ingress"
+            },
+            "field_slices": [
+                {
+                    "field_name": "Enqueue_left_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                }
+            ],
+            "phv_slices": [
+                {
+                    "field_slice": {
+                        "field_name": "Enqueue_left_tmp",
+                        "slice_info": {
+                            "lsb": 0,
+                            "msb": 31
+                        }
+                    },
+                    "phv_number": 0,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.inc_tail",
+                                "table": "SwitchIngress.Enqueue.inc_tail_table"
+                            }
+                        }
+                    ],
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    },
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Enqueue.read_left",
+                                "table": "SwitchIngress.Enqueue.left_table"
+                            }
+                        }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Dequeue_left_tmp"
+                    ]
+                }
+            ],
+            "status": "allocated",
+            "structure": "Enqueue_left_tmp"
+        },
+        {
             "constraints": [],
             "field_info": {
                 "bit_width": 1,
@@ -1291,11 +1439,11 @@
                             "msb": 0
                         }
                     },
-                    "phv_number": 65,
+                    "phv_number": 4,
                     "reads": [],
                     "slice_info": {
-                        "lsb": 1,
-                        "msb": 1
+                        "lsb": 0,
+                        "msb": 0
                     },
                     "writes": [
                         {
@@ -1307,6 +1455,9 @@
                                 "table": "SwitchIngress.Enqueue.first_table"
                             }
                         }
+                    ],
+                    "mutually_exclusive_with": [
+                        "Dequeue_size_tmp"
                     ]
                 }
             ],
@@ -1314,7 +1465,32 @@
             "structure": "Enqueue_first_tmp"
         },
         {
-            "constraints": [],
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 3,
+                            "name": "Solitary",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        },
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 10,
+                            "name": "NoSplit",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        }
+                    ]
+                }
+            ],
             "field_info": {
                 "bit_width": 32,
                 "field_class": "meta",
@@ -1339,7 +1515,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 3,
+                    "phv_number": 1,
                     "reads": [],
                     "slice_info": {
                         "lsb": 0,
@@ -1365,16 +1541,31 @@
             "structure": "Enqueue_tail_tmp"
         },
         {
-            "constraints": [],
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 10,
+                            "name": "NoSplit",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        }
+                    ]
+                }
+            ],
             "field_info": {
                 "bit_width": 32,
                 "field_class": "meta",
-                "field_name": "Enqueue_left_tmp",
+                "field_name": "Dequeue_left_tmp",
                 "gress": "ingress"
             },
             "field_slices": [
                 {
-                    "field_name": "Enqueue_left_tmp",
+                    "field_name": "Dequeue_left_tmp",
                     "slice_info": {
                         "lsb": 0,
                         "msb": 31
@@ -1384,26 +1575,46 @@
             "phv_slices": [
                 {
                     "field_slice": {
-                        "field_name": "Enqueue_left_tmp",
+                        "field_name": "Dequeue_left_tmp",
                         "slice_info": {
                             "lsb": 0,
                             "msb": 31
                         }
                     },
-                    "phv_number": 2,
-                    "reads": [],
+                    "phv_number": 0,
+                    "reads": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 1,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.inc_head",
+                                "table": "SwitchIngress.Dequeue.inc_head_table"
+                            }
+                        }
+                    ],
                     "slice_info": {
                         "lsb": 0,
                         "msb": 31
                     },
-                    "writes": [],
+                    "writes": [
+                        {
+                            "location": {
+                                "detail": "vliw",
+                                "stage": 0,
+                                "type": "mau",
+                                "action": "SwitchIngress.Dequeue.read_left",
+                                "table": "SwitchIngress.Dequeue.left_table"
+                            }
+                        }
+                    ],
                     "mutually_exclusive_with": [
-                        "Dequeue_size_tmp"
+                        "Enqueue_left_tmp"
                     ]
                 }
             ],
             "status": "allocated",
-            "structure": "Enqueue_left_tmp"
+            "structure": "Dequeue_left_tmp"
         },
         {
             "constraints": [],
@@ -1431,7 +1642,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 2,
+                    "phv_number": 4,
                     "reads": [],
                     "slice_info": {
                         "lsb": 0,
@@ -1449,7 +1660,7 @@
                         }
                     ],
                     "mutually_exclusive_with": [
-                        "Enqueue_left_tmp"
+                        "Enqueue_first_tmp"
                     ]
                 }
             ],
@@ -1457,7 +1668,32 @@
             "structure": "Dequeue_size_tmp"
         },
         {
-            "constraints": [],
+            "constraints": [
+                {
+                    "base_constraint": [
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 3,
+                            "name": "Solitary",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        },
+                        {
+                            "constraint_type": "BoolConstraint",
+                            "inverted": false,
+                            "id": 10,
+                            "name": "NoSplit",
+                            "source": {
+                                "file": "DummyFile",
+                                "line": -1
+                            }
+                        }
+                    ]
+                }
+            ],
             "field_info": {
                 "bit_width": 32,
                 "field_class": "meta",
@@ -1482,7 +1718,7 @@
                             "msb": 31
                         }
                     },
-                    "phv_number": 3,
+                    "phv_number": 1,
                     "reads": [],
                     "slice_info": {
                         "lsb": 0,
@@ -1506,6 +1742,32 @@
             ],
             "status": "allocated",
             "structure": "Dequeue_head_tmp"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 10,
+                "field_class": "meta",
+                "field_name": "lefts$index",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "lefts$index"
+        },
+        {
+            "constraints": [],
+            "field_info": {
+                "bit_width": 1,
+                "field_class": "meta",
+                "field_name": "lefts$ena",
+                "gress": "ingress"
+            },
+            "field_slices": [],
+            "phv_slices": [],
+            "status": "unreferenced",
+            "structure": "lefts$ena"
         },
         {
             "constraints": [],
@@ -2385,7 +2647,7 @@
             "num_containers": 64
         }
     ],
-    "run_id": "89d8164a6d3259e2",
+    "run_id": "a5814967fd135097",
     "schema_version": "3.0.0",
     "structures": [
         {
@@ -2558,6 +2820,20 @@
         },
         {
             "gress": "ingress",
+            "name": "Enqueue_left_tmp",
+            "ordered_fields": [
+                {
+                    "field_name": "Enqueue_left_tmp",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 31
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
             "name": "Enqueue_first_tmp",
             "ordered_fields": [
                 {
@@ -2586,10 +2862,10 @@
         },
         {
             "gress": "ingress",
-            "name": "Enqueue_left_tmp",
+            "name": "Dequeue_left_tmp",
             "ordered_fields": [
                 {
-                    "field_name": "Enqueue_left_tmp",
+                    "field_name": "Dequeue_left_tmp",
                     "slice_info": {
                         "lsb": 0,
                         "msb": 31
@@ -2621,6 +2897,34 @@
                     "slice_info": {
                         "lsb": 0,
                         "msb": 31
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "lefts$index",
+            "ordered_fields": [
+                {
+                    "field_name": "lefts$index",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 9
+                    }
+                }
+            ],
+            "type": "header"
+        },
+        {
+            "gress": "ingress",
+            "name": "lefts$ena",
+            "ordered_fields": [
+                {
+                    "field_name": "lefts$ena",
+                    "slice_info": {
+                        "lsb": 0,
+                        "msb": 0
                     }
                 }
             ],

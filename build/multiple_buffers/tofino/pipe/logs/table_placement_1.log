@@ -1,95 +1,226 @@
 Table Placement ignores container conflicts? 0
 table placement starting pipe
-ingress: [2017341]
-  dmac_0{ E 38+1, 0 0K }
-    drop: [2017477] 1 00 110
-      Enqueue_first_table
-        stateful firsts    2
-      Enqueue_inc_tail_table
-        stateful tails    2
-      Enqueue_inc_size_table
-        stateful sizes    2
-      Enqueue_enqueue_table_two
-        stateful rb2   16
-    NoAction: [2017747] 1
+ingress: [3288458]
+  cond-33(ingress::hdr.ipv4.dst_addr[0:0] == 0; => $true, 1 => $false)
+    $true: [3288464] 1
       Dequeue_dec_size_table
-        stateful sizes    2
-      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
-        $true: [2017821] 1
+        stateful sizes   16
+      cond-34(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [3288548] 1
           Dequeue_inc_head_table
-            stateful heads    2
-          Dequeue_dequeue_table_two
-            stateful rb2   16
-egress: [2020618]
+            stateful heads   16
+          cond-35(ingress::hdr.ipv4.dst_addr[3:0] == 0; => $true, 1 => $false)
+            $true: [3289800]
+              Dequeue_dequeue_table
+                stateful rb1  33K
+            $false: [3289802]
+              cond-36(ingress::hdr.ipv4.dst_addr[3:0] == 1; => $true, 1 => $false)
+                $true: [3289796]
+                  Dequeue_dequeue_table_0
+                    stateful rb2  33K
+                $false: [3289798]
+                  cond-37(ingress::hdr.ipv4.dst_addr[3:0] == 2; => $true, 1 => $false)
+                    $true: [3289792]
+                      Dequeue_dequeue_table_1
+                        stateful rb3  33K
+                    $false: [3289794]
+                      cond-38(ingress::hdr.ipv4.dst_addr[3:0] == 3; => $true, 1 => $false)
+                        $true: [3289788]
+                          Dequeue_dequeue_table_2
+                            stateful rb4  33K
+                        $false: [3289790]
+                          cond-39(ingress::hdr.ipv4.dst_addr[3:0] == 4; => $true, 1 => $false)
+                            $true: [3289784]
+                              Dequeue_dequeue_table_3
+                                stateful rb5  33K
+                            $false: [3289786]
+                              cond-40(ingress::hdr.ipv4.dst_addr[3:0] == 5; => $true, 1 => $false)
+                                $true: [3289780]
+                                  Dequeue_dequeue_table_4
+                                    stateful rb6  33K
+                                $false: [3289782]
+                                  cond-41(ingress::hdr.ipv4.dst_addr[3:0] == 6; => $true, 1 => $false)
+                                    $true: [3289776]
+                                      Dequeue_dequeue_table_5
+                                        stateful rb7  33K
+                                    $false: [3289778]
+                                      cond-42(ingress::hdr.ipv4.dst_addr[3:0] == 7; => $true, 1 => $false)
+                                        $true: [3289772]
+                                          Dequeue_dequeue_table_6
+                                            stateful rb8  33K
+                                        $false: [3289774]
+                                          cond-43(ingress::hdr.ipv4.dst_addr[3:0] == 8; => $true, 1 => $false)
+                                            $true: [3289768]
+                                              Dequeue_dequeue_table_7
+                                                stateful rb9  33K
+                                            $false: [3289770]
+                                              cond-44(ingress::hdr.ipv4.dst_addr[3:0] == 9; => $true, 1 => $false)
+                                                $true: [3289764]
+                                                  Dequeue_dequeue_table_8
+                                                    stateful rb10  33K
+                                                $false: [3289766]
+                                                  cond-45(ingress::hdr.ipv4.dst_addr[3:0] == 10; => $true, 1 => $false)
+                                                    $true: [3289760]
+                                                      Dequeue_dequeue_table_9
+                                                        stateful rb11  33K
+                                                    $false: [3289762]
+                                                      cond-46(ingress::hdr.ipv4.dst_addr[3:0] == 11; => $true, 1 => $false)
+                                                        $true: [3289756]
+                                                          Dequeue_dequeue_table_10
+                                                            stateful rb12  33K
+                                                        $false: [3289758]
+                                                          cond-47(ingress::hdr.ipv4.dst_addr[3:0] == 12; => $true, 1 => $false)
+                                                            $true: [3289752]
+                                                              Dequeue_dequeue_table_11
+                                                                stateful rb13  33K
+                                                            $false: [3289754]
+                                                              cond-48(ingress::hdr.ipv4.dst_addr[3:0] == 13; => $true, 1 => $false)
+                                                                $true: [3289748]
+                                                                  Dequeue_dequeue_table_12
+                                                                    stateful rb14  33K
+                                                                $false: [3289750]
+                                                                  cond-49(ingress::hdr.ipv4.dst_addr[3:0] == 14; => $true, 1 => $false)
+                                                                    $true: [3289744]
+                                                                      Dequeue_dequeue_table_13
+                                                                        stateful rb15  33K
+                                                                    $false: [3289746]
+                                                                      Dequeue_dequeue_table_14
+                                                                        stateful rb16  33K
+    $false: [3289804] 1 00 110
+      Enqueue_first_table
+        stateful firsts   16
+      Enqueue_inc_tail_table
+        stateful tails   16
+      Enqueue_inc_size_table
+        stateful sizes   16
+      cond-50(ingress::hdr.ipv4.dst_addr[3:0] == 0; => $true, 1 => $false)
+        $true: [3291210]
+          Enqueue_enqueue_table
+            stateful rb1  33K
+        $false: [3291212]
+          cond-51(ingress::hdr.ipv4.dst_addr[3:0] == 1; => $true, 1 => $false)
+            $true: [3291206]
+              Enqueue_enqueue_table_0
+                stateful rb2  33K
+            $false: [3291208]
+              cond-52(ingress::hdr.ipv4.dst_addr[3:0] == 2; => $true, 1 => $false)
+                $true: [3291202]
+                  Enqueue_enqueue_table_1
+                    stateful rb3  33K
+                $false: [3291204]
+                  cond-53(ingress::hdr.ipv4.dst_addr[3:0] == 3; => $true, 1 => $false)
+                    $true: [3291198]
+                      Enqueue_enqueue_table_2
+                        stateful rb4  33K
+                    $false: [3291200]
+                      cond-54(ingress::hdr.ipv4.dst_addr[3:0] == 4; => $true, 1 => $false)
+                        $true: [3291194]
+                          Enqueue_enqueue_table_3
+                            stateful rb5  33K
+                        $false: [3291196]
+                          cond-55(ingress::hdr.ipv4.dst_addr[3:0] == 5; => $true, 1 => $false)
+                            $true: [3291190]
+                              Enqueue_enqueue_table_4
+                                stateful rb6  33K
+                            $false: [3291192]
+                              cond-56(ingress::hdr.ipv4.dst_addr[3:0] == 6; => $true, 1 => $false)
+                                $true: [3291186]
+                                  Enqueue_enqueue_table_5
+                                    stateful rb7  33K
+                                $false: [3291188]
+                                  cond-57(ingress::hdr.ipv4.dst_addr[3:0] == 7; => $true, 1 => $false)
+                                    $true: [3291182]
+                                      Enqueue_enqueue_table_6
+                                        stateful rb8  33K
+                                    $false: [3291184]
+                                      cond-58(ingress::hdr.ipv4.dst_addr[3:0] == 8; => $true, 1 => $false)
+                                        $true: [3291178]
+                                          Enqueue_enqueue_table_7
+                                            stateful rb9  33K
+                                        $false: [3291180]
+                                          cond-59(ingress::hdr.ipv4.dst_addr[3:0] == 9; => $true, 1 => $false)
+                                            $true: [3291174]
+                                              Enqueue_enqueue_table_8
+                                                stateful rb10  33K
+                                            $false: [3291176]
+                                              cond-60(ingress::hdr.ipv4.dst_addr[3:0] == 10; => $true, 1 => $false)
+                                                $true: [3291170]
+                                                  Enqueue_enqueue_table_9
+                                                    stateful rb11  33K
+                                                $false: [3291172]
+                                                  cond-61(ingress::hdr.ipv4.dst_addr[3:0] == 11; => $true, 1 => $false)
+                                                    $true: [3291166]
+                                                      Enqueue_enqueue_table_10
+                                                        stateful rb12  33K
+                                                    $false: [3291168]
+                                                      cond-62(ingress::hdr.ipv4.dst_addr[3:0] == 12; => $true, 1 => $false)
+                                                        $true: [3291162]
+                                                          Enqueue_enqueue_table_11
+                                                            stateful rb13  33K
+                                                        $false: [3291164]
+                                                          cond-63(ingress::hdr.ipv4.dst_addr[3:0] == 13; => $true, 1 => $false)
+                                                            $true: [3291158]
+                                                              Enqueue_enqueue_table_12
+                                                                stateful rb14  33K
+                                                            $false: [3291160]
+                                                              cond-64(ingress::hdr.ipv4.dst_addr[3:0] == 14; => $true, 1 => $false)
+                                                                $true: [3291154]
+                                                                  Enqueue_enqueue_table_13
+                                                                    stateful rb15  33K
+                                                                $false: [3291156]
+                                                                  Enqueue_enqueue_table_14
+                                                                    stateful rb16  33K
+egress: [3296157]
 
-stage 0, work: [ 2017341 ], partly placed 0, placed 0
+stage 0, work: [ 3288458 ], partly placed 0, placed 0
     { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
-  Group table: dmac_0
-dmac_0 is not a gateway! Aborting search for merge choices
-try_place_table(dmac_0, stage=0)
-  Initial stage is 0, initial entries is 256
-Trying to allocate imem for dmac_0
-Trying to allocate imem for dmac_0
+  Group table: cond-33
+try_place_table(cond-33, stage=0)
+  Merging with match table Enqueue_first_table
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Enqueue_first_table
   Selected stage: 0    Furthest stage: 0
-  try_place_table returning 4096 of dmac_0 in stage 0
-    Pl vector: [ dmac_0 ]
-found 1 tables that could be placed: [ dmac_0 ]
-Initial best is first table seen: dmac_0
-placing 4096 entries of dmac_0 in stage 0(0) FormatType(02)
-stage 0, work: [ 2017477, 2017747 ], partly placed 0, placed 1
-    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
-  Group table: Enqueue_first_table
-  Group table: Enqueue_inc_tail_table
-  Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
-Enqueue_first_table is not a gateway! Aborting search for merge choices
-try_place_table(Enqueue_first_table, stage=0)
-  Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
-Trying to allocate imem for Enqueue_first_table
-Trying to allocate imem for dmac_0
-Trying to allocate imem for Enqueue_first_table
-  Selected stage: 0    Furthest stage: 1
   try_place_table returning 512 of Enqueue_first_table in stage 0
-    Pl vector: [ Enqueue_first_table ]
-  - skipping Enqueue_inc_tail_table due to in-sequence control dependence on Enqueue_first_table
-Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
-try_place_table(Enqueue_inc_size_table, stage=0)
+  Merging with match table Enqueue_inc_size_table
   Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_inc_size_table
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_inc_size_table
-  Selected stage: 0    Furthest stage: 1
+  Selected stage: 0    Furthest stage: 0
   try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
-    Pl vector: [ Enqueue_inc_size_table ]
-  - skipping Enqueue_enqueue_table_two due to in-sequence control dependence on Enqueue_first_table
-  Group table: Dequeue_dec_size_table
-  Group table: cond-2
-Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
-try_place_table(Dequeue_dec_size_table, stage=0)
+  Merging with match table Dequeue_dec_size_table
   Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Dequeue_dec_size_table
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Dequeue_dec_size_table
-  Selected stage: 0    Furthest stage: 1
+  Selected stage: 0    Furthest stage: 0
   try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
-    Pl vector: [ Dequeue_dec_size_table ]
-  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+    Pl vector: [ Enqueue_first_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
 found 3 tables that could be placed: [ Enqueue_first_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
 Initial best is first table seen: Enqueue_first_table
 For trial t : Enqueue_inc_size_table with best: Enqueue_first_table
     Keeping best Enqueue_first_table for reason: longer downward prop control-included dependence tail chain
 For trial t : Dequeue_dec_size_table with best: Enqueue_first_table
     Keeping best Enqueue_first_table for reason: longer control-excluded dependence tail chain
-placing 512 entries of Enqueue_first_table in stage 0(1) FormatType(022)
-stage 0, work: [ 2017477, 2017747 ], partly placed 0, placed 2
-    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+placing 512 entries of Enqueue_first_table (with gw cond-33) in stage 0(0) FormatType(022)
+stage 0, work: [ 3288464, 3289804 ], partly placed 0, placed 1
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Dequeue_dec_size_table
+  Group table: cond-34
+Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dec_size_table, stage=0)
+  Initial stage is 0, initial entries is 512
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+Trying to allocate imem for Enqueue_first_table
+Trying to allocate imem for Dequeue_dec_size_table
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
+    Pl vector: [ Dequeue_dec_size_table ]
+  - skipping cond-34 due to in-sequence control dependence on Dequeue_dec_size_table
   Group table: Enqueue_first_table
   Group table: Enqueue_inc_tail_table
   Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
+  Group table: cond-50
     - skipping Enqueue_first_table as its already done
 Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
 try_place_table(Enqueue_inc_tail_table, stage=0)
@@ -103,44 +234,36 @@ Trying to allocate imem for Enqueue_inc_tail_table
 Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
 try_place_table(Enqueue_inc_size_table, stage=0)
   Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_first_table
 Trying to allocate imem for Enqueue_inc_size_table
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_first_table
 Trying to allocate imem for Enqueue_inc_size_table
   Selected stage: 0    Furthest stage: 1
   try_place_table returning 512 of Enqueue_inc_size_table in stage 0 (need more)
     Pl vector: [ Enqueue_inc_size_table ]
-  - skipping Enqueue_enqueue_table_two due to in-sequence control dependence on Enqueue_inc_tail_table
+  - skipping cond-50 because it depends on Enqueue_inc_tail_table
+    - removing Enqueue_enqueue_table from merge list because it depends on Enqueue_inc_tail_table
+    - skipping gateway cond-50 until mergeable tables are available
+found 3 tables that could be placed: [ Dequeue_dec_size_table, Enqueue_inc_tail_table, Enqueue_inc_size_table ]
+Initial best is first table seen: Dequeue_dec_size_table
+For trial t : Enqueue_inc_tail_table with best: Dequeue_dec_size_table
+    Keeping best Dequeue_dec_size_table for reason: earlier stage calculated
+For trial t : Enqueue_inc_size_table with best: Dequeue_dec_size_table
+    Keeping best Dequeue_dec_size_table for reason: longer downward prop control-included dependence tail chain
+placing 512 entries of Dequeue_dec_size_table in stage 0(1) FormatType(042) (need more)
+stage 0, work: [ 3288464, 3289804 ], partly placed 1, placed 2
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
   Group table: Dequeue_dec_size_table
-  Group table: cond-2
+  Group table: cond-34
 Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
 try_place_table(Dequeue_dec_size_table, stage=0)
-  Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
-Trying to allocate imem for Enqueue_first_table
-Trying to allocate imem for Dequeue_dec_size_table
-Trying to allocate imem for dmac_0
-Trying to allocate imem for Enqueue_first_table
-Trying to allocate imem for Dequeue_dec_size_table
-  Selected stage: 0    Furthest stage: 1
-  try_place_table returning 512 of Dequeue_dec_size_table in stage 0 (need more)
-    Pl vector: [ Dequeue_dec_size_table ]
-  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
-found 3 tables that could be placed: [ Enqueue_inc_tail_table, Enqueue_inc_size_table, Dequeue_dec_size_table ]
-Initial best is first table seen: Enqueue_inc_tail_table
-For trial t : Enqueue_inc_size_table with best: Enqueue_inc_tail_table
-    Updating best to Enqueue_inc_size_table from Enqueue_inc_tail_table for reason: earlier stage calculated
-For trial t : Dequeue_dec_size_table with best: Enqueue_inc_size_table
-    Updating best to Dequeue_dec_size_table from Enqueue_inc_size_table for reason: longer downward prop control-included dependence tail chain
-placing 512 entries of Dequeue_dec_size_table in stage 0(2) FormatType(042) (need more)
-stage 0, work: [ 2017477, 2017747 ], partly placed 1, placed 3
-    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  - skipping cond-34 due to in-sequence control dependence on Dequeue_dec_size_table
   Group table: Enqueue_first_table
   Group table: Enqueue_inc_tail_table
   Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
+  Group table: cond-50
     - skipping Enqueue_first_table as its already done
 Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
 try_place_table(Enqueue_inc_tail_table, stage=0)
@@ -155,36 +278,41 @@ Enqueue_inc_size_table is not a gateway! Aborting search for merge choices
 try_place_table(Enqueue_inc_size_table, stage=0)
     Dequeue_dec_size_table is now also placed (1)
   Initial stage is 0, initial entries is 512
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_first_table
 Trying to allocate imem for Dequeue_dec_size_table
 Trying to allocate imem for Enqueue_inc_size_table
-Trying to allocate imem for dmac_0
 Trying to allocate imem for Enqueue_first_table
 Trying to allocate imem for Dequeue_dec_size_table
 Trying to allocate imem for Enqueue_inc_size_table
   Selected stage: 0    Furthest stage: 1
   try_place_table returning 512 of Enqueue_inc_size_table in stage 0
     Pl vector: [ Enqueue_inc_size_table ]
-  - skipping Enqueue_enqueue_table_two due to in-sequence control dependence on Enqueue_inc_tail_table
-  Group table: Dequeue_dec_size_table
-  Group table: cond-2
-Dequeue_dec_size_table is not a gateway! Aborting search for merge choices
-try_place_table(Dequeue_dec_size_table, stage=0)
-  Cannot place multiple sections of an individual table in the same stage
-    Pl vector: []
-  - skipping cond-2 due to in-sequence control dependence on Dequeue_dec_size_table
+  - skipping cond-50 because it depends on Enqueue_inc_tail_table
+    - removing Enqueue_enqueue_table from merge list because it depends on Enqueue_inc_tail_table
+    - skipping gateway cond-50 until mergeable tables are available
 found 2 tables that could be placed: [ Enqueue_inc_tail_table, Enqueue_inc_size_table ]
 Initial best is first table seen: Enqueue_inc_tail_table
 For trial t : Enqueue_inc_size_table with best: Enqueue_inc_tail_table
     Updating best to Enqueue_inc_size_table from Enqueue_inc_tail_table for reason: earlier stage calculated
-placing 512 entries of Enqueue_inc_size_table in stage 0(3) FormatType(022)
-stage 0, work: [ 2017477, 2017747 ], partly placed 0, placed 4
-    { id=1 ram=4 tcam=0 mram=0 eixb=6 tixb=0 malu=0 salu=0 }
+placing 512 entries of Enqueue_inc_size_table in stage 0(2) FormatType(022)
+stage 0, work: [ 3288464, 3289804 ], partly placed 0, placed 3
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Dequeue_dec_size_table
+  Group table: cond-34
+    - skipping Dequeue_dec_size_table as its already done
+try_place_table(cond-34, stage=0)
+  Merging with match table Dequeue_inc_head_table
+  - dependency between Dequeue_dec_size_table and table advances stage
+  Initial stage is 1, initial entries is 512
+Trying to allocate imem for Dequeue_inc_head_table
+Trying to allocate imem for Dequeue_inc_head_table
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 512 of Dequeue_inc_head_table in stage 1
+    Pl vector: [ Dequeue_inc_head_table ]
   Group table: Enqueue_first_table
   Group table: Enqueue_inc_tail_table
   Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
+  Group table: cond-50
     - skipping Enqueue_first_table as its already done
 Enqueue_inc_tail_table is not a gateway! Aborting search for merge choices
 try_place_table(Enqueue_inc_tail_table, stage=0)
@@ -196,46 +324,20 @@ Trying to allocate imem for Enqueue_inc_tail_table
   try_place_table returning 512 of Enqueue_inc_tail_table in stage 1
     Pl vector: [ Enqueue_inc_tail_table ]
     - skipping Enqueue_inc_size_table as its already done
-  - skipping Enqueue_enqueue_table_two due to in-sequence control dependence on Enqueue_inc_tail_table
-  Group table: Dequeue_dec_size_table
-  Group table: cond-2
-    - skipping Dequeue_dec_size_table as its already done
-try_place_table(cond-2, stage=0)
-  Merging with match table Dequeue_inc_head_table
-  - dependency between Dequeue_dec_size_table and table advances stage
-  Initial stage is 1, initial entries is 512
-Trying to allocate imem for Dequeue_inc_head_table
-Trying to allocate imem for Dequeue_inc_head_table
-  Selected stage: 1    Furthest stage: 1
-  try_place_table returning 512 of Dequeue_inc_head_table in stage 1
-    Pl vector: [ Dequeue_inc_head_table ]
-found 2 tables that could be placed: [ Enqueue_inc_tail_table, Dequeue_inc_head_table ]
-Initial best is first table seen: Enqueue_inc_tail_table
-For trial t : Dequeue_inc_head_table with best: Enqueue_inc_tail_table
-    Keeping best Enqueue_inc_tail_table for reason: longer downward dominance frontier dependence chain
+  - skipping cond-50 because it depends on Enqueue_inc_tail_table
+    - removing Enqueue_enqueue_table from merge list because it depends on Enqueue_inc_tail_table
+    - skipping gateway cond-50 until mergeable tables are available
+found 2 tables that could be placed: [ Dequeue_inc_head_table, Enqueue_inc_tail_table ]
+Initial best is first table seen: Dequeue_inc_head_table
+For trial t : Enqueue_inc_tail_table with best: Dequeue_inc_head_table
+    Updating best to Enqueue_inc_tail_table from Dequeue_inc_head_table for reason: longer downward dominance frontier dependence chain
 placing 512 entries of Enqueue_inc_tail_table in stage 1(10) FormatType(022)
-stage 1, work: [ 2017477, 2017747 ], partly placed 0, placed 5
+stage 1, work: [ 3288464, 3289804 ], partly placed 0, placed 4
     { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
-  Group table: Enqueue_first_table
-  Group table: Enqueue_inc_tail_table
-  Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
-    - skipping Enqueue_first_table as its already done
-    - skipping Enqueue_inc_tail_table as its already done
-    - skipping Enqueue_inc_size_table as its already done
-Enqueue_enqueue_table_two is not a gateway! Aborting search for merge choices
-try_place_table(Enqueue_enqueue_table_two, stage=1)
-  - dependency between Enqueue_inc_tail_table and table advances stage
-  Initial stage is 2, initial entries is 512
-Trying to allocate imem for Enqueue_enqueue_table_two
-Trying to allocate imem for Enqueue_enqueue_table_two
-  Selected stage: 2    Furthest stage: 2
-  try_place_table returning 512 of Enqueue_enqueue_table_two in stage 2 (need more)
-    Pl vector: [ Enqueue_enqueue_table_two ]
   Group table: Dequeue_dec_size_table
-  Group table: cond-2
+  Group table: cond-34
     - skipping Dequeue_dec_size_table as its already done
-try_place_table(cond-2, stage=1)
+try_place_table(cond-34, stage=1)
   Merging with match table Dequeue_inc_head_table
   Initial stage is 1, initial entries is 512
 Trying to allocate imem for Enqueue_inc_tail_table
@@ -245,127 +347,1658 @@ Trying to allocate imem for Dequeue_inc_head_table
   Selected stage: 1    Furthest stage: 2
   try_place_table returning 512 of Dequeue_inc_head_table in stage 1
     Pl vector: [ Dequeue_inc_head_table ]
-found 2 tables that could be placed: [ Enqueue_enqueue_table_two, Dequeue_inc_head_table ]
-Initial best is first table seen: Enqueue_enqueue_table_two
-For trial t : Dequeue_inc_head_table with best: Enqueue_enqueue_table_two
-    Updating best to Dequeue_inc_head_table from Enqueue_enqueue_table_two for reason: earlier stage calculated
-placing 512 entries of Dequeue_inc_head_table (with gw cond-2) in stage 1(11) FormatType(022)
-stage 1, work: [ 2017477, 2017821 ], partly placed 0, placed 6
+  Group table: Enqueue_first_table
+  Group table: Enqueue_inc_tail_table
+  Group table: Enqueue_inc_size_table
+  Group table: cond-50
+    - skipping Enqueue_first_table as its already done
+    - skipping Enqueue_inc_tail_table as its already done
+    - skipping Enqueue_inc_size_table as its already done
+try_place_table(cond-50, stage=1)
+  Merging with match table Enqueue_enqueue_table
+  - dependency between Enqueue_inc_tail_table and table advances stage
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 512 of Enqueue_enqueue_table in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table ]
+found 2 tables that could be placed: [ Dequeue_inc_head_table, Enqueue_enqueue_table ]
+Initial best is first table seen: Dequeue_inc_head_table
+For trial t : Enqueue_enqueue_table with best: Dequeue_inc_head_table
+    Keeping best Dequeue_inc_head_table for reason: earlier stage calculated
+placing 512 entries of Dequeue_inc_head_table (with gw cond-34) in stage 1(11) FormatType(022)
+stage 1, work: [ 3289804, 3288548 ], partly placed 0, placed 5
     { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
   Group table: Enqueue_first_table
   Group table: Enqueue_inc_tail_table
   Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
+  Group table: cond-50
     - skipping Enqueue_first_table as its already done
     - skipping Enqueue_inc_tail_table as its already done
     - skipping Enqueue_inc_size_table as its already done
-Enqueue_enqueue_table_two is not a gateway! Aborting search for merge choices
-try_place_table(Enqueue_enqueue_table_two, stage=1)
-  - dependency between Dequeue_inc_head_table and Dequeue_dequeue_table_two advances stage
+try_place_table(cond-50, stage=1)
+  Merging with match table Enqueue_enqueue_table
+  - dependency between Dequeue_inc_head_table and Dequeue_dequeue_table advances stage
   Initial stage is 2, initial entries is 512
-Trying to allocate imem for Enqueue_enqueue_table_two
-Trying to allocate imem for Enqueue_enqueue_table_two
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table
   Selected stage: 2    Furthest stage: 2
-  try_place_table returning 512 of Enqueue_enqueue_table_two in stage 2 (need more)
-    Pl vector: [ Enqueue_enqueue_table_two ]
+  try_place_table returning 512 of Enqueue_enqueue_table in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table ]
   Group table: Dequeue_inc_head_table
-  Group table: Dequeue_dequeue_table_two
+  Group table: cond-35
     - skipping Dequeue_inc_head_table as its already done
-Dequeue_dequeue_table_two is not a gateway! Aborting search for merge choices
-try_place_table(Dequeue_dequeue_table_two, stage=1)
+try_place_table(cond-35, stage=1)
+  Merging with match table Dequeue_dequeue_table
   - dependency between Dequeue_inc_head_table and table advances stage
   Initial stage is 2, initial entries is 512
-Trying to allocate imem for Dequeue_dequeue_table_two
-Trying to allocate imem for Dequeue_dequeue_table_two
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Dequeue_dequeue_table
   Selected stage: 2    Furthest stage: 2
-  try_place_table returning 512 of Dequeue_dequeue_table_two in stage 2 (need more)
-    Pl vector: [ Dequeue_dequeue_table_two ]
-found 2 tables that could be placed: [ Enqueue_enqueue_table_two, Dequeue_dequeue_table_two ]
-Initial best is first table seen: Enqueue_enqueue_table_two
-For trial t : Dequeue_dequeue_table_two with best: Enqueue_enqueue_table_two
-    Updating best to Dequeue_dequeue_table_two from Enqueue_enqueue_table_two for reason: default choice
-placing 512 entries of Dequeue_dequeue_table_two in stage 2(20) FormatType(042) (need more)
-stage 2, work: [ 2017477, 2017821 ], partly placed 1, placed 7
+  try_place_table returning 512 of Dequeue_dequeue_table in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table, Dequeue_dequeue_table ]
+Initial best is first table seen: Enqueue_enqueue_table
+For trial t : Dequeue_dequeue_table with best: Enqueue_enqueue_table
+    Updating best to Dequeue_dequeue_table from Enqueue_enqueue_table for reason: default choice
+placing 512 entries of Dequeue_dequeue_table (with gw cond-35) in stage 2(20) FormatType(042) (need more)
+stage 2, work: [ 3289804, 3289800, 3289802 ], partly placed 1, placed 6
     { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
   Group table: Enqueue_first_table
   Group table: Enqueue_inc_tail_table
   Group table: Enqueue_inc_size_table
-  Group table: Enqueue_enqueue_table_two
+  Group table: cond-50
     - skipping Enqueue_first_table as its already done
     - skipping Enqueue_inc_tail_table as its already done
     - skipping Enqueue_inc_size_table as its already done
-Enqueue_enqueue_table_two is not a gateway! Aborting search for merge choices
-try_place_table(Enqueue_enqueue_table_two, stage=2)
-    Dequeue_dequeue_table_two is now also placed (1)
+try_place_table(cond-50, stage=2)
+  Merging with match table Enqueue_enqueue_table
+    Dequeue_dequeue_table is now also placed (1)
   Initial stage is 2, initial entries is 512
-Trying to allocate imem for Dequeue_dequeue_table_two
-Trying to allocate imem for Enqueue_enqueue_table_two
-Trying to allocate imem for Dequeue_dequeue_table_two
-Trying to allocate imem for Enqueue_enqueue_table_two
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
   Selected stage: 2    Furthest stage: 3
-  try_place_table returning 512 of Enqueue_enqueue_table_two in stage 2
-    Pl vector: [ Enqueue_enqueue_table_two ]
-  Group table: Dequeue_inc_head_table
-  Group table: Dequeue_dequeue_table_two
-    - skipping Dequeue_inc_head_table as its already done
-Dequeue_dequeue_table_two is not a gateway! Aborting search for merge choices
-try_place_table(Dequeue_dequeue_table_two, stage=2)
+  try_place_table returning 512 of Enqueue_enqueue_table in stage 2
+    Pl vector: [ Enqueue_enqueue_table ]
+  Group table: Dequeue_dequeue_table
+Dequeue_dequeue_table is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table, stage=2)
   Cannot place multiple sections of an individual table in the same stage
     Pl vector: []
-found 1 tables that could be placed: [ Enqueue_enqueue_table_two ]
-Initial best is first table seen: Enqueue_enqueue_table_two
-placing 512 entries of Enqueue_enqueue_table_two in stage 2(21) FormatType(022)
-stage 2, work: [ 2017821 ], partly placed 0, placed 8
+  Group table: cond-36
+try_place_table(cond-36, stage=2)
+  Merging with match table Dequeue_dequeue_table_0
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Dequeue_dequeue_table_0
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_0 in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table_0 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table, Dequeue_dequeue_table_0 ]
+Initial best is first table seen: Enqueue_enqueue_table
+For trial t : Dequeue_dequeue_table_0 with best: Enqueue_enqueue_table
+    Keeping best Enqueue_enqueue_table for reason: completes more shared tables
+placing 512 entries of Enqueue_enqueue_table (with gw cond-50) in stage 2(21) FormatType(022)
+stage 2, work: [ 3289800, 3289802, 3291212 ], partly placed 0, placed 7
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-36
+try_place_table(cond-36, stage=2)
+  Merging with match table Dequeue_dequeue_table_0
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Dequeue_dequeue_table_0
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_0 in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table_0 ]
+  Group table: cond-51
+try_place_table(cond-51, stage=2)
+  Merging with match table Enqueue_enqueue_table_0
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_0 in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table_0 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_0, Enqueue_enqueue_table_0 ]
+Initial best is first table seen: Dequeue_dequeue_table_0
+For trial t : Enqueue_enqueue_table_0 with best: Dequeue_dequeue_table_0
+    Updating best to Enqueue_enqueue_table_0 from Dequeue_dequeue_table_0 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_0 (with gw cond-51) in stage 2(22) FormatType(042) (need more)
+stage 2, work: [ 3289802, 3291206, 3291208 ], partly placed 1, placed 8
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-36
+try_place_table(cond-36, stage=2)
+  Merging with match table Dequeue_dequeue_table_0
+    Enqueue_enqueue_table_0 is now also placed (1)
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_0 in stage 2
+    Pl vector: [ Dequeue_dequeue_table_0 ]
+  Group table: Enqueue_enqueue_table_0
+Enqueue_enqueue_table_0 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_0, stage=2)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-52
+try_place_table(cond-52, stage=2)
+  Merging with match table Enqueue_enqueue_table_1
+  Initial stage is 2, initial entries is 512
+    The table Enqueue_enqueue_table_1 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_1 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_1 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_0, Enqueue_enqueue_table_1 ]
+Initial best is first table seen: Dequeue_dequeue_table_0
+For trial t : Enqueue_enqueue_table_1 with best: Dequeue_dequeue_table_0
+    Keeping best Dequeue_dequeue_table_0 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_0 (with gw cond-36) in stage 2(23) FormatType(022)
+stage 2, work: [ 3291206, 3291208, 3289798 ], partly placed 0, placed 9
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-52
+try_place_table(cond-52, stage=2)
+  Merging with match table Enqueue_enqueue_table_1
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Enqueue_enqueue_table_1
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_1 in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table_1 ]
+  Group table: cond-37
+try_place_table(cond-37, stage=2)
+  Merging with match table Dequeue_dequeue_table_1
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_1 in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table_1 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_1, Dequeue_dequeue_table_1 ]
+Initial best is first table seen: Enqueue_enqueue_table_1
+For trial t : Dequeue_dequeue_table_1 with best: Enqueue_enqueue_table_1
+    Updating best to Dequeue_dequeue_table_1 from Enqueue_enqueue_table_1 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_1 (with gw cond-37) in stage 2(24) FormatType(042) (need more)
+stage 2, work: [ 3291208, 3289792, 3289794 ], partly placed 1, placed 10
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-52
+try_place_table(cond-52, stage=2)
+  Merging with match table Enqueue_enqueue_table_1
+    Dequeue_dequeue_table_1 is now also placed (1)
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_1 in stage 2
+    Pl vector: [ Enqueue_enqueue_table_1 ]
+  Group table: Dequeue_dequeue_table_1
+Dequeue_dequeue_table_1 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_1, stage=2)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-38
+try_place_table(cond-38, stage=2)
+  Merging with match table Dequeue_dequeue_table_2
+  Initial stage is 2, initial entries is 512
+    The table Dequeue_dequeue_table_2 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_2
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_2 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_2 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_1, Dequeue_dequeue_table_2 ]
+Initial best is first table seen: Enqueue_enqueue_table_1
+For trial t : Dequeue_dequeue_table_2 with best: Enqueue_enqueue_table_1
+    Keeping best Enqueue_enqueue_table_1 for reason: earlier stage calculated
+placing 512 entries of Enqueue_enqueue_table_1 (with gw cond-52) in stage 2(25) FormatType(022)
+stage 2, work: [ 3289792, 3289794, 3291204 ], partly placed 0, placed 11
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-38
+try_place_table(cond-38, stage=2)
+  Merging with match table Dequeue_dequeue_table_2
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Dequeue_dequeue_table_2
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Dequeue_dequeue_table_2
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_2 in stage 2 (need more)
+    Pl vector: [ Dequeue_dequeue_table_2 ]
+  Group table: cond-53
+try_place_table(cond-53, stage=2)
+  Merging with match table Enqueue_enqueue_table_2
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_2 in stage 2 (need more)
+    Pl vector: [ Enqueue_enqueue_table_2 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_2, Enqueue_enqueue_table_2 ]
+Initial best is first table seen: Dequeue_dequeue_table_2
+For trial t : Enqueue_enqueue_table_2 with best: Dequeue_dequeue_table_2
+    Updating best to Enqueue_enqueue_table_2 from Dequeue_dequeue_table_2 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_2 (with gw cond-53) in stage 2(26) FormatType(042) (need more)
+stage 2, work: [ 3289794, 3291198, 3291200 ], partly placed 1, placed 12
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-38
+try_place_table(cond-38, stage=2)
+  Merging with match table Dequeue_dequeue_table_2
+    Enqueue_enqueue_table_2 is now also placed (1)
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_2
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_2
+  Selected stage: 2    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_2 in stage 2
+    Pl vector: [ Dequeue_dequeue_table_2 ]
+  Group table: Enqueue_enqueue_table_2
+Enqueue_enqueue_table_2 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_2, stage=2)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-54
+try_place_table(cond-54, stage=2)
+  Merging with match table Enqueue_enqueue_table_3
+  Initial stage is 2, initial entries is 512
+    The table Enqueue_enqueue_table_3 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_3 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_3 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_2, Enqueue_enqueue_table_3 ]
+Initial best is first table seen: Dequeue_dequeue_table_2
+For trial t : Enqueue_enqueue_table_3 with best: Dequeue_dequeue_table_2
+    Keeping best Dequeue_dequeue_table_2 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_2 (with gw cond-38) in stage 2(27) FormatType(022)
+stage 2, work: [ 3291198, 3291200, 3289790 ], partly placed 0, placed 13
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-54
+try_place_table(cond-54, stage=2)
+  Merging with match table Enqueue_enqueue_table_3
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_2
+Trying to allocate imem for Enqueue_enqueue_table_3
+    table SwitchIngress.Enqueue.enqueue_table_5 could not fit in stage 2 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 512 of Enqueue_enqueue_table_3 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_3 ]
+  Group table: cond-39
+try_place_table(cond-39, stage=2)
+  Merging with match table Dequeue_dequeue_table_3
+  Initial stage is 2, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table
+Trying to allocate imem for Enqueue_enqueue_table
+Trying to allocate imem for Enqueue_enqueue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_0
+Trying to allocate imem for Dequeue_dequeue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_1
+Trying to allocate imem for Enqueue_enqueue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_2
+Trying to allocate imem for Dequeue_dequeue_table_3
+    table SwitchIngress.Dequeue.dequeue_table_5 could not fit in stage 2 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_3
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 512 of Dequeue_dequeue_table_3 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_3 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_3, Dequeue_dequeue_table_3 ]
+Initial best is first table seen: Enqueue_enqueue_table_3
+For trial t : Dequeue_dequeue_table_3 with best: Enqueue_enqueue_table_3
+    Updating best to Dequeue_dequeue_table_3 from Enqueue_enqueue_table_3 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_3 (with gw cond-39) in stage 3(30) FormatType(042) (need more)
+stage 3, work: [ 3291200, 3289784, 3289786 ], partly placed 1, placed 14
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-54
+try_place_table(cond-54, stage=3)
+  Merging with match table Enqueue_enqueue_table_3
+    Dequeue_dequeue_table_3 is now also placed (1)
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_3 in stage 3
+    Pl vector: [ Enqueue_enqueue_table_3 ]
+  Group table: Dequeue_dequeue_table_3
+Dequeue_dequeue_table_3 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_3, stage=3)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-40
+try_place_table(cond-40, stage=3)
+  Merging with match table Dequeue_dequeue_table_4
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_4
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_4 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_4 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_3, Dequeue_dequeue_table_4 ]
+Initial best is first table seen: Enqueue_enqueue_table_3
+For trial t : Dequeue_dequeue_table_4 with best: Enqueue_enqueue_table_3
+    Keeping best Enqueue_enqueue_table_3 for reason: completes more shared tables
+placing 512 entries of Enqueue_enqueue_table_3 (with gw cond-54) in stage 3(31) FormatType(022)
+stage 3, work: [ 3289784, 3289786, 3291196 ], partly placed 0, placed 15
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-40
+try_place_table(cond-40, stage=3)
+  Merging with match table Dequeue_dequeue_table_4
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Dequeue_dequeue_table_4
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_4 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_4 ]
+  Group table: cond-55
+try_place_table(cond-55, stage=3)
+  Merging with match table Enqueue_enqueue_table_4
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_4 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_4 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_4, Enqueue_enqueue_table_4 ]
+Initial best is first table seen: Dequeue_dequeue_table_4
+For trial t : Enqueue_enqueue_table_4 with best: Dequeue_dequeue_table_4
+    Updating best to Enqueue_enqueue_table_4 from Dequeue_dequeue_table_4 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_4 (with gw cond-55) in stage 3(32) FormatType(042) (need more)
+stage 3, work: [ 3289786, 3291190, 3291192 ], partly placed 1, placed 16
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-40
+try_place_table(cond-40, stage=3)
+  Merging with match table Dequeue_dequeue_table_4
+    Enqueue_enqueue_table_4 is now also placed (1)
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_4 in stage 3
+    Pl vector: [ Dequeue_dequeue_table_4 ]
+  Group table: Enqueue_enqueue_table_4
+Enqueue_enqueue_table_4 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_4, stage=3)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-56
+try_place_table(cond-56, stage=3)
+  Merging with match table Enqueue_enqueue_table_5
+  Initial stage is 3, initial entries is 512
+    The table Enqueue_enqueue_table_5 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_5 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_5 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_4, Enqueue_enqueue_table_5 ]
+Initial best is first table seen: Dequeue_dequeue_table_4
+For trial t : Enqueue_enqueue_table_5 with best: Dequeue_dequeue_table_4
+    Keeping best Dequeue_dequeue_table_4 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_4 (with gw cond-40) in stage 3(33) FormatType(022)
+stage 3, work: [ 3291190, 3291192, 3289782 ], partly placed 0, placed 17
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-56
+try_place_table(cond-56, stage=3)
+  Merging with match table Enqueue_enqueue_table_5
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Enqueue_enqueue_table_5
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_5 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_5 ]
+  Group table: cond-41
+try_place_table(cond-41, stage=3)
+  Merging with match table Dequeue_dequeue_table_5
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_5 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_5 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_5, Dequeue_dequeue_table_5 ]
+Initial best is first table seen: Enqueue_enqueue_table_5
+For trial t : Dequeue_dequeue_table_5 with best: Enqueue_enqueue_table_5
+    Updating best to Dequeue_dequeue_table_5 from Enqueue_enqueue_table_5 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_5 (with gw cond-41) in stage 3(34) FormatType(042) (need more)
+stage 3, work: [ 3291192, 3289776, 3289778 ], partly placed 1, placed 18
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-56
+try_place_table(cond-56, stage=3)
+  Merging with match table Enqueue_enqueue_table_5
+    Dequeue_dequeue_table_5 is now also placed (1)
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_5 in stage 3
+    Pl vector: [ Enqueue_enqueue_table_5 ]
+  Group table: Dequeue_dequeue_table_5
+Dequeue_dequeue_table_5 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_5, stage=3)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-42
+try_place_table(cond-42, stage=3)
+  Merging with match table Dequeue_dequeue_table_6
+  Initial stage is 3, initial entries is 512
+    The table Dequeue_dequeue_table_6 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_6
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_6 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_6 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_5, Dequeue_dequeue_table_6 ]
+Initial best is first table seen: Enqueue_enqueue_table_5
+For trial t : Dequeue_dequeue_table_6 with best: Enqueue_enqueue_table_5
+    Keeping best Enqueue_enqueue_table_5 for reason: earlier stage calculated
+placing 512 entries of Enqueue_enqueue_table_5 (with gw cond-56) in stage 3(35) FormatType(022)
+stage 3, work: [ 3289776, 3289778, 3291188 ], partly placed 0, placed 19
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-42
+try_place_table(cond-42, stage=3)
+  Merging with match table Dequeue_dequeue_table_6
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Dequeue_dequeue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Dequeue_dequeue_table_6
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_6 in stage 3 (need more)
+    Pl vector: [ Dequeue_dequeue_table_6 ]
+  Group table: cond-57
+try_place_table(cond-57, stage=3)
+  Merging with match table Enqueue_enqueue_table_6
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_6 in stage 3 (need more)
+    Pl vector: [ Enqueue_enqueue_table_6 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_6, Enqueue_enqueue_table_6 ]
+Initial best is first table seen: Dequeue_dequeue_table_6
+For trial t : Enqueue_enqueue_table_6 with best: Dequeue_dequeue_table_6
+    Updating best to Enqueue_enqueue_table_6 from Dequeue_dequeue_table_6 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_6 (with gw cond-57) in stage 3(36) FormatType(042) (need more)
+stage 3, work: [ 3289778, 3291182, 3291184 ], partly placed 1, placed 20
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-42
+try_place_table(cond-42, stage=3)
+  Merging with match table Dequeue_dequeue_table_6
+    Enqueue_enqueue_table_6 is now also placed (1)
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_6
+  Selected stage: 3    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_6 in stage 3
+    Pl vector: [ Dequeue_dequeue_table_6 ]
+  Group table: Enqueue_enqueue_table_6
+Enqueue_enqueue_table_6 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_6, stage=3)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-58
+try_place_table(cond-58, stage=3)
+  Merging with match table Enqueue_enqueue_table_7
+  Initial stage is 3, initial entries is 512
+    The table Enqueue_enqueue_table_7 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_7 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_7 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_6, Enqueue_enqueue_table_7 ]
+Initial best is first table seen: Dequeue_dequeue_table_6
+For trial t : Enqueue_enqueue_table_7 with best: Dequeue_dequeue_table_6
+    Keeping best Dequeue_dequeue_table_6 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_6 (with gw cond-42) in stage 3(37) FormatType(022)
+stage 3, work: [ 3291182, 3291184, 3289774 ], partly placed 0, placed 21
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-58
+try_place_table(cond-58, stage=3)
+  Merging with match table Enqueue_enqueue_table_7
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_6
+Trying to allocate imem for Enqueue_enqueue_table_7
+    table SwitchIngress.Enqueue.enqueue_table_9 could not fit in stage 3 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 512 of Enqueue_enqueue_table_7 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_7 ]
+  Group table: cond-43
+try_place_table(cond-43, stage=3)
+  Merging with match table Dequeue_dequeue_table_7
+  Initial stage is 3, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_3
+Trying to allocate imem for Enqueue_enqueue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_4
+Trying to allocate imem for Dequeue_dequeue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_5
+Trying to allocate imem for Enqueue_enqueue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_6
+Trying to allocate imem for Dequeue_dequeue_table_7
+    table SwitchIngress.Dequeue.dequeue_table_9 could not fit in stage 3 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_7
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 512 of Dequeue_dequeue_table_7 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_7 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_7, Dequeue_dequeue_table_7 ]
+Initial best is first table seen: Enqueue_enqueue_table_7
+For trial t : Dequeue_dequeue_table_7 with best: Enqueue_enqueue_table_7
+    Updating best to Dequeue_dequeue_table_7 from Enqueue_enqueue_table_7 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_7 (with gw cond-43) in stage 4(40) FormatType(042) (need more)
+stage 4, work: [ 3291184, 3289768, 3289770 ], partly placed 1, placed 22
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-58
+try_place_table(cond-58, stage=4)
+  Merging with match table Enqueue_enqueue_table_7
+    Dequeue_dequeue_table_7 is now also placed (1)
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_7 in stage 4
+    Pl vector: [ Enqueue_enqueue_table_7 ]
+  Group table: Dequeue_dequeue_table_7
+Dequeue_dequeue_table_7 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_7, stage=4)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-44
+try_place_table(cond-44, stage=4)
+  Merging with match table Dequeue_dequeue_table_8
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_8
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_8 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_8 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_7, Dequeue_dequeue_table_8 ]
+Initial best is first table seen: Enqueue_enqueue_table_7
+For trial t : Dequeue_dequeue_table_8 with best: Enqueue_enqueue_table_7
+    Keeping best Enqueue_enqueue_table_7 for reason: completes more shared tables
+placing 512 entries of Enqueue_enqueue_table_7 (with gw cond-58) in stage 4(41) FormatType(022)
+stage 4, work: [ 3289768, 3289770, 3291180 ], partly placed 0, placed 23
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-44
+try_place_table(cond-44, stage=4)
+  Merging with match table Dequeue_dequeue_table_8
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Dequeue_dequeue_table_8
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_8 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_8 ]
+  Group table: cond-59
+try_place_table(cond-59, stage=4)
+  Merging with match table Enqueue_enqueue_table_8
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_8 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_8 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_8, Enqueue_enqueue_table_8 ]
+Initial best is first table seen: Dequeue_dequeue_table_8
+For trial t : Enqueue_enqueue_table_8 with best: Dequeue_dequeue_table_8
+    Updating best to Enqueue_enqueue_table_8 from Dequeue_dequeue_table_8 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_8 (with gw cond-59) in stage 4(42) FormatType(042) (need more)
+stage 4, work: [ 3289770, 3291174, 3291176 ], partly placed 1, placed 24
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-44
+try_place_table(cond-44, stage=4)
+  Merging with match table Dequeue_dequeue_table_8
+    Enqueue_enqueue_table_8 is now also placed (1)
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_8 in stage 4
+    Pl vector: [ Dequeue_dequeue_table_8 ]
+  Group table: Enqueue_enqueue_table_8
+Enqueue_enqueue_table_8 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_8, stage=4)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-60
+try_place_table(cond-60, stage=4)
+  Merging with match table Enqueue_enqueue_table_9
+  Initial stage is 4, initial entries is 512
+    The table Enqueue_enqueue_table_9 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_9 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_9 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_8, Enqueue_enqueue_table_9 ]
+Initial best is first table seen: Dequeue_dequeue_table_8
+For trial t : Enqueue_enqueue_table_9 with best: Dequeue_dequeue_table_8
+    Keeping best Dequeue_dequeue_table_8 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_8 (with gw cond-44) in stage 4(43) FormatType(022)
+stage 4, work: [ 3291174, 3291176, 3289766 ], partly placed 0, placed 25
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-60
+try_place_table(cond-60, stage=4)
+  Merging with match table Enqueue_enqueue_table_9
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Enqueue_enqueue_table_9
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_9 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_9 ]
+  Group table: cond-45
+try_place_table(cond-45, stage=4)
+  Merging with match table Dequeue_dequeue_table_9
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_9 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_9 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_9, Dequeue_dequeue_table_9 ]
+Initial best is first table seen: Enqueue_enqueue_table_9
+For trial t : Dequeue_dequeue_table_9 with best: Enqueue_enqueue_table_9
+    Updating best to Dequeue_dequeue_table_9 from Enqueue_enqueue_table_9 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_9 (with gw cond-45) in stage 4(44) FormatType(042) (need more)
+stage 4, work: [ 3291176, 3289760, 3289762 ], partly placed 1, placed 26
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-60
+try_place_table(cond-60, stage=4)
+  Merging with match table Enqueue_enqueue_table_9
+    Dequeue_dequeue_table_9 is now also placed (1)
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_9 in stage 4
+    Pl vector: [ Enqueue_enqueue_table_9 ]
+  Group table: Dequeue_dequeue_table_9
+Dequeue_dequeue_table_9 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_9, stage=4)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-46
+try_place_table(cond-46, stage=4)
+  Merging with match table Dequeue_dequeue_table_10
+  Initial stage is 4, initial entries is 512
+    The table Dequeue_dequeue_table_10 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_10
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_10 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_10 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_9, Dequeue_dequeue_table_10 ]
+Initial best is first table seen: Enqueue_enqueue_table_9
+For trial t : Dequeue_dequeue_table_10 with best: Enqueue_enqueue_table_9
+    Keeping best Enqueue_enqueue_table_9 for reason: earlier stage calculated
+placing 512 entries of Enqueue_enqueue_table_9 (with gw cond-60) in stage 4(45) FormatType(022)
+stage 4, work: [ 3289760, 3289762, 3291172 ], partly placed 0, placed 27
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-46
+try_place_table(cond-46, stage=4)
+  Merging with match table Dequeue_dequeue_table_10
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Dequeue_dequeue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Dequeue_dequeue_table_10
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_10 in stage 4 (need more)
+    Pl vector: [ Dequeue_dequeue_table_10 ]
+  Group table: cond-61
+try_place_table(cond-61, stage=4)
+  Merging with match table Enqueue_enqueue_table_10
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_10 in stage 4 (need more)
+    Pl vector: [ Enqueue_enqueue_table_10 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_10, Enqueue_enqueue_table_10 ]
+Initial best is first table seen: Dequeue_dequeue_table_10
+For trial t : Enqueue_enqueue_table_10 with best: Dequeue_dequeue_table_10
+    Updating best to Enqueue_enqueue_table_10 from Dequeue_dequeue_table_10 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_10 (with gw cond-61) in stage 4(46) FormatType(042) (need more)
+stage 4, work: [ 3289762, 3291166, 3291168 ], partly placed 1, placed 28
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-46
+try_place_table(cond-46, stage=4)
+  Merging with match table Dequeue_dequeue_table_10
+    Enqueue_enqueue_table_10 is now also placed (1)
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_10
+  Selected stage: 4    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_10 in stage 4
+    Pl vector: [ Dequeue_dequeue_table_10 ]
+  Group table: Enqueue_enqueue_table_10
+Enqueue_enqueue_table_10 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_10, stage=4)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-62
+try_place_table(cond-62, stage=4)
+  Merging with match table Enqueue_enqueue_table_11
+  Initial stage is 4, initial entries is 512
+    The table Enqueue_enqueue_table_11 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_11 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_11 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_10, Enqueue_enqueue_table_11 ]
+Initial best is first table seen: Dequeue_dequeue_table_10
+For trial t : Enqueue_enqueue_table_11 with best: Dequeue_dequeue_table_10
+    Keeping best Dequeue_dequeue_table_10 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_10 (with gw cond-46) in stage 4(47) FormatType(022)
+stage 4, work: [ 3291166, 3291168, 3289758 ], partly placed 0, placed 29
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-62
+try_place_table(cond-62, stage=4)
+  Merging with match table Enqueue_enqueue_table_11
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_10
+Trying to allocate imem for Enqueue_enqueue_table_11
+    table SwitchIngress.Enqueue.enqueue_table_13 could not fit in stage 4 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 512 of Enqueue_enqueue_table_11 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_11 ]
+  Group table: cond-47
+try_place_table(cond-47, stage=4)
+  Merging with match table Dequeue_dequeue_table_11
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_7
+Trying to allocate imem for Enqueue_enqueue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_8
+Trying to allocate imem for Dequeue_dequeue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_9
+Trying to allocate imem for Enqueue_enqueue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_10
+Trying to allocate imem for Dequeue_dequeue_table_11
+    table SwitchIngress.Dequeue.dequeue_table_13 could not fit in stage 4 with 1 entries
+    too many meter alu users
+    Min use of memory allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_11
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 512 of Dequeue_dequeue_table_11 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_11 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_11, Dequeue_dequeue_table_11 ]
+Initial best is first table seen: Enqueue_enqueue_table_11
+For trial t : Dequeue_dequeue_table_11 with best: Enqueue_enqueue_table_11
+    Updating best to Dequeue_dequeue_table_11 from Enqueue_enqueue_table_11 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_11 (with gw cond-47) in stage 5(50) FormatType(042) (need more)
+stage 5, work: [ 3291168, 3289752, 3289754 ], partly placed 1, placed 30
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-62
+try_place_table(cond-62, stage=5)
+  Merging with match table Enqueue_enqueue_table_11
+    Dequeue_dequeue_table_11 is now also placed (1)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_11 in stage 5
+    Pl vector: [ Enqueue_enqueue_table_11 ]
+  Group table: Dequeue_dequeue_table_11
+Dequeue_dequeue_table_11 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_11, stage=5)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-48
+try_place_table(cond-48, stage=5)
+  Merging with match table Dequeue_dequeue_table_12
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_12
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_12 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_12 ]
+found 2 tables that could be placed: [ Enqueue_enqueue_table_11, Dequeue_dequeue_table_12 ]
+Initial best is first table seen: Enqueue_enqueue_table_11
+For trial t : Dequeue_dequeue_table_12 with best: Enqueue_enqueue_table_11
+    Keeping best Enqueue_enqueue_table_11 for reason: completes more shared tables
+placing 512 entries of Enqueue_enqueue_table_11 (with gw cond-62) in stage 5(51) FormatType(022)
+stage 5, work: [ 3289752, 3289754, 3291164 ], partly placed 0, placed 31
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-48
+try_place_table(cond-48, stage=5)
+  Merging with match table Dequeue_dequeue_table_12
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Dequeue_dequeue_table_12
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_12 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_12 ]
+  Group table: cond-63
+try_place_table(cond-63, stage=5)
+  Merging with match table Enqueue_enqueue_table_12
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_12 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_12 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_12, Enqueue_enqueue_table_12 ]
+Initial best is first table seen: Dequeue_dequeue_table_12
+For trial t : Enqueue_enqueue_table_12 with best: Dequeue_dequeue_table_12
+    Updating best to Enqueue_enqueue_table_12 from Dequeue_dequeue_table_12 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_12 (with gw cond-63) in stage 5(52) FormatType(042) (need more)
+stage 5, work: [ 3289754, 3291158, 3291160 ], partly placed 1, placed 32
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-48
+try_place_table(cond-48, stage=5)
+  Merging with match table Dequeue_dequeue_table_12
+    Enqueue_enqueue_table_12 is now also placed (1)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_12 in stage 5
+    Pl vector: [ Dequeue_dequeue_table_12 ]
+  Group table: Enqueue_enqueue_table_12
+Enqueue_enqueue_table_12 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_12, stage=5)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: cond-64
+try_place_table(cond-64, stage=5)
+  Merging with match table Enqueue_enqueue_table_14
+  Initial stage is 5, initial entries is 512
+    The table Enqueue_enqueue_table_14 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Enqueue_enqueue_table_14
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_14 in stage 6 (need more)
+  Merging with match table Enqueue_enqueue_table_13
+  Initial stage is 5, initial entries is 512
+    The table Enqueue_enqueue_table_13 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_13 in stage 6 (need more)
+    Pl vector: [ Enqueue_enqueue_table_14, Enqueue_enqueue_table_13 ]
+found 3 tables that could be placed: [ Dequeue_dequeue_table_12, Enqueue_enqueue_table_14, Enqueue_enqueue_table_13 ]
+Initial best is first table seen: Dequeue_dequeue_table_12
+For trial t : Enqueue_enqueue_table_14 with best: Dequeue_dequeue_table_12
+    Keeping best Dequeue_dequeue_table_12 for reason: earlier stage calculated
+For trial t : Enqueue_enqueue_table_13 with best: Dequeue_dequeue_table_12
+    Keeping best Dequeue_dequeue_table_12 for reason: earlier stage calculated
+placing 512 entries of Dequeue_dequeue_table_12 (with gw cond-48) in stage 5(53) FormatType(022)
+stage 5, work: [ 3291158, 3291160, 3289750 ], partly placed 0, placed 33
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-64
+try_place_table(cond-64, stage=5)
+  Merging with match table Enqueue_enqueue_table_14
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Enqueue_enqueue_table_14
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_14 in stage 5 (need more)
+  Merging with match table Enqueue_enqueue_table_13
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Enqueue_enqueue_table_13
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_13 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_14, Enqueue_enqueue_table_13 ]
+  Group table: cond-49
+try_place_table(cond-49, stage=5)
+  Merging with match table Dequeue_dequeue_table_14
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_14
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_14 in stage 5 (need more)
+  Merging with match table Dequeue_dequeue_table_13
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_13 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_14, Dequeue_dequeue_table_13 ]
+found 4 tables that could be placed: [ Enqueue_enqueue_table_14, Enqueue_enqueue_table_13, Dequeue_dequeue_table_14, Dequeue_dequeue_table_13 ]
+Initial best is first table seen: Enqueue_enqueue_table_14
+For trial t : Enqueue_enqueue_table_13 with best: Enqueue_enqueue_table_14
+    Updating best to Enqueue_enqueue_table_13 from Enqueue_enqueue_table_14 for reason: default choice
+For trial t : Dequeue_dequeue_table_14 with best: Enqueue_enqueue_table_13
+    Updating best to Dequeue_dequeue_table_14 from Enqueue_enqueue_table_13 for reason: default choice
+For trial t : Dequeue_dequeue_table_13 with best: Dequeue_dequeue_table_14
+    Updating best to Dequeue_dequeue_table_13 from Dequeue_dequeue_table_14 for reason: default choice
+placing 512 entries of Dequeue_dequeue_table_13 (with gw cond-49) in stage 5(54) FormatType(042) (need more)
+stage 5, work: [ 3291160, 3289744, 3289746 ], partly placed 1, placed 34
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-64
+try_place_table(cond-64, stage=5)
+  Merging with match table Enqueue_enqueue_table_14
+  Initial stage is 5, initial entries is 512
+    The table Enqueue_enqueue_table_14 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Enqueue_enqueue_table_14
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_14 in stage 6 (need more)
+  Merging with match table Enqueue_enqueue_table_13
+    Dequeue_dequeue_table_13 is now also placed (1)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_13 in stage 5
+    Pl vector: [ Enqueue_enqueue_table_14, Enqueue_enqueue_table_13 ]
+  Group table: Dequeue_dequeue_table_13
+Dequeue_dequeue_table_13 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_13, stage=5)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  Group table: Dequeue_dequeue_table_14
+Dequeue_dequeue_table_14 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_14, stage=5)
+  Initial stage is 5, initial entries is 512
+    The table Dequeue_dequeue_table_14 could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for Dequeue_dequeue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_14
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_14 in stage 6 (need more)
+    Pl vector: [ Dequeue_dequeue_table_14 ]
+found 3 tables that could be placed: [ Enqueue_enqueue_table_14, Enqueue_enqueue_table_13, Dequeue_dequeue_table_14 ]
+Initial best is first table seen: Enqueue_enqueue_table_14
+For trial t : Enqueue_enqueue_table_13 with best: Enqueue_enqueue_table_14
+    Updating best to Enqueue_enqueue_table_13 from Enqueue_enqueue_table_14 for reason: earlier stage calculated
+For trial t : Dequeue_dequeue_table_14 with best: Enqueue_enqueue_table_13
+    Keeping best Enqueue_enqueue_table_13 for reason: earlier stage calculated
+placing 512 entries of Enqueue_enqueue_table_13 (with gw cond-64) in stage 5(55) FormatType(022)
+stage 5, work: [ 3289744, 3289746, 3291156 ], partly placed 0, placed 35
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Dequeue_dequeue_table_14
+Dequeue_dequeue_table_14 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_14, stage=5)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Dequeue_dequeue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Dequeue_dequeue_table_14
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_14 in stage 5 (need more)
+    Pl vector: [ Dequeue_dequeue_table_14 ]
+  Group table: Enqueue_enqueue_table_14
+Enqueue_enqueue_table_14 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_14, stage=5)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_14
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Enqueue_enqueue_table_14 in stage 5 (need more)
+    Pl vector: [ Enqueue_enqueue_table_14 ]
+found 2 tables that could be placed: [ Dequeue_dequeue_table_14, Enqueue_enqueue_table_14 ]
+Initial best is first table seen: Dequeue_dequeue_table_14
+For trial t : Enqueue_enqueue_table_14 with best: Dequeue_dequeue_table_14
+    Updating best to Enqueue_enqueue_table_14 from Dequeue_dequeue_table_14 for reason: default choice
+placing 512 entries of Enqueue_enqueue_table_14 in stage 5(56) FormatType(042) (need more)
+stage 5, work: [ 3289746, 3291156 ], partly placed 1, placed 36
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: Dequeue_dequeue_table_14
+Dequeue_dequeue_table_14 is not a gateway! Aborting search for merge choices
+try_place_table(Dequeue_dequeue_table_14, stage=5)
+    Enqueue_enqueue_table_14 is now also placed (1)
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_11
+Trying to allocate imem for Enqueue_enqueue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_12
+Trying to allocate imem for Dequeue_dequeue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_13
+Trying to allocate imem for Enqueue_enqueue_table_14
+Trying to allocate imem for Dequeue_dequeue_table_14
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 512 of Dequeue_dequeue_table_14 in stage 5
+    Pl vector: [ Dequeue_dequeue_table_14 ]
+  Group table: Enqueue_enqueue_table_14
+Enqueue_enqueue_table_14 is not a gateway! Aborting search for merge choices
+try_place_table(Enqueue_enqueue_table_14, stage=5)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+found 1 tables that could be placed: [ Dequeue_dequeue_table_14 ]
+Initial best is first table seen: Dequeue_dequeue_table_14
+placing 512 entries of Dequeue_dequeue_table_14 in stage 5(57) FormatType(022)
+stage 5, work: [ 3291156 ], partly placed 0, placed 37
     { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
 Adding complete placement for resource mode:0
 Found a complete solution that fit the number of stages required
 Evaluating complete solution with resource:0
-Placement error(s):0 stages required:3
+Placement error(s):0 stages required:6
 Updating best final placement with this one
-Table placement placed 8 tables in 3 stages
-  Table Enqueue_enqueue_table_two logical id 0x21 entries=512
-    attached table rb2 entries=16
-  Table Dequeue_dequeue_table_two logical id 0x20 entries=512
-    attached table rb2 entries=16
+Table placement placed 37 tables in 6 stages
+  Table Dequeue_dequeue_table_14 logical id 0x57 entries=512
+    attached table rb16 entries=32768
+  Table Enqueue_enqueue_table_14 logical id 0x56 entries=512
+    attached table rb16 entries=32768
+  Table Enqueue_enqueue_table_13 logical id 0x55 entries=512
+    attached table rb15 entries=32768
+  Gateway cond-64 is also logical id 0x55
+  Table Dequeue_dequeue_table_13 logical id 0x54 entries=512
+    attached table rb15 entries=32768
+  Gateway cond-49 is also logical id 0x54
+  Table Dequeue_dequeue_table_12 logical id 0x53 entries=512
+    attached table rb14 entries=32768
+  Gateway cond-48 is also logical id 0x53
+  Table Enqueue_enqueue_table_12 logical id 0x52 entries=512
+    attached table rb14 entries=32768
+  Gateway cond-63 is also logical id 0x52
+  Table Enqueue_enqueue_table_11 logical id 0x51 entries=512
+    attached table rb13 entries=32768
+  Gateway cond-62 is also logical id 0x51
+  Table Dequeue_dequeue_table_11 logical id 0x50 entries=512
+    attached table rb13 entries=32768
+  Gateway cond-47 is also logical id 0x50
+  Table Dequeue_dequeue_table_10 logical id 0x47 entries=512
+    attached table rb12 entries=32768
+  Gateway cond-46 is also logical id 0x47
+  Table Enqueue_enqueue_table_10 logical id 0x46 entries=512
+    attached table rb12 entries=32768
+  Gateway cond-61 is also logical id 0x46
+  Table Enqueue_enqueue_table_9 logical id 0x45 entries=512
+    attached table rb11 entries=32768
+  Gateway cond-60 is also logical id 0x45
+  Table Dequeue_dequeue_table_9 logical id 0x44 entries=512
+    attached table rb11 entries=32768
+  Gateway cond-45 is also logical id 0x44
+  Table Dequeue_dequeue_table_8 logical id 0x43 entries=512
+    attached table rb10 entries=32768
+  Gateway cond-44 is also logical id 0x43
+  Table Enqueue_enqueue_table_8 logical id 0x42 entries=512
+    attached table rb10 entries=32768
+  Gateway cond-59 is also logical id 0x42
+  Table Enqueue_enqueue_table_7 logical id 0x41 entries=512
+    attached table rb9 entries=32768
+  Gateway cond-58 is also logical id 0x41
+  Table Dequeue_dequeue_table_7 logical id 0x40 entries=512
+    attached table rb9 entries=32768
+  Gateway cond-43 is also logical id 0x40
+  Table Dequeue_dequeue_table_6 logical id 0x37 entries=512
+    attached table rb8 entries=32768
+  Gateway cond-42 is also logical id 0x37
+  Table Enqueue_enqueue_table_6 logical id 0x36 entries=512
+    attached table rb8 entries=32768
+  Gateway cond-57 is also logical id 0x36
+  Table Enqueue_enqueue_table_5 logical id 0x35 entries=512
+    attached table rb7 entries=32768
+  Gateway cond-56 is also logical id 0x35
+  Table Dequeue_dequeue_table_5 logical id 0x34 entries=512
+    attached table rb7 entries=32768
+  Gateway cond-41 is also logical id 0x34
+  Table Dequeue_dequeue_table_4 logical id 0x33 entries=512
+    attached table rb6 entries=32768
+  Gateway cond-40 is also logical id 0x33
+  Table Enqueue_enqueue_table_4 logical id 0x32 entries=512
+    attached table rb6 entries=32768
+  Gateway cond-55 is also logical id 0x32
+  Table Enqueue_enqueue_table_3 logical id 0x31 entries=512
+    attached table rb5 entries=32768
+  Gateway cond-54 is also logical id 0x31
+  Table Dequeue_dequeue_table_3 logical id 0x30 entries=512
+    attached table rb5 entries=32768
+  Gateway cond-39 is also logical id 0x30
+  Table Dequeue_dequeue_table_2 logical id 0x27 entries=512
+    attached table rb4 entries=32768
+  Gateway cond-38 is also logical id 0x27
+  Table Enqueue_enqueue_table_2 logical id 0x26 entries=512
+    attached table rb4 entries=32768
+  Gateway cond-53 is also logical id 0x26
+  Table Enqueue_enqueue_table_1 logical id 0x25 entries=512
+    attached table rb3 entries=32768
+  Gateway cond-52 is also logical id 0x25
+  Table Dequeue_dequeue_table_1 logical id 0x24 entries=512
+    attached table rb3 entries=32768
+  Gateway cond-37 is also logical id 0x24
+  Table Dequeue_dequeue_table_0 logical id 0x23 entries=512
+    attached table rb2 entries=32768
+  Gateway cond-36 is also logical id 0x23
+  Table Enqueue_enqueue_table_0 logical id 0x22 entries=512
+    attached table rb2 entries=32768
+  Gateway cond-51 is also logical id 0x22
+  Table Enqueue_enqueue_table logical id 0x21 entries=512
+    attached table rb1 entries=32768
+  Gateway cond-50 is also logical id 0x21
+  Table Dequeue_dequeue_table logical id 0x20 entries=512
+    attached table rb1 entries=32768
+  Gateway cond-35 is also logical id 0x20
   Table Dequeue_inc_head_table logical id 0x11 entries=512
-    attached table heads entries=2
-  Gateway cond-2 is also logical id 0x11
+    attached table heads entries=16
+  Gateway cond-34 is also logical id 0x11
   Table Enqueue_inc_tail_table logical id 0x10 entries=512
-    attached table tails entries=2
-  Table Enqueue_inc_size_table logical id 0x3 entries=512
-    attached table sizes entries=2
-  Table Dequeue_dec_size_table logical id 0x2 entries=512
-    attached table sizes entries=2
-  Table Enqueue_first_table logical id 0x1 entries=512
-    attached table firsts entries=2
-  Table dmac_0 logical id 0x0 entries=4096
+    attached table tails entries=16
+  Table Enqueue_inc_size_table logical id 0x2 entries=512
+    attached table sizes entries=16
+  Table Dequeue_dec_size_table logical id 0x1 entries=512
+    attached table sizes entries=16
+  Table Enqueue_first_table logical id 0x0 entries=512
+    attached table firsts entries=16
+  Gateway cond-33 is also logical id 0x0
 Finished table placement decisions pipe
-  Adding Ternary Indirect table to Enqueue_first_table
-  Adding Ternary Indirect table to Enqueue_inc_tail_table
-  Adding Ternary Indirect table to Enqueue_inc_size_table
-  Adding Ternary Indirect table to Dequeue_dec_size_table
-folding gateway cond-2 onto Dequeue_inc_head_table
-  Adding Ternary Indirect table to Dequeue_inc_head_table
+folding gateway cond-33 onto Enqueue_first_table
+folding gateway cond-34 onto Dequeue_inc_head_table
+folding gateway cond-35 onto Dequeue_dequeue_table
+folding gateway cond-36 onto Dequeue_dequeue_table_0
+folding gateway cond-37 onto Dequeue_dequeue_table_1
+folding gateway cond-38 onto Dequeue_dequeue_table_2
+folding gateway cond-39 onto Dequeue_dequeue_table_3
+folding gateway cond-40 onto Dequeue_dequeue_table_4
+folding gateway cond-41 onto Dequeue_dequeue_table_5
+folding gateway cond-42 onto Dequeue_dequeue_table_6
+folding gateway cond-43 onto Dequeue_dequeue_table_7
+folding gateway cond-44 onto Dequeue_dequeue_table_8
+folding gateway cond-45 onto Dequeue_dequeue_table_9
+folding gateway cond-46 onto Dequeue_dequeue_table_10
+folding gateway cond-47 onto Dequeue_dequeue_table_11
+folding gateway cond-48 onto Dequeue_dequeue_table_12
+folding gateway cond-49 onto Dequeue_dequeue_table_13
+folding gateway cond-50 onto Enqueue_enqueue_table
+folding gateway cond-51 onto Enqueue_enqueue_table_0
+folding gateway cond-52 onto Enqueue_enqueue_table_1
+folding gateway cond-53 onto Enqueue_enqueue_table_2
+folding gateway cond-54 onto Enqueue_enqueue_table_3
+folding gateway cond-55 onto Enqueue_enqueue_table_4
+folding gateway cond-56 onto Enqueue_enqueue_table_5
+folding gateway cond-57 onto Enqueue_enqueue_table_6
+folding gateway cond-58 onto Enqueue_enqueue_table_7
+folding gateway cond-59 onto Enqueue_enqueue_table_8
+folding gateway cond-60 onto Enqueue_enqueue_table_9
+folding gateway cond-61 onto Enqueue_enqueue_table_10
+folding gateway cond-62 onto Enqueue_enqueue_table_11
+folding gateway cond-63 onto Enqueue_enqueue_table_12
+folding gateway cond-64 onto Enqueue_enqueue_table_13
 table placement completed pipe
-ingress: [2017341]
-  0: dmac_0{ E 38+1, 0 [1x1 1K 1K 1K 1K] }
-    drop: [2017477] 0 00 000
-      1: Enqueue_first_table{ E 0+10, 0 0K }
-        stateful firsts    2
-      3: Enqueue_inc_size_table{ E 0+10, 0 0K }
-        stateful sizes    2
-      10: Enqueue_inc_tail_table{ E 0+10, 0 0K }
-        stateful tails    2
-      21: Enqueue_enqueue_table_two{ E 0+10, 0 0K }
-        stateful rb2   16
-    NoAction: [2017747] 0
-      2: Dequeue_dec_size_table{ E 0+10, 0 0K }
-        stateful sizes    2
+ingress: [3288458]
+  0: Enqueue_first_table(ingress::hdr.ipv4.dst_addr[0:0] == 0; => $true, 1){ GE 0+10, 0 0K }
+    stateful firsts   16
+    $true: [3288464] 0
+      1: Dequeue_dec_size_table{ E 0+10, 0 0K }
+        stateful sizes   16
       11: Dequeue_inc_head_table(ingress::Dequeue_size_tmp == 0; => $false, 1){ GE 0+10, 0 0K }
-        stateful heads    2
-        $default: [2017821]
-          20: Dequeue_dequeue_table_two{ E 0+10, 0 0K }
-            stateful rb2   16
-        $false: [2075305]
-egress: [2020618]
+        stateful heads   16
+        $default: [3288548]
+          20: Dequeue_dequeue_table(ingress::hdr.ipv4.dst_addr[3:0] == 0;, 1 => $false){ GE 0+15, 0 0K }
+            stateful rb1  33K
+            $false: [3289802]
+              23: Dequeue_dequeue_table_0(ingress::hdr.ipv4.dst_addr[3:0] == 1;, 1 => $false){ GE 0+15, 0 0K }
+                stateful rb2  33K
+                $false: [3289798]
+                  24: Dequeue_dequeue_table_1(ingress::hdr.ipv4.dst_addr[3:0] == 2;, 1 => $false){ GE 0+15, 0 0K }
+                    stateful rb3  33K
+                    $false: [3289794]
+                      27: Dequeue_dequeue_table_2(ingress::hdr.ipv4.dst_addr[3:0] == 3;, 1 => $false){ GE 0+15, 0 0K }
+                        stateful rb4  33K
+                        $false: [3289790]
+                          30: Dequeue_dequeue_table_3(ingress::hdr.ipv4.dst_addr[3:0] == 4;, 1 => $false){ GE 0+15, 0 0K }
+                            stateful rb5  33K
+                            $false: [3289786]
+                              33: Dequeue_dequeue_table_4(ingress::hdr.ipv4.dst_addr[3:0] == 5;, 1 => $false){ GE 0+15, 0 0K }
+                                stateful rb6  33K
+                                $false: [3289782]
+                                  34: Dequeue_dequeue_table_5(ingress::hdr.ipv4.dst_addr[3:0] == 6;, 1 => $false){ GE 0+15, 0 0K }
+                                    stateful rb7  33K
+                                    $false: [3289778]
+                                      37: Dequeue_dequeue_table_6(ingress::hdr.ipv4.dst_addr[3:0] == 7;, 1 => $false){ GE 0+15, 0 0K }
+                                        stateful rb8  33K
+                                        $false: [3289774]
+                                          40: Dequeue_dequeue_table_7(ingress::hdr.ipv4.dst_addr[3:0] == 8;, 1 => $false){ GE 0+15, 0 0K }
+                                            stateful rb9  33K
+                                            $false: [3289770]
+                                              43: Dequeue_dequeue_table_8(ingress::hdr.ipv4.dst_addr[3:0] == 9;, 1 => $false){ GE 0+15, 0 0K }
+                                                stateful rb10  33K
+                                                $false: [3289766]
+                                                  44: Dequeue_dequeue_table_9(ingress::hdr.ipv4.dst_addr[3:0] == 10;, 1 => $false){ GE 0+15, 0 0K }
+                                                    stateful rb11  33K
+                                                    $false: [3289762]
+                                                      47: Dequeue_dequeue_table_10(ingress::hdr.ipv4.dst_addr[3:0] == 11;, 1 => $false){ GE 0+15, 0 0K }
+                                                        stateful rb12  33K
+                                                        $false: [3289758]
+                                                          50: Dequeue_dequeue_table_11(ingress::hdr.ipv4.dst_addr[3:0] == 12;, 1 => $false){ GE 0+15, 0 0K }
+                                                            stateful rb13  33K
+                                                            $false: [3289754]
+                                                              53: Dequeue_dequeue_table_12(ingress::hdr.ipv4.dst_addr[3:0] == 13;, 1 => $false){ GE 0+15, 0 0K }
+                                                                stateful rb14  33K
+                                                                $false: [3289750]
+                                                                  54: Dequeue_dequeue_table_13(ingress::hdr.ipv4.dst_addr[3:0] == 14;, 1 => $false){ GE 0+15, 0 0K }
+                                                                    stateful rb15  33K
+                                                                    $false: [3289746]
+                                                                      57: Dequeue_dequeue_table_14{ E 0+15, 0 0K }
+                                                                        stateful rb16  33K
+        $false: [3477213]
+    $default: [3289804] 0 00
+      2: Enqueue_inc_size_table{ E 0+10, 0 0K }
+        stateful sizes   16
+      10: Enqueue_inc_tail_table{ E 0+10, 0 0K }
+        stateful tails   16
+      21: Enqueue_enqueue_table(ingress::hdr.ipv4.dst_addr[3:0] == 0;, 1 => $false){ GE 0+15, 0 0K }
+        stateful rb1  33K
+        $false: [3291212]
+          22: Enqueue_enqueue_table_0(ingress::hdr.ipv4.dst_addr[3:0] == 1;, 1 => $false){ GE 0+15, 0 0K }
+            stateful rb2  33K
+            $false: [3291208]
+              25: Enqueue_enqueue_table_1(ingress::hdr.ipv4.dst_addr[3:0] == 2;, 1 => $false){ GE 0+15, 0 0K }
+                stateful rb3  33K
+                $false: [3291204]
+                  26: Enqueue_enqueue_table_2(ingress::hdr.ipv4.dst_addr[3:0] == 3;, 1 => $false){ GE 0+15, 0 0K }
+                    stateful rb4  33K
+                    $false: [3291200]
+                      31: Enqueue_enqueue_table_3(ingress::hdr.ipv4.dst_addr[3:0] == 4;, 1 => $false){ GE 0+15, 0 0K }
+                        stateful rb5  33K
+                        $false: [3291196]
+                          32: Enqueue_enqueue_table_4(ingress::hdr.ipv4.dst_addr[3:0] == 5;, 1 => $false){ GE 0+15, 0 0K }
+                            stateful rb6  33K
+                            $false: [3291192]
+                              35: Enqueue_enqueue_table_5(ingress::hdr.ipv4.dst_addr[3:0] == 6;, 1 => $false){ GE 0+15, 0 0K }
+                                stateful rb7  33K
+                                $false: [3291188]
+                                  36: Enqueue_enqueue_table_6(ingress::hdr.ipv4.dst_addr[3:0] == 7;, 1 => $false){ GE 0+15, 0 0K }
+                                    stateful rb8  33K
+                                    $false: [3291184]
+                                      41: Enqueue_enqueue_table_7(ingress::hdr.ipv4.dst_addr[3:0] == 8;, 1 => $false){ GE 0+15, 0 0K }
+                                        stateful rb9  33K
+                                        $false: [3291180]
+                                          42: Enqueue_enqueue_table_8(ingress::hdr.ipv4.dst_addr[3:0] == 9;, 1 => $false){ GE 0+15, 0 0K }
+                                            stateful rb10  33K
+                                            $false: [3291176]
+                                              45: Enqueue_enqueue_table_9(ingress::hdr.ipv4.dst_addr[3:0] == 10;, 1 => $false){ GE 0+15, 0 0K }
+                                                stateful rb11  33K
+                                                $false: [3291172]
+                                                  46: Enqueue_enqueue_table_10(ingress::hdr.ipv4.dst_addr[3:0] == 11;, 1 => $false){ GE 0+15, 0 0K }
+                                                    stateful rb12  33K
+                                                    $false: [3291168]
+                                                      51: Enqueue_enqueue_table_11(ingress::hdr.ipv4.dst_addr[3:0] == 12;, 1 => $false){ GE 0+15, 0 0K }
+                                                        stateful rb13  33K
+                                                        $false: [3291164]
+                                                          52: Enqueue_enqueue_table_12(ingress::hdr.ipv4.dst_addr[3:0] == 13;, 1 => $false){ GE 0+15, 0 0K }
+                                                            stateful rb14  33K
+                                                            $false: [3291160]
+                                                              55: Enqueue_enqueue_table_13(ingress::hdr.ipv4.dst_addr[3:0] == 14;, 1 => $false){ GE 0+15, 0 0K }
+                                                                stateful rb15  33K
+                                                                $false: [3291156]
+                                                                  56: Enqueue_enqueue_table_14{ E 0+15, 0 0K }
+                                                                    stateful rb16  33K
+egress: [3296157]
 
