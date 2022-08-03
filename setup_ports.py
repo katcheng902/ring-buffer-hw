@@ -45,7 +45,39 @@ class SlimAtpTest(pd_base_tests.ThriftInterface):
                         [table.make_key([gc.KeyTuple('$REGISTER_INDEX', reg_idx)])],
                         [table.make_data(
                         [gc.DataTuple("{}.f1".format(reg_name), reg_val)])])
-                        
+
+
+    def read_register(self, reg_name, reg_idx):
+        target = gc.Target(device_id=0, pipe_id=0xffff)
+        table = self.bfrt_info.table_get(reg_name)
+        resp = table.entry_get(
+                        target,
+                        [table.make_key([gc.KeyTuple('$REGISTER_INDEX', reg_idx)])],
+                      {"from_hw": True})
+        data, _ = next(resp)
+        data = data.to_dict()
+        return data["{}.f1".format(reg_name)]
+
+    def test_read(self, T, ind): #T is cycle time, ind is ring buffer we want to read
+        res = []
+        while True:
+            sz = self.read_register("sizes", ind)[1]
+
+            start_time = time.time()
+
+            for i in range(sz):
+                self.read_register("ring_buffers", 0)
+
+            end_time = time.time()
+            res.append((end_time-start_time)*1000)
+            #print(res)
+            if len(res) >= 20:
+                break
+
+            time.sleep(T)
+        return sum(res)/20
+
+
 if __name__ == "__main__":
     config["log_dir"] = "log"
     # parse p4program name
@@ -56,7 +88,12 @@ if __name__ == "__main__":
         test.setup_grpc(p4program)
                                                                                                                                                                                                                                                                         # Enable ports connected (100G / NONE)
     test.enable_ports()
+
     test.write_register("lefts", 0, 0)
-    test.write_register("lefts", 1, 3)
-    test.write_register("lefts", 2, 6)
+    test.write_register("sizes", 0, 64)
+    #for i in range(64):
+    #    test.write_register("ring_buffers", i, 1)
+
+    print(test.test_read(2, 0))
+
     test.stop_grpc()
