@@ -1,1 +1,2 @@
-# ring-buffer-hw
+# Ring Buffer
+### Katarina Cheng
