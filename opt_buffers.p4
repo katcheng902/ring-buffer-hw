@@ -15,8 +15,8 @@
  *  or implied warranties, other than those that are expressly stated in the
  *  License.
  ******************************************************************************/
-#include "registers.p4"
-/*
+/*#include "registers.p4"*/
+
 #include <core.p4>
 #if __TARGET_TOFINO__ == 3
 #include <t3na.p4>
@@ -31,19 +31,17 @@
 
 struct metadata_t {}
 
+const bit<32> CAPACITY = 64;
+const bit<32> TOTAL = CAPACITY*1;
+#define ID_LEN 1
 #define REG_SIZE 32
 #define ELT_SIZE 32
-#define ID_LEN 4
-const bit<32> CAPACITY = 1 << 14;
-const bit<32> TOTAL = CAPACITY*16;
-
-Register<bit<REG_SIZE>, bit<32>> (16, 0) lefts;
-Register<bit<REG_SIZE>, bit<32>> (16, 0) heads; 
-Register<bit<REG_SIZE>, bit<32>> (16,0) tails;
-Register<bit<REG_SIZE>, bit<32>> (16,0) sizes;
-Register<bit<1>, bit<32>> (16,0) firsts;
+Register<bit<REG_SIZE>, bit<32>> (1, 0) lefts;
+Register<bit<REG_SIZE>, bit<32>> (1, 0) heads; 
+Register<bit<REG_SIZE>, bit<32>> (1,0) tails;
+Register<bit<REG_SIZE>, bit<32>> (1,0) sizes;
+Register<bit<1>, bit<32>> (1,0) firsts;
 Register<bit<32>, bit<32>> (TOTAL, 0) ring_buffers;
-*/
 struct pair {
     bit<32>     first;
     bit<32>     second;

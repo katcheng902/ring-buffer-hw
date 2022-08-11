@@ -57,9 +57,21 @@ class SlimAtpTest(pd_base_tests.ThriftInterface):
         data, _ = next(resp)
         data = data.to_dict()
         return data["{}.f1".format(reg_name)]
+    def enb_digest(self):
 
+        # Get bfrt_info and set it as part of the test
+        # The learn object can be retrieved using a lesser qualified name on the condition
+        # that it is unique
+        learn_filter = self.bfrt_info.learn_get("digest_a") #digest name
+        learn_filter.info.data_field_annotation_add("src_addr", "mac")
+        learn_filter.info.data_field_annotation_add("dst_addr", "mac")
+
+        print("Waiting for digest")
+        digest = self.interface.digest_get()
+
+'''
     def test_read(self, T, ind): #T is cycle time, ind is ring buffer we want to read
-        res = []
+        #res = []
         while True:
             sz = self.read_register("sizes", ind)[1]
 
@@ -69,14 +81,15 @@ class SlimAtpTest(pd_base_tests.ThriftInterface):
                 self.read_register("ring_buffers", 0)
 
             end_time = time.time()
-            res.append((end_time-start_time)*1000)
+            return ((end_time-start_time)*1000)
+            #res.append((end_time-start_time)*1000)
             #print(res)
-            if len(res) >= 20:
-                break
+            #if len(res) >= 20:
+               # break
 
-            time.sleep(T)
-        return sum(res)/20
-
+            #time.sleep(T)
+        #return sum(res)/20
+'''
 
 if __name__ == "__main__":
     config["log_dir"] = "log"
@@ -88,12 +101,5 @@ if __name__ == "__main__":
         test.setup_grpc(p4program)
                                                                                                                                                                                                                                                                         # Enable ports connected (100G / NONE)
     test.enable_ports()
-
-    test.write_register("lefts", 0, 0)
-    test.write_register("sizes", 0, 64)
-    #for i in range(64):
-    #    test.write_register("ring_buffers", i, 1)
-
-    print(test.test_read(2, 0))
-
+    test.enb_digest()
     test.stop_grpc()

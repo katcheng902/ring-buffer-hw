@@ -83,7 +83,7 @@ control SwitchIngressDeparser(
 
 #define REG_SIZE 32
 #define ELT_SIZE 32
-const bit<32> CAPACITY = 1 << 4;
+const bit<32> CAPACITY = 32768;
 
 /*REGISTERS*/
 Register<bit<REG_SIZE>, bit<32>> (1,0) tail;
