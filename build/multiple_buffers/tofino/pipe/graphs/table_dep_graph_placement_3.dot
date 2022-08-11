@@ -1,0 +1,31 @@
+digraph table_deps {
+  splines=ortho; rankdir=LR;
+  label="Program: multiple_buffers
+RunId: c185dcc13b3ecb2b
+";
+  labelloc=t; labeljust=l;
+  { "cond-4"; "cond-5"; "SwitchIngress.Dequeue.inc_head_table"; "cond-6"; "SwitchIngress.Enqueue.inc_tail_table"; }
+  { rank = same; "SwitchIngress.Enqueue.enqueue_table_1"; "SwitchIngress.Enqueue.enqueue_table_2"; "SwitchIngress.Dequeue.dequeue_table_1"; "SwitchIngress.Dequeue.dequeue_table_2"; }
+  { rank = same; "SwitchIngress.Enqueue.first_table"; "SwitchIngress.Enqueue.inc_size_table"; "SwitchIngress.Dequeue.dec_size_table"; }
+   "cond-4" -> "SwitchIngress.Enqueue.enqueue_table_1" [ label= "",color=green ];
+   "cond-4" -> "SwitchIngress.Enqueue.enqueue_table_2" [ label= "",color=green ];
+   "cond-5" -> "SwitchIngress.Dequeue.inc_head_table" [ label= "",color=green ];
+   "cond-5" -> "cond-6" [ label= "",color=green ];
+   "cond-6" -> "SwitchIngress.Dequeue.dequeue_table_1" [ label= "",color=green ];
+   "cond-6" -> "SwitchIngress.Dequeue.dequeue_table_2" [ label= "",color=green ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_1" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "SwitchIngress.Enqueue.enqueue_table_2" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.dec_size_table" -> "cond-5" [ label= "",color=blue ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_1" [ label= "",color=gold ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "SwitchIngress.Dequeue.dequeue_table_2" [ label= "",color=gold ];
+   "SwitchIngress.Enqueue.inc_tail_table" -> "cond-4" [ label= "",color=pink ];
+   "SwitchIngress.Dequeue.inc_head_table" -> "cond-6" [ label= "",color=pink ];
+   "SwitchIngress.Enqueue.first_table" -> "SwitchIngress.Enqueue.inc_tail_table" [ label= "",color=pink ];
+   "SwitchIngress.Dequeue.dec_size_table" -> "cond-5" [ label= "",color=pink ];
+  { rank=max;
+    subgraph cluster_legend { node [ shape=record; fontsize=10];
+      empty [label=<<table border="0" cellborder="0"><tr><td colspan="8">Edge colors</td></tr><tr><td><font color="gold">ixbar_read</font></td><td><font color="blue">action_read</font></td><td><font color="red">output</font></td><td><font color="navy">cont_conflict</font></td><td><font color="cyan">reduction_or_read</font></td><td><font color="cyan">reduction_or_output</font></td><td><font color="pink">anti_table_read</font></td><td><font color="pink">anti_next_action_read</font></td><td><font color="pink">anti_next_table_data</font></td><td><font color="pink">anti_next_table_control</font></td><td><font color="pink">anti_next_table_metadata</font></td><td><font color="black">exit</font></td><td><font color="green">control_action</font></td><td><font color="green">control_condition_true</font></td><td><font color="green">control_condition_false</font></td><td><font color="green">control_table_hit</font></td><td><font color="green">control_table_miss</font></td><td><font color="green">control_default_next_table</font></td><td><font color="green">control_exit</font></td></tr></table>>;]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+ingress::TofinoIngressParser_parse_port_metadata is split into 2 states:
+  ingress::TofinoIngressParser_parse_port_metadata
+  ingress::TofinoIngressParser_parse_port_metadata.$split_0
+allocated { $byte1 } to {  [ ingress::start : inbuf bit[0] ig_intr_md.resubmit_flag; ] }
+allocated { $half $byte0 $byte1 } to {  [ ingress::TofinoIngressParser_parse_port_metadata.$split_0 : inbuf bit[48..79] hdr.ipv4/ipv4.dst_addr; ] }
+ComputeLoweredParserIR preorder on Header : header ethernet_h {
+  bit<48> dst_addr;
+  bit<48> src_addr;
+  bit<16> ether_type; }
+ComputeLoweredParserIR preorder on Header : header ipv4_h {
+  bit<4> version;
+  bit<4> ihl;
+  bit<8> diffserv;
+  bit<16> total_len;
+  bit<16> identification;
+  bit<3> flags;
+  bit<13> frag_offset;
+  bit<8> ttl;
+  bit<8> protocol;
+  bit<16> hdr_checksum;
+  bit<32> src_addr;
+  bit<32> dst_addr; }

@@ -1,0 +1,10 @@
+/root/ring-buffer/build/CMakeFiles/install.dir
+/root/ring-buffer/build/CMakeFiles/list_install_components.dir
+/root/ring-buffer/build/CMakeFiles/edit_cache.dir
+/root/ring-buffer/build/CMakeFiles/bf-p4c.dir
+/root/ring-buffer/build/CMakeFiles/install/strip.dir
+/root/ring-buffer/build/CMakeFiles/install/local.dir
+/root/ring-buffer/build/CMakeFiles/driver.dir
+/root/ring-buffer/build/CMakeFiles/rebuild_cache.dir
+/root/ring-buffer/build/CMakeFiles/opt_buffers.dir
+/root/ring-buffer/build/CMakeFiles/opt_buffers-tofino.dir

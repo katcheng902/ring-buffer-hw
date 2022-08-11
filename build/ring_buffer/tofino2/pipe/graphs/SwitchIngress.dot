@@ -1,0 +1,22 @@
+digraph SwitchIngress {
+subgraph cluster {
+graph [
+label="", labeljust=r, style=bold];
+0[label=__START__, margin="", shape=rectangle, style=solid];
+1[label=__EXIT__, margin="", shape=rectangle, style=solid];
+2[label="SwitchIngress.dmac", margin="", shape=ellipse, style=solid];
+3[label=tbl_ring_buffer87, margin="", shape=ellipse, style=solid];
+4[label="SwitchIngress.Enqueue.first_table", margin="", shape=ellipse, style=solid];
+5[label="SwitchIngress.Enqueue.inc_tail_table", margin="", shape=ellipse, style=solid];
+6[label="SwitchIngress.Enqueue.inc_size_table", margin="", shape=ellipse, style=solid];
+7[label="SwitchIngress.Enqueue.enqueue_table", margin="", shape=ellipse, style=solid];
+0 -> 2[label=""];
+2 -> 3[label="NoAction_1/NoAction;"];
+2 -> 1[label=default];
+3 -> 4[label=""];
+4 -> 5[label=""];
+5 -> 6[label=""];
+6 -> 7[label=""];
+7 -> 1[label=""];
+}
+}

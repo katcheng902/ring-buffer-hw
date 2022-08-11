@@ -1,0 +1,69 @@
+[
+  {
+    "gress": "ingress",
+    "pov": {
+      "size": 1,
+      "pov_bits": [
+        {
+          "pov_bit": 0,
+          "phv_container": 84,
+          "phv_container_bit": 0,
+          "pov_name": "hdr.ethernet.$valid"
+        }
+      ]
+    },
+    "nFdeEntries": 128,
+    "fde_entries": [
+      {
+        "entry": 0,
+        "pov_bit": 0,
+        "pov_name": "hdr.ethernet.$valid",
+        "chunks": [
+          { "chunk_number": 0, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 1, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 2, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 3, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 4, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 5, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 6, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 7, "chunk": { "clot_tag": 0 } }
+        ]
+      },
+      {
+        "entry": 1,
+        "pov_bit": 0,
+        "pov_name": "hdr.ethernet.$valid",
+        "chunks": [
+          { "chunk_number": 0, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 1, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 2, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 3, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 4, "chunk": { "clot_tag": 0 } },
+          { "chunk_number": 5, "chunk": { "clot_tag": 0 } }
+        ]
+      }
+    ],
+    "mirror_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] },
+    "resubmit_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] },
+    "learning_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] }
+  },
+  {
+    "gress": "egress",
+    "pov": {
+      "size": 1,
+      "pov_bits": [
+        {
+          "pov_bit": 0,
+          "phv_container": 80,
+          "phv_container_bit": 0,
+          "pov_name": "eg_intr_md_for_dprsr.mirror_io_select.$valid"
+        }
+      ]
+    },
+    "nFdeEntries": 128,
+    "fde_entries": [],
+    "mirror_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] },
+    "resubmit_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] },
+    "learning_table": { "nTables": 0, "maxBytes": 0, "table_phv": [] }
+  }
+]

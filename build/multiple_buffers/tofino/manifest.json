@@ -1,0 +1,218 @@
+{
+  "architecture": "tna",
+  "build_date": "Thu Jul 28 19:46:55 2022",
+  "run_id": "b2357547dc2e8213",
+  "compile_command": "/root/bf-sde-9.8.0/install/bin/bf-p4c --std p4-16 --target tofino --arch tna --bf-rt-schema multiple_buffers/tofino/bf-rt.json -o /root/ring-buffer/build/multiple_buffers/tofino -g /root/ring-buffer/multiple_buffers.p4",
+  "compiler_version": "9.8.0 (989b4bf)",
+  "compilation_succeeded": true,
+  "compilation_time": "21.03107738494873",
+  "schema_version": "2.0.6",
+  "programs": [
+    {
+      "p4_version": "p4-16",
+      "frontend_ir_log_file": "frontend-ir.json",
+      "pipes": [
+        {
+          "pipe_name": "pipe",
+          "pipe_id": 0,
+          "files": {
+            "logs": [
+              {
+                "log_type": "parser",
+                "path": "pipe/logs/flexible_packing.log"
+              },
+              {
+                "log_type": "parser",
+                "path": "pipe/logs/parser.characterize.log"
+              },
+              {
+                "log_type": "parser",
+                "path": "pipe/logs/parser.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv.json"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_0.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_3.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_history_0.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_history_3.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_summary_0.log"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/phv_allocation_summary_3.log"
+              },
+              {
+                "log_type": "power",
+                "path": "pipe/logs/power.json"
+              },
+              {
+                "log_type": "phv",
+                "path": "pipe/logs/pragmas.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/table_dependency_graph.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/table_placement_1.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/table_placement_2.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/table_placement_4.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/table_summary.log"
+              },
+              {
+                "log_type": "mau",
+                "path": "pipe/logs/mau.json"
+              }
+            ],
+            "context": {
+              "path": "pipe/context.json"
+            },
+            "graphs": [
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/dep.json",
+                "gress": "ingress",
+                "graph_format": ".json"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/program_graph.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/power_graph.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "control",
+                "path": "pipe/graphs/EmptyEgress.dot",
+                "gress": "egress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "parser",
+                "path": "pipe/graphs/EmptyEgressParser.dot",
+                "gress": "egress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "parser",
+                "path": "pipe/graphs/SwitchIngressParser.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "control",
+                "path": "pipe/graphs/SwitchIngress.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/table_dep_graph_placement_1.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/placement_graph.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/table_dep_graph_placement_0.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              },
+              {
+                "graph_type": "table",
+                "path": "pipe/graphs/table_dep_graph_placement_2.dot",
+                "gress": "ingress",
+                "graph_format": ".dot"
+              }
+            ],
+            "metrics": {
+              "path": "pipe/logs/metrics.json"
+            },
+            "resources": [
+              {
+                "type": "resources",
+                "path": "pipe/logs/resources.json"
+              }
+            ]
+          }
+        }
+      ],
+      "program_name": "multiple_buffers.p4",
+      "event_log_file": "events.json",
+      "source_files": {
+        "src_map": "source.json",
+        "src_root": "/root/ring-buffer",
+        "defines": [
+          "__TARGET_TOFINO__=1",
+          "__p4c__=1",
+          "__p4c_major__=9",
+          "__p4c_minor__=8",
+          "__p4c_patchlevel__=0",
+          "__p4c_version__=\"9.8.0\""
+        ],
+        "includes": [
+          "/root/bf-sde-9.8.0/install/share/p4c/p4include"
+        ]
+      }
+    }
+  ],
+  "target": "tofino",
+  "conf_file": "multiple_buffers.conf",
+  "architectureConfig": {
+    "name": "64q",
+    "pipes": [
+      {
+        "egress": {
+          "pipeName": "EmptyEgress",
+          "nextControl": []
+        },
+        "pipe": 0,
+        "ingress": {
+          "pipeName": "SwitchIngress",
+          "nextControl": [
+            {
+              "pipe": 0,
+              "pipeName": "EmptyEgress"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

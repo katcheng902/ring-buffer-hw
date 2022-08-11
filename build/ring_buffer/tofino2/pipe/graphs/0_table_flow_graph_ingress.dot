@@ -1,0 +1,28 @@
+digraph ingress {
+dmac_0 [ shape=record, style="filled", fillcolor=cornsilk, label="dmac_0\l\l
+M:\l
+ hdr.ethernet.dst_addr\l
+\lR:\l
+ Enqueue_first_tmp\l
+\lW:\l
+ Enqueue_tail_tmp\l
+ "];
+Enqueue_first_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_first_table\l\l
+ "];
+Enqueue_inc_tail_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_inc_tail_table\l\l
+R:\l
+ Enqueue_first_tmp\l
+\lW:\l
+ Enqueue_tail_tmp\l
+ "];
+Enqueue_inc_size_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_inc_size_table\l\l
+ "];
+Enqueue_enqueue_table [ shape=record, style="filled", fillcolor=cornsilk, label="Enqueue_enqueue_table\l\l
+ "];
+    PARSER -> dmac_0
+    dmac_0 -> Enqueue_first_table
+    Enqueue_first_table -> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -> Enqueue_inc_size_table
+    Enqueue_inc_size_table -> Enqueue_enqueue_table
+    Enqueue_enqueue_table -> DEPARSER
+}

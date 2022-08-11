@@ -1,0 +1,559 @@
+FindDependencyGraph : After Instruction Selection
+ingress: [2032819]
+  dmac_0
+    drop: [2032955] 0 00 000 0000
+      Enqueue_left_table
+        stateful lefts    3
+      Enqueue_first_table
+        stateful firsts    3
+      Enqueue_inc_tail_table
+        stateful tails    3
+      Enqueue_inc_size_table
+        stateful sizes    3
+      Enqueue_enqueue_table
+        stateful ring_buffers    9
+    NoAction: [2033304] 0 00
+      Dequeue_left_table
+        stateful lefts    3
+      Dequeue_dec_size_table
+        stateful sizes    3
+      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [2033446] 0
+          Dequeue_inc_head_table
+            stateful heads    3
+          Dequeue_dequeue_table
+            stateful ring_buffers    9
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : cond-2
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> cond-2
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_inc_head_table
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> cond-2
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Dequeue_inc_head_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_dequeue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     cond-2 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+     Dequeue_inc_head_table 1 1
+	- Edge CONTROL_COND_TRUE cond-2
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+
+FindDependencyGraph : Just Before PHV allocation
+ingress: [2032819]
+  dmac_0
+    drop: [2032955] 0 00 000 0000
+      Enqueue_left_table
+        stateful lefts    3
+      Enqueue_first_table
+        stateful firsts    3
+      Enqueue_inc_tail_table
+        stateful tails    3
+      Enqueue_inc_size_table
+        stateful sizes    3
+      Enqueue_enqueue_table
+        stateful ring_buffers    9
+    NoAction: [2033304] 0 00
+      Dequeue_left_table
+        stateful lefts    3
+      Dequeue_dec_size_table
+        stateful sizes    3
+      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [2033446] 0
+          Dequeue_inc_head_table
+            stateful heads    3
+          Dequeue_dequeue_table
+            stateful ring_buffers    9
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : cond-2
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> cond-2
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_inc_head_table
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> cond-2
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Dequeue_inc_head_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_dequeue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     cond-2 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+     Dequeue_inc_head_table 1 1
+	- Edge CONTROL_COND_TRUE cond-2
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+
+ingress: [2032819]
+  dmac_0{ E 38+1, 0 0K }
+    drop: [2032955] 0 11 000 1110
+      Enqueue_left_table
+        stateful lefts    3
+      Enqueue_first_table
+        stateful firsts    3
+      Enqueue_inc_tail_table
+        stateful tails    3
+      Enqueue_inc_size_table
+        stateful sizes    3
+      Enqueue_enqueue_table
+        stateful ring_buffers    9
+    NoAction: [2033304] 0 11
+      Dequeue_left_table
+        stateful lefts    3
+      Dequeue_dec_size_table
+        stateful sizes    3
+      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [2033446] 1
+          Dequeue_inc_head_table
+            stateful heads    3
+          Dequeue_dequeue_table
+            stateful ring_buffers    9
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : cond-2
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> cond-2
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_inc_head_table
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> cond-2
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Dequeue_inc_head_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_dequeue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     cond-2 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+     Dequeue_inc_head_table 1 1
+	- Edge CONTROL_COND_TRUE cond-2
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+
+FindDependencyGraph : Before Table Placement
+ingress: [2032819]
+  dmac_0{ E 38+1, 0 0K }
+    drop: [2032955] 0 11 000 1110
+      Enqueue_left_table
+        stateful lefts    3
+      Enqueue_first_table
+        stateful firsts    3
+      Enqueue_inc_tail_table
+        stateful tails    3
+      Enqueue_inc_size_table
+        stateful sizes    3
+      Enqueue_enqueue_table
+        stateful ring_buffers    9
+    NoAction: [2033304] 0 11
+      Dequeue_left_table
+        stateful lefts    3
+      Dequeue_dec_size_table
+        stateful sizes    3
+      cond-2(ingress::Dequeue_size_tmp == 0; => $false, 1 => $true)
+        $true: [2033446] 1
+          Dequeue_inc_head_table
+            stateful heads    3
+          Dequeue_dequeue_table
+            stateful ring_buffers    9
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : cond-2
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> cond-2
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_inc_head_table
+    cond-2 -- CONTROL_COND_TRUE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> cond-2
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Dequeue_inc_head_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_dequeue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> cond-2
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     cond-2 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+     Dequeue_inc_head_table 1 1
+	- Edge CONTROL_COND_TRUE cond-2
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+
+FindDependencyGraph : After Table Placement
+ingress: [2032819]
+  0: dmac_0{ E 38+1, 0 [1x1 1K 1K 1K 1K] }
+    drop: [2032955] 0 00 110 1101
+      2: Enqueue_left_table{ E 0+10, 0 0K }
+        stateful lefts 3   
+      3: Enqueue_first_table{ E 0+10, 0 0K }
+        stateful firsts 3   
+      5: Enqueue_inc_size_table{ E 0+10, 0 0K }
+        stateful sizes 3   
+      10: Enqueue_inc_tail_table{ E 0+10, 0 0K }
+        stateful tails 3   
+      21: Enqueue_enqueue_table{ E 0+10, 0 0K }
+        stateful ring_buffers 9   
+    NoAction: [2033304] 0 11
+      1: Dequeue_left_table{ E 0+10, 0 0K }
+        stateful lefts 3   
+      4: Dequeue_dec_size_table{ E 0+10, 0 0K }
+        stateful sizes 3   
+      11: Dequeue_inc_head_table(ingress::Dequeue_size_tmp == 0; => $false, 1){ GE 0+10, 0 0K }
+        stateful heads 3   
+        $default: [2033446]
+          20: Dequeue_dequeue_table{ E 0+10, 0 0K }
+            stateful ring_buffers 9   
+        $false: [2098120]
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- CONTROL_DEFAULT_NEXT_TABLE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_inc_head_table
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_inc_head_table
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     Dequeue_inc_head_table 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+
+FindDependencyGraph : Power Calculation
+ingress: [2032819]
+  0: dmac_0{ E 38+1, 0 [1x1 1K 1K 1K 1K] }
+    drop: [2032955] 0 00 110 1101
+      2: Enqueue_left_table{ E 0+10, 0 0K }
+        stateful lefts 3   
+      3: Enqueue_first_table{ E 0+10, 0 0K }
+        stateful firsts 3   
+      5: Enqueue_inc_size_table{ E 0+10, 0 0K }
+        stateful sizes 3   
+      10: Enqueue_inc_tail_table{ E 0+10, 0 0K }
+        stateful tails 3   
+      21: Enqueue_enqueue_table{ E 0+10, 0 0K }
+        stateful ring_buffers 9   
+    NoAction: [2033304] 0 11
+      1: Dequeue_left_table{ E 0+10, 0 0K }
+        stateful lefts 3   
+      4: Dequeue_dec_size_table{ E 0+10, 0 0K }
+        stateful sizes 3   
+      11: Dequeue_inc_head_table(ingress::Dequeue_size_tmp == 0; => $false, 1){ GE 0+10, 0 0K }
+        stateful heads 3   
+        $default: [2033446]
+          20: Dequeue_dequeue_table{ E 0+10, 0 0K }
+            stateful ring_buffers 9   
+        $false: [2098120]
+egress: [2036409]
+
+DepStagesThruDomFrontier postorder : Enqueue_left_table
+DepStagesThruDomFrontier postorder : Enqueue_first_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_size_table
+DepStagesThruDomFrontier postorder : Enqueue_inc_tail_table
+DepStagesThruDomFrontier postorder : Enqueue_enqueue_table
+DepStagesThruDomFrontier postorder : Dequeue_left_table
+DepStagesThruDomFrontier postorder : Dequeue_dec_size_table
+DepStagesThruDomFrontier postorder : Dequeue_dequeue_table
+DepStagesThruDomFrontier postorder : Dequeue_inc_head_table
+DepStagesThruDomFrontier postorder : dmac_0
+    Maximum stage number according to dependences: 
+      INGRESS: 2
+      EGRESS: -1
+GRAPH
+    dmac_0 -- CONTROL_ACTION --> Enqueue_left_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_first_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_size_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_inc_tail_table
+    dmac_0 -- CONTROL_ACTION --> Enqueue_enqueue_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_left_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_dec_size_table
+    dmac_0 -- CONTROL_ACTION --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- CONTROL_DEFAULT_NEXT_TABLE --> Dequeue_dequeue_table
+    Enqueue_first_table -- IXBAR_READ --> Enqueue_inc_tail_table
+    Enqueue_left_table -- ACTION_READ --> Enqueue_inc_tail_table
+    Enqueue_inc_tail_table -- IXBAR_READ --> Enqueue_enqueue_table
+    Dequeue_dec_size_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_left_table -- ACTION_READ --> Dequeue_inc_head_table
+    Dequeue_inc_head_table -- IXBAR_READ --> Dequeue_dequeue_table
+    Enqueue_inc_tail_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_enqueue_table
+    Enqueue_left_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Enqueue_first_table -- ANTI_NEXT_TABLE_DATA --> Enqueue_inc_tail_table
+    Dequeue_left_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_inc_head_table
+    Dequeue_dec_size_table -- ANTI_NEXT_TABLE_DATA --> Dequeue_inc_head_table
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     dmac_0 2 2
+     Enqueue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_first_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Enqueue_inc_size_table 0 0
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_left_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+     Dequeue_dec_size_table 2 2
+	- Edge CONTROL_ACTION dmac_0
+ Stage #1
+     Enqueue_inc_tail_table 1 1
+	- Edge IXBAR_READ Enqueue_first_table
+	- Edge ACTION_READ Enqueue_left_table
+     Dequeue_inc_head_table 1 1
+	- Edge ACTION_READ Dequeue_dec_size_table
+	- Edge ACTION_READ Dequeue_left_table
+ Stage #2
+     Enqueue_enqueue_table 0 0
+	- Edge IXBAR_READ Enqueue_inc_tail_table
+     Dequeue_dequeue_table 0 0
+	- Edge IXBAR_READ Dequeue_inc_head_table
+

@@ -1,0 +1,112 @@
+{
+    "program_name": "opt_buffers.p4", 
+    "build_date": "Thu Jul 28 20:02:44 2022", 
+    "run_id": "a5814967fd135097", 
+    "compiler_version": "9.8.0", 
+    "schema_version": "1.1.0", 
+    "target": "tofino", 
+    "compilation_time": "7.600056171417236", 
+    "phv": {
+        "normal": [
+            {
+                "bit_width": 8, 
+                "containers_occupied": 2, 
+                "bits_occupied": 4, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 16, 
+                "containers_occupied": 1, 
+                "bits_occupied": 16, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 32, 
+                "containers_occupied": 5, 
+                "bits_occupied": 160, 
+                "bits_overlaid": 65
+            }
+        ], 
+        "tagalong": [
+            {
+                "bit_width": 8, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 16, 
+                "containers_occupied": 2, 
+                "bits_occupied": 32, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 32, 
+                "containers_occupied": 1, 
+                "bits_occupied": 32, 
+                "bits_overlaid": 0
+            }
+        ]
+    }, 
+    "parser": {
+        "ingress": {
+            "tcam_rows": 8
+        }, 
+        "egress": {
+            "tcam_rows": 1
+        }
+    }, 
+    "mau": {
+        "srams": 16, 
+        "tcams": 0, 
+        "map_rams": 12, 
+        "logical_tables": 10, 
+        "action_bus_bytes": 20, 
+        "exact_crossbar_bytes": 18, 
+        "ternary_crossbar_bytes": 0, 
+        "latency": [
+            {
+                "gress": "ingress", 
+                "cycles": 108
+            }, 
+            {
+                "gress": "egress", 
+                "cycles": 168
+            }
+        ], 
+        "power": [
+            {
+                "gress": "ingress", 
+                "estimate": "1.77475816663"
+            }, 
+            {
+                "gress": "egress", 
+                "estimate": "0.0"
+            }
+        ]
+    }, 
+    "deparser": {
+        "ingress": {
+            "pov_bits": 1, 
+            "fde_entries": 3
+        }, 
+        "egress": {
+            "pov_bits": 0, 
+            "fde_entries": 0
+        }
+    }, 
+    "clots": {
+        "ingress": {
+            "all_allocated_bits": 0, 
+            "allocated_bits": 0, 
+            "unallocated_bits": 0, 
+            "redundant_phv_bits": 0
+        }, 
+        "egress": {
+            "all_allocated_bits": 0, 
+            "allocated_bits": 0, 
+            "unallocated_bits": 0, 
+            "redundant_phv_bits": 0
+        }
+    }
+}

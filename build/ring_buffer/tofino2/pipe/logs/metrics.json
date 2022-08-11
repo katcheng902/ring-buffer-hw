@@ -1,0 +1,140 @@
+{
+    "program_name": "ring_buffer.p4", 
+    "build_date": "Tue Jul 19 16:52:34 2022", 
+    "run_id": "1f645164d3e5f320", 
+    "compiler_version": "9.8.0", 
+    "schema_version": "1.1.0", 
+    "target": "tofino2", 
+    "compilation_time": "8.774564981460571", 
+    "phv": {
+        "normal": [
+            {
+                "bit_width": 8, 
+                "containers_occupied": 2, 
+                "bits_occupied": 3, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 16, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 32, 
+                "containers_occupied": 1, 
+                "bits_occupied": 32, 
+                "bits_overlaid": 0
+            }
+        ], 
+        "mocha": [
+            {
+                "bit_width": 8, 
+                "containers_occupied": 1, 
+                "bits_occupied": 1, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 16, 
+                "containers_occupied": 1, 
+                "bits_occupied": 16, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 32, 
+                "containers_occupied": 1, 
+                "bits_occupied": 32, 
+                "bits_overlaid": 0
+            }
+        ], 
+        "dark": [
+            {
+                "bit_width": 8, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 16, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
+                "bits_overlaid": 0
+            }, 
+            {
+                "bit_width": 32, 
+                "containers_occupied": 0, 
+                "bits_occupied": 0, 
+                "bits_overlaid": 0
+            }
+        ]
+    }, 
+    "parser": {
+        "ingress": {
+            "tcam_rows": 5
+        }, 
+        "egress": {
+            "tcam_rows": 1
+        }
+    }, 
+    "mau": {
+        "srams": 12, 
+        "tcams": 0, 
+        "map_rams": 8, 
+        "logical_tables": 5, 
+        "action_bus_bytes": 4, 
+        "exact_crossbar_bytes": 11, 
+        "ternary_crossbar_bytes": 0, 
+        "latency": [
+            {
+                "gress": "ingress", 
+                "cycles": 86
+            }, 
+            {
+                "gress": "egress", 
+                "cycles": 58
+            }, 
+            {
+                "gress": "ghost", 
+                "cycles": 76
+            }
+        ], 
+        "power": [
+            {
+                "gress": "ingress", 
+                "estimate": "1.1464"
+            }, 
+            {
+                "gress": "egress", 
+                "estimate": "0.0"
+            }, 
+            {
+                "gress": "ghost", 
+                "estimate": "0.0"
+            }
+        ]
+    }, 
+    "deparser": {
+        "ingress": {
+            "pov_bits": 1, 
+            "fde_entries": 2
+        }, 
+        "egress": {
+            "pov_bits": 1, 
+            "fde_entries": 0
+        }
+    }, 
+    "clots": {
+        "ingress": {
+            "all_allocated_bits": 112, 
+            "allocated_bits": 64, 
+            "unallocated_bits": 0, 
+            "redundant_phv_bits": 0
+        }, 
+        "egress": {
+            "all_allocated_bits": 0, 
+            "allocated_bits": 0, 
+            "unallocated_bits": 0, 
+            "redundant_phv_bits": 0
+        }
+    }
+}

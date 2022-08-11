@@ -1,0 +1,34 @@
+digraph SwitchIngress {
+subgraph cluster {
+graph [
+label="", labeljust=r, style=bold];
+0[label=__START__, margin="", shape=rectangle, style=solid];
+1[label=__EXIT__, margin="", shape=rectangle, style=solid];
+2[label="SwitchIngress.dmac", margin="", shape=ellipse, style=solid];
+3[label="SwitchIngress.Enqueue.left_table", margin="", shape=ellipse, style=solid];
+4[label="SwitchIngress.Enqueue.first_table", margin="", shape=ellipse, style=solid];
+5[label="SwitchIngress.Enqueue.inc_tail_table", margin="", shape=ellipse, style=solid];
+6[label="SwitchIngress.Enqueue.inc_size_table", margin="", shape=ellipse, style=solid];
+7[label="SwitchIngress.Enqueue.enqueue_table", margin="", shape=ellipse, style=solid];
+8[label="SwitchIngress.Dequeue.left_table", margin="", shape=ellipse, style=solid];
+9[label="SwitchIngress.Dequeue.dec_size_table", margin="", shape=ellipse, style=solid];
+10[label="Dequeue_size_tmp/size_tmp > 0;", margin="", shape=rectangle, style=solid];
+11[label="SwitchIngress.Dequeue.inc_head_table", margin="", shape=ellipse, style=solid];
+12[label="SwitchIngress.Dequeue.dequeue_table", margin="", shape=ellipse, style=solid];
+0 -> 2[label=""];
+2 -> 3[label="drop;"];
+2 -> 8[label="NoAction_1/NoAction;"];
+2 -> 1[label=default];
+3 -> 4[label=""];
+4 -> 5[label=""];
+5 -> 6[label=""];
+6 -> 7[label=""];
+7 -> 1[label=""];
+8 -> 9[label=""];
+9 -> 10[label=""];
+10 -> 11[label=TRUE];
+10 -> 1[label=FALSE];
+11 -> 12[label=""];
+12 -> 1[label=""];
+}
+}

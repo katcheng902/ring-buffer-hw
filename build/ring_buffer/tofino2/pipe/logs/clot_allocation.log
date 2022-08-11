@@ -1,0 +1,45 @@
+
+CLOT Allocation (ingress):
++------+--------------------------------------------------------+--------------+-----------+
+| CLOT |                         Fields                         |     Bits     | Property  |
++------+--------------------------------------------------------+--------------+-----------+
+|  0   | state ingress::TofinoIngressParser_parse_port_metadata |   14 bytes   |           |
+|      |                                                        |              |           |
+|      |             ingress::hdr.ethernet.dst_addr             |  48 [0..47]  |  ( phv )  |
+|      |             ingress::hdr.ethernet.src_addr             | 48 [48..95]  |           |
+|      |            ingress::hdr.ethernet.ether_type            | 16 [96..111] |           |
++------+--------------------------------------------------------+--------------+-----------+
+|      |                       Total Bits                       |     112      |           |
++------+--------------------------------------------------------+--------------+-----------+
+
+  Packets will use up to 1 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    ingress::TofinoIngressParser_parse_port_metadata (1 CLOTs)
+    ingress::start (0 CLOTs)
+    ingress::$entry_point (0 CLOTs)
+
+CLOT Allocation (egress):
++------+------------+------+----------+
+| CLOT |   Fields   | Bits | Property |
++------+------------+------+----------+
+|      | Total Bits |  0   |          |
++------+------------+------+----------+
+
+  Packets will use up to 0 CLOTs.
+  The parser path(s) that will use the most CLOTs contain the following states:
+    $entry_point.start (0 CLOTs)
+
+All fields:
++----------------------------------+------+-------+-----------+
+|              Field               | Bits | CLOTs | Property  |
++----------------------------------+------+-------+-----------+
+|  ingress::hdr.ethernet.dst_addr  |  48  |   0   | read-only |
+|  ingress::hdr.ethernet.src_addr  |  48  |   0   |  unused   |
+| ingress::hdr.ethernet.ether_type |  16  |   0   |  unused   |
++----------------------------------+------+-------+-----------+
+|          Unused fields           |  2   |       |           |
+|           Unused bits            |  64  |       |           |
+|   Unused CLOT-allocated fields   |  2   |       |           |
+|    Unused CLOT-allocated bits    |  64  |       |           |
++----------------------------------+------+-------+-----------+
+

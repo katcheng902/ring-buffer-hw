@@ -1,0 +1,712 @@
+{
+    "schema_version": "1.0.0",
+    "symbols": [
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 128,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size_reg_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 119,
+                "column": 62
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 115,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail_reg_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 103,
+                "column": 55
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 99,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.set_first_reg_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 91,
+                "column": 54
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 139,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.write_buffer_reg_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 132,
+                "column": 62
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 119,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "buffer_size",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 82,
+                "column": 34
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 91,
+                    "column": 47
+                }
+            ],
+            "symbol_name": "first",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 84,
+                "column": 33
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 293,
+                    "column": 8
+                }
+            ],
+            "symbol_name": "pipe",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 291,
+                "column": 33
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 132,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "ring_buffer",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 83,
+                "column": 42
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 103,
+                    "column": 49
+                }
+            ],
+            "symbol_name": "tail",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 81,
+                "column": 34
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 87,
+                    "column": 13
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 105,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_tmp",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 87,
+                "column": 6
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 115,
+                    "column": 33
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 139,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.tail_tmp",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 88,
+                "column": 6
+            },
+            "symbol_type": "Declaration_Variable_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 271,
+                    "column": 13
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 274,
+                    "column": 26
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 280,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "NoAction",
+            "declaration": {
+                "file": "/root/bf-sde-9.8.0/install/share/p4c/p4include/core.p4",
+                "line": 70,
+                "column": 8
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 167,
+                    "column": 6
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 169,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.enqueue_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 138,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 146,
+                    "column": 6
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 148,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_action",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 98,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 160,
+                    "column": 6
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 162,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 127,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 153,
+                    "column": 6
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 155,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 114,
+                "column": 13
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 176,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.enqueue_table",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 165,
+                "column": 10
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 173,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.first_table",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 144,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 175,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_size_table",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 158,
+                "column": 10
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 174,
+                    "column": 2
+                }
+            ],
+            "symbol_name": "SwitchIngress.Enqueue.inc_tail_table",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 151,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 279,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "SwitchIngress.dmac",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 263,
+                "column": 11
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [],
+            "symbol_name": "tbl_ring_buffer87",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 87,
+                "column": 6
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 266,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "SwitchIngress.hdr.ethernet.dst_addr",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 255,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 93,
+                    "column": 7
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 110,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.rv",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 104,
+                "column": 44
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 93,
+                    "column": 12
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 94,
+                    "column": 7
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 105,
+                    "column": 31
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 106,
+                    "column": 3
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 108,
+                    "column": 3
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 108,
+                    "column": 9
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 110,
+                    "column": 11
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 121,
+                    "column": 10
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 122,
+                    "column": 3
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 122,
+                    "column": 9
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 134,
+                    "column": 6
+                }
+            ],
+            "symbol_name": "SwitchIngress.val",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 133,
+                "column": 27
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ethernet",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv4",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.ipv6",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.tcp",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.udp",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 18
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.hdr.vlan_tag",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 66,
+                "column": 24
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 71,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressDeparser.pkt",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 65,
+                "column": 20
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 56,
+                    "column": 21
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.hdr.ethernet",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 45,
+                "column": 22
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 27,
+                    "column": 21
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.$valid",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 28,
+                    "column": 27
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 51,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.ig_intr_md.resubmit_flag",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 47,
+                "column": 42
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "include/util.p4",
+                    "line": 27,
+                    "column": 9
+                },
+                {
+                    "file": "include/util.p4",
+                    "line": 40,
+                    "column": 9
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 51,
+                    "column": 29
+                },
+                {
+                    "file": "ring_buffer.p4",
+                    "line": 56,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "SwitchIngressParser.pkt",
+            "declaration": {
+                "file": "ring_buffer.p4",
+                "line": 44,
+                "column": 19
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        }
+    ],
+    "source_root": "/root/ring-buffer"
+}

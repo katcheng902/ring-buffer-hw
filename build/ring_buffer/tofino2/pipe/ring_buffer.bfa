@@ -1,0 +1,311 @@
+version:
+  version: 1.0.1
+  run_id: "1f645164d3e5f320"
+  target: Tofino2
+phv ingress:
+  hdr.ethernet.dst_addr.0-31: MW0
+  hdr.ethernet.dst_addr.32-47: MH0
+  Enqueue_tail_tmp: {  stage 1: W0 } 
+  Enqueue_first_tmp: {  stage 0: B4(1) } 
+  hdr.ethernet.$valid: B4(0)
+  context_json:
+    MH0:
+    - { name : hdr.ethernet.dst_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    MW0:
+    - { name : hdr.ethernet.dst_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B4:
+    - { name : Enqueue_first_tmp, live_start : 0, live_end : 0, mutually_exclusive_with: [  ] }
+    - { name : hdr.ethernet.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    W0:
+    - { name : Enqueue_tail_tmp, live_start : 1, live_end : 1, mutually_exclusive_with: [  ] }
+phv egress:
+  eg_intr_md_for_dprsr.mirror_io_select: MB0(0)
+  eg_intr_md_for_dprsr.mirror_io_select.$valid: B0(0)
+  context_json:
+    MB0:
+    - { name : eg_intr_md_for_dprsr.mirror_io_select, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B0:
+    - { name : eg_intr_md_for_dprsr.mirror_io_select.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+parser ingress:
+  start: $entry_point
+  hdr_len_adj: 32
+  states:
+    $entry_point:
+      *:
+        load: { byte0 : 0 }
+        buf_req: 1
+        next: start
+    start:
+      match: [ byte0 ]
+      0b1*******:
+        shift: 8
+        buf_req: 8
+        next: end
+      0b0*******:
+        shift: 8
+        buf_req: 8
+        next: TofinoIngressParser_parse_port_metadata
+    TofinoIngressParser_parse_port_metadata:
+      *:
+        24..25: MH0  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        26..29: MW0  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        B4: 1  # value 1 -> B4 bit[0]: ingress::hdr.ethernet.$valid
+        clot 0 :
+          start: 24
+          length: 14
+        shift: 32
+        buf_req: 32
+        next: TofinoIngressParser_parse_port_metadata.$split_0
+    TofinoIngressParser_parse_port_metadata.$split_0:
+      *:
+        # clot 0 (spilled)
+        shift: 6
+        buf_req: 6
+        next: end
+deparser ingress:
+  dictionary:
+    clot 0:
+      pov: hdr.ethernet.$valid
+parser egress:
+  start: $entry_point.start
+  hdr_len_adj: 0
+  meta_opt: 0
+  states:
+    $entry_point.start:
+      *:
+        MB0: 1  # value 1 -> MB0 bit[0]: egress::eg_intr_md_for_dprsr.mirror_io_select
+        B0: 1  # value 1 -> B0 bit[0]: egress::eg_intr_md_for_dprsr.mirror_io_select.$valid
+        buf_req: 0
+        next: end
+deparser egress:
+  dictionary: {}
+  mirr_io_sel: { MB0(0..0): B0(0) }  # bit[0]: egress::eg_intr_md_for_dprsr.mirror_io_select if egress::eg_intr_md_for_dprsr.mirror_io_select.$valid
+stage 0 ingress:
+  mpr_stage_id: 0
+  mpr_bus_dep_glob_exec: 0x0
+  mpr_bus_dep_long_brch: 0x0
+  mpr_always_run: 0xf
+  phase0_match SwitchIngressParser.$PORT_METADATA:
+    p4:
+      name: SwitchIngressParser.$PORT_METADATA
+      size: 288
+      preferred_match_type: exact
+      match_type: exact
+    size: 288
+    p4_param_order:
+      ig_intr_md.ingress_port: { type: exact, size: 9 }
+    format: {ig_intr_md: 0..127}
+    constant_value: 0
+    actions:
+      set_port_metadata:
+      - handle: 0x20000000
+      - p4_param_order: { ig_intr_md: 128 } 
+  exact_match dmac_0 0:
+    always_run: true
+    p4: { name: SwitchIngress.dmac, size: 256 }
+    p4_param_order: 
+      hdr.ethernet.dst_addr: { type: exact, size: 48, full_size: 48 }
+    row: 7
+    bus: 0
+    column: [ 2, 3, 4, 5 ]
+    ways:
+      - [0, 0, 0x0, [7, 2]]
+      - [0, 1, 0x0, [7, 3]]
+      - [0, 2, 0x0, [7, 4]]
+      - [0, 3, 0x0, [7, 5]]
+    input_xbar:
+      exact group 0: { 0: hdr.ethernet.dst_addr.0-31, 32: hdr.ethernet.dst_addr.32-47 }
+      hash 0:
+        0..7: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(0..7)
+        8..9: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(8..9)
+        11..18: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(0..7)
+        19: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(8)
+        10: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(9)
+        22..29: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(0..7)
+        20..21: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(8..9)
+        33..39: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(0..6)
+        30: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(7)
+        31..32: random(hdr.ethernet.dst_addr.0-31, hdr.ethernet.dst_addr.32-47(10..15)) ^ hdr.ethernet.dst_addr.32-47(8..9)
+      hash group 0:
+        table: [0]
+        seed: 0xd8874fabc4
+    format: { version(0): 112..115, match(0): [66..71, 32..63 ] }
+    match: [ hdr.ethernet.dst_addr.32-47(10..15), hdr.ethernet.dst_addr.0-31(0..7), hdr.ethernet.dst_addr.0-31(8..15), hdr.ethernet.dst_addr.0-31(16..23), hdr.ethernet.dst_addr.0-31(24..31) ]
+    match_group_map: [ [ 0 ] ]
+    hit: [ [ Enqueue_first_table, Enqueue_inc_size_table, Enqueue_inc_tail_table ] ]
+    miss:  END
+    instruction: dmac_0($DEFAULT, $DEFAULT)
+    actions:
+      NoAction(0, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000001
+      - next_table: 0
+    default_action: NoAction
+  ternary_match Enqueue_inc_tail_table 1:
+    p4: { name: SwitchIngress.Enqueue.inc_tail_table, size: 512 }
+    hit: [  Enqueue_enqueue_table ]
+    miss:  Enqueue_enqueue_table
+    indirect: Enqueue_inc_tail_table$tind
+  stateful Enqueue_inc_tail_table$salu.tail:
+    p4: { name: tail, size: 1 }
+    row: 11
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 11
+    input_xbar:
+      exact group 0: { 65: Enqueue_first_tmp }
+      hash 1:
+        0: Enqueue_first_tmp
+      hash group 1:
+        table: [1]
+        seed: 0x0
+    hash_bytemask: 1
+    format: { lo: 32 }
+    actions:
+      Enqueue_inc_tail_reg_action:
+      - equ cmp0, phv_lo(0..7)
+      - geq.u cmp1, lo, -15
+      - alu_a (cmp0 | cmp1), lo, 0
+      - add (!cmp0 & !cmp1), lo, lo, 1
+      - output word0, alu_lo
+  ternary_indirect Enqueue_inc_tail_table$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0, meter_addr: 1..10 }
+    action_bus: { 96..99 : Enqueue_inc_tail_table$salu.tail(64..95) }
+    stateful: Enqueue_inc_tail_table$salu.tail(meter_addr, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_inc_tail_table$tind(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.inc_tail(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000003
+      - next_table: 0
+      - set Enqueue_tail_tmp, Enqueue_inc_tail_table$salu.tail(64..95)
+      - Enqueue_inc_tail_table$salu.tail(Enqueue_inc_tail_reg_action, 0)
+    default_action: SwitchIngress.Enqueue.inc_tail
+  ternary_match Enqueue_inc_size_table 2:
+    p4: { name: SwitchIngress.Enqueue.inc_size_table, size: 512 }
+    hit: [  END ]
+    miss:  END
+    indirect: Enqueue_inc_size_table$tind
+  stateful Enqueue_inc_size_table$salu.buffer_size:
+    p4: { name: buffer_size, size: 1 }
+    row: 15
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 15
+    format: { lo: 32 }
+    actions:
+      Enqueue_inc_size_reg_action:
+      - lss.u cmp0, lo, -16
+      - add cmp0, lo, lo, 1
+  ternary_indirect Enqueue_inc_size_table$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0, meter_addr: 1..10 }
+    stateful: Enqueue_inc_size_table$salu.buffer_size(meter_addr, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_inc_size_table$tind(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.inc_size(0, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000004
+      - next_table: 0
+      - Enqueue_inc_size_table$salu.buffer_size(Enqueue_inc_size_reg_action, 0)
+    default_action: SwitchIngress.Enqueue.inc_size
+  ternary_match Enqueue_first_table 3:
+    p4: { name: SwitchIngress.Enqueue.first_table, size: 512 }
+    hit: [  END ]
+    miss:  END
+    indirect: Enqueue_first_table$tind
+  stateful Enqueue_first_table$salu.first:
+    p4: { name: first, size: 1 }
+    row: 7
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 7
+    format: { lo: 1 }
+    actions:
+      Enqueue_set_first_reg_action:
+      - set_bit
+      - output word0, alu_lo
+      clr_bit_alu$0:
+      - clr_bit
+  ternary_indirect Enqueue_first_table$tind:
+    row: 1
+    bus: 0
+    format: { action: 0..0, meter_addr: 1..10 }
+    stateful: Enqueue_first_table$salu.first(meter_addr, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_first_table$tind(action, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.first_action(0, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000002
+      - next_table: 0
+      - Enqueue_first_table$salu.first(Enqueue_set_first_reg_action, 0)
+    default_action: SwitchIngress.Enqueue.first_action
+stage 1 ingress:
+  dependency: match
+  mpr_stage_id: 1
+  mpr_bus_dep_glob_exec: 0x0
+  mpr_bus_dep_long_brch: 0x0
+  mpr_always_run: 0x0
+  mpr_glob_exec_lut: 
+    0: 0x1
+  hash_action Enqueue_enqueue_table 0:
+    p4: { name: SwitchIngress.Enqueue.enqueue_table, size: 512 }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x7fffff, shift: 4, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: Enqueue_tail_tmp }
+      hash 0:
+        0..15: Enqueue_tail_tmp(0..15)
+        32..38: Enqueue_tail_tmp(16..22)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: Enqueue_enqueue_table-gateway
+      row: 0
+      bus: 0
+      unit: 0
+      0x0:  END
+      miss:  END
+      condition: 
+        expression: "true(always hit)"
+        true:  END
+        false:  END
+    next: []
+    stateful: Enqueue_enqueue_table$salu.ring_buffer(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: Enqueue_enqueue_table($DEFAULT, $DEFAULT)
+    actions:
+      SwitchIngress.Enqueue.enqueue_action(0, 0):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000005
+      - next_table: 0
+      - Enqueue_enqueue_table$salu.ring_buffer(Enqueue_write_buffer_reg_action, $hash_dist)
+    default_action: SwitchIngress.Enqueue.enqueue_action
+  stateful Enqueue_enqueue_table$salu.ring_buffer:
+    p4: { name: ring_buffer, size: 16 }
+    row: 15
+    logical_bus: S
+    column: [ 0, 1 ]
+    maprams: [ 0, 1 ]
+    home_row: 15
+    format: { lo: 16 }
+    actions:
+      Enqueue_write_buffer_reg_action:
+      - alu_a lo, 0
+
+
+primitives: "ring_buffer.prim.json"
+dynhash: "ring_buffer.dynhash.json"

@@ -1,0 +1,7 @@
+/root/bf-sde-9.8.0/install/share/p4/targets/tofino/opt_buffers.conf
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/source.json
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/bf-rt.json
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/pipe/tofino.bin
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/pipe/context.json
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/frontend-ir.json
+/root/bf-sde-9.8.0/install/share/tofinopd/opt_buffers/events.json

@@ -1,0 +1,135 @@
+{
+  "tables" : [
+    {
+      "name" : "SwitchIngress.dmac",
+      "actions" : [
+        {
+          "name" : "NoAction",
+          "primitives" : []
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.first_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.first_action",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "first"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_set_first_reg_action",
+                "single_bit_mode" : true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.inc_tail_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.inc_tail",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "tail"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_inc_tail_reg_action",
+                "single_bit_mode" : false
+              }
+            },
+            {
+              "name" : "ModifyFieldPrimitive",
+              "operation" : "set",
+              "dst" : {
+                "type" : "phv",
+                "name" : "Enqueue_tail_tmp"
+              },
+              "dst_mask" : {
+                "type" : "immediate",
+                "name" : "0"
+              },
+              "src1" : {
+                "type" : "phv",
+                "name" : "tail"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.inc_size_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.inc_size",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "buffer_size"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_inc_size_reg_action",
+                "single_bit_mode" : false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.enqueue_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.enqueue_action",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluFromHashPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "ring_buffer"
+              },
+              "idx" : {
+                "type" : "hash",
+                "name" : "hash_ring_buffer",
+                "algorithm" : "identity"
+              },
+              "hash_inputs" : ["Enqueue_tail_tmp"],
+              "stateful_alu_details" : {
+                "name" : "Enqueue_write_buffer_reg_action",
+                "single_bit_mode" : false,
+                "update_lo_1_value" : {
+                  "operand_1_type" : "immediate",
+                  "operand_1_value" : "16w0"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

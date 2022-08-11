@@ -1,0 +1,243 @@
+{
+  "tables" : [
+    {
+      "name" : "SwitchIngress.dmac",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.drop",
+          "primitives" : [
+            {
+              "name" : "DropPrimitive",
+              "dst" : {
+                "type" : "phv",
+                "name" : "ig_intr_md_for_dprsr.drop_ctl"
+              },
+              "src1" : {
+                "type" : "immediate",
+                "name" : "1"
+              }
+            }
+          ]
+        },
+        {
+          "name" : "NoAction",
+          "primitives" : []
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.first_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.first_action",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "first"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_set_first_reg_action",
+                "single_bit_mode" : true,
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "memory_lo"
+                },
+                "output_dst" : "Enqueue_first_tmp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.inc_tail_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.inc_tail",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "tail"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_inc_tail_reg_action",
+                "single_bit_mode" : false,
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "memory_lo"
+                },
+                "output_dst" : "Enqueue_tail_tmp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.inc_size_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.inc_size",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "buffer_size"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Enqueue_inc_size_reg_action",
+                "single_bit_mode" : false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Enqueue.enqueue_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Enqueue.enqueue_action",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluFromHashPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "ring_buffer"
+              },
+              "idx" : {
+                "type" : "hash",
+                "name" : "hash_ring_buffer",
+                "algorithm" : "identity"
+              },
+              "hash_inputs" : ["Enqueue_tail_tmp"],
+              "stateful_alu_details" : {
+                "name" : "Enqueue_write_buffer_reg_action",
+                "single_bit_mode" : false,
+                "update_lo_1_value" : {
+                  "operand_1_type" : "phv",
+                  "operand_1_value" : "ingress::hdr.ipv4.dst_addr"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Dequeue.dec_size_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Dequeue.dec_size",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "buffer_size"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Dequeue_dec_size_reg_action",
+                "single_bit_mode" : false,
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "mem_lo"
+                },
+                "output_dst" : "Dequeue_size_tmp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Dequeue.inc_head_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Dequeue.inc_head",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "head"
+              },
+              "idx" : {
+                "type" : "immediate",
+                "name" : "32w0"
+              },
+              "stateful_alu_details" : {
+                "name" : "Dequeue_inc_head_reg_action",
+                "single_bit_mode" : false,
+                "update_lo_1_value" : {
+                  "operation" : "+",
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "register_lo",
+                  "operand_2_type" : "immediate",
+                  "operand_2_value" : "32w1"
+                },
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "mem_lo"
+                },
+                "output_dst" : "Dequeue_head_tmp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "SwitchIngress.Dequeue.dequeue_table",
+      "actions" : [
+        {
+          "name" : "SwitchIngress.Dequeue.dequeue_action",
+          "primitives" : [
+            {
+              "name" : "ExecuteStatefulAluFromHashPrimitive",
+              "dst" : {
+                "type" : "stateful",
+                "name" : "ring_buffer"
+              },
+              "idx" : {
+                "type" : "hash",
+                "name" : "hash_ring_buffer",
+                "algorithm" : "identity"
+              },
+              "hash_inputs" : ["Dequeue_head_tmp"],
+              "stateful_alu_details" : {
+                "name" : "Dequeue_read_buffer_reg_action",
+                "single_bit_mode" : false,
+                "output_value" : {
+                  "operand_1_type" : "memory",
+                  "operand_1_value" : "mem_lo"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
