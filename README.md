@@ -27,6 +27,8 @@ multiple_buffers.p4 contains multiple copies of ring buffer registers labeled ``
 ### opt_buffers.p4 (+ opt_gen.py)
 In opt_buffers.p4, there will only be one ```ring_buffer``` register array containing all the buffers. This shared buffer is used so that a smaller number of register arrays is used, and thus fewer pipeline stages are used (as we are allowed 4 register arrays per pipeline stage). Further, there is a register array ```lefts``` containing the left bound of each register. 
 
+![alt text](https://github.com/katcheng902/ring-buffer-hw/blob/master/shared_buffer.png?raw=true)
+
 To generate opt_buffers.p4, run the command ```python3 opt_gen.py [ELEMENT SIZE] [NUMBER OF BUFFERS] [BUFFER CAPACITY]```. This will properly define the register arrays in the file registers.p4. After connecting to the switch, run ```python3 setup_ports.py opt_buffers``` to set up ports and initialize ```lefts``` based on the number of buffers and buffer capacity. Use ```Enqueue``` and ```Dequeue``` in the same way as in multiple_buffers.p4.
 
 ### Multiple Buffers v. Shared Buffer
