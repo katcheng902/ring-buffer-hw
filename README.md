@@ -1,6 +1,5 @@
 # Ring Buffers in P4
-##### Katarina Cheng, MIT
-##### katcheng@mit.edu
+##### Katarina Cheng, MIT (katcheng@mit.edu)
 
 A ring buffer is a circular queue, which enqueues at the tail pointer index of the queue and dequeues at the head. It is usually implemented as a linear queue where the head and tail are just incremented modulo the buffer capacity. It is a popular way to store data in networks, like queueing incoming packets or requests to a switch.
 
